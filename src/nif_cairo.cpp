@@ -92,7 +92,7 @@ int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 
 void surface_dtor(ErlNifEnv *env, void *obj)
 {
-  cairo_surface_t *surface = obj;
+  cairo_surface_t *surface = (cairo_surface_t *)obj;
 
   cairo_surface_destroy(surface);
 }
@@ -251,7 +251,7 @@ NIF_DECL(nif_surface_create_similar)
   }
 
   cairo_surface_t *new_surface = cairo_surface_create_similar(surface, content, width, height);
-  cairo_surface_t **resource = enif_alloc_resource(g_res_type_surface, sizeof(cairo_surface_t *));
+  cairo_surface_t **resource = (cairo_surface_t **)enif_alloc_resource(g_res_type_surface, sizeof(cairo_surface_t *));
 
   memcpy(resource, &new_surface, sizeof(cairo_surface_t *));
 
@@ -279,7 +279,7 @@ NIF_DECL(nif_surface_create_similar_image)
   }
 
   cairo_surface_t *new_surface = cairo_surface_create_similar_image(surface, format, width, height);
-  cairo_surface_t **resource = enif_alloc_resource(g_res_type_surface, sizeof(cairo_surface_t *));
+  cairo_surface_t **resource = (cairo_surface_t **)enif_alloc_resource(g_res_type_surface, sizeof(cairo_surface_t *));
 
   memcpy(resource, &new_surface, sizeof(cairo_surface_t *));
 
@@ -311,7 +311,7 @@ NIF_DECL(nif_surface_create_for_rectangle)
   }
 
   cairo_surface_t *new_surface = cairo_surface_create_for_rectangle(surface, x, y, width, height);
-  cairo_surface_t **resource = enif_alloc_resource(g_res_type_surface, sizeof(cairo_surface_t *));
+  cairo_surface_t **resource = (cairo_surface_t **)enif_alloc_resource(g_res_type_surface, sizeof(cairo_surface_t *));
 
   memcpy(resource, &new_surface, sizeof(cairo_surface_t *));
 
@@ -491,7 +491,7 @@ NIF_DECL(nif_image_surface_create)
   }
 
   cairo_surface_t *surface = cairo_image_surface_create(format, width, height);
-  cairo_surface_t **resource = enif_alloc_resource(g_res_type_surface, sizeof(cairo_surface_t *));
+  cairo_surface_t **resource = (cairo_surface_t **)enif_alloc_resource(g_res_type_surface, sizeof(cairo_surface_t *));
 
   memcpy(resource, &surface, sizeof(cairo_surface_t *));
 
@@ -522,7 +522,7 @@ NIF_DECL(nif_image_surface_create_for_data)
   }
 
   cairo_surface_t *surface = cairo_image_surface_create_for_data(data.data, format, width, height, stride);
-  cairo_surface_t **resource = enif_alloc_resource(g_res_type_surface, sizeof(cairo_surface_t *));
+  cairo_surface_t **resource = (cairo_surface_t **)enif_alloc_resource(g_res_type_surface, sizeof(cairo_surface_t *));
 
   memcpy(resource, &surface, sizeof(cairo_surface_t *));
 
