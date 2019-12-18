@@ -11,6 +11,23 @@ defmodule Cairo.NativeFunctions do
   end
 
   #
+  # SURFACES
+  #
+
+  def surface_create_similar(surface, content, width, height), do: nif_err!
+  def surface_create_similar_image(surface, format, width, height), do: nif_err!
+  def surface_create_for_rectangle(surface, x, y, width, height), do: nif_err!
+  def surface_get_content(_surface), do: nif_err!()
+  def surface_mark_dirty(surface), do: nif_err!
+  def surface_mark_dirty_rectangle(surface, x, y, width, height), do: nif_err!
+  def surface_set_device_offset(surface, x_offset, y_offset), do: nif_err!
+  def surface_get_device_offset(surface), do: nif_err!
+  def surface_set_device_scale(surface, x_scale, y_scale), do: nif_err!
+  def surface_get_device_scale(surface), do: nif_err!
+  def surface_set_fallback_resolution(surface, x_ppi, y_ppi), do: nif_err!
+  def surface_get_fallback_resolution(surface), do: nif_err!
+
+  #
   # IMAGE SURFACES
   #
 
