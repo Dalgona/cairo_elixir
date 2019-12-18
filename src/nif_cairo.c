@@ -13,6 +13,10 @@
   ATOM_DECL(a1) \
   ATOM_DECL(rgb16_565) \
   ATOM_DECL(rgb30) \
+  \
+  ATOM_DECL(color) \
+  ATOM_DECL(alpha) \
+  ATOM_DECL(color_alpha)
 
 #define BEGIN_ATOM_MATCH(t) \
   char buf[256]; \
@@ -37,6 +41,8 @@ ATOMS
 void surface_dtor(ErlNifEnv *env, void *obj);
 int format_from_atom(ErlNifEnv *env, const ERL_NIF_TERM, cairo_format_t *);
 ERL_NIF_TERM format_to_atom(ErlNifEnv *env, const cairo_format_t);
+int content_from_atom(ErlNifEnv *env, const ERL_NIF_TERM, cairo_content_t *);
+ERL_NIF_TERM content_to_atom(ErlNifEnv *env, const cairo_content_t);
 
 int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 {
@@ -86,6 +92,24 @@ ERL_NIF_TERM format_to_atom(ErlNifEnv *env, const cairo_format_t format)
     CONVERT_ATOM(CAIRO_FORMAT_A1, a1)
     CONVERT_ATOM(CAIRO_FORMAT_RGB16_565, rgb16_565)
     CONVERT_ATOM(CAIRO_FORMAT_RGB30, rgb30)
+  END_ATOM_CONVERT
+}
+
+int content_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_content_t *content)
+{
+  BEGIN_ATOM_MATCH(term)
+    MATCH_ATOM(color, CAIRO_CONTENT_COLOR)
+    MATCH_ATOM(alpha, CAIRO_CONTENT_ALPHA)
+    MATCH_ATOM(color_alpha, CAIRO_CONTENT_COLOR_ALPHA)
+  END_ATOM_MATCH
+}
+
+ERL_NIF_TERM content_to_atom(ErlNifEnv *env, const cairo_content_t content)
+{
+  BEGIN_ATOM_CONVERT(content)
+    CONVERT_ATOM(CAIRO_CONTENT_COLOR, color)
+    CONVERT_ATOM(CAIRO_CONTENT_ALPHA, alpha)
+    CONVERT_ATOM(CAIRO_CONTENT_COLOR_ALPHA, color_alpha)
   END_ATOM_CONVERT
 }
 
