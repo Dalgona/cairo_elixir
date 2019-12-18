@@ -1,4 +1,5 @@
 #include <unordered_map>
+#include <string>
 #include <cstring>
 
 #include <cairo.h>
@@ -53,18 +54,6 @@
   ATOM_DECL(subsurface, CAIRO_SURFACE_TYPE_SUBSURFACE) \
   ATOM_DECL(cogl, CAIRO_SURFACE_TYPE_COGL)
 
-#define BEGIN_ATOM_MATCH(t) \
-  char buf[256]; \
-  size_t read_bytes = enif_get_atom(env, t, buf, 256, ERL_NIF_LATIN1); \
-  if (read_bytes == 0) { return 0; }
-
-#define MATCH_ATOM(a, val) else if (!strcmp(buf, #a)) { *content = val; return 1; }
-#define END_ATOM_MATCH else { return 0; }
-
-#define BEGIN_ATOM_CONVERT(x) switch (x) {
-#define CONVERT_ATOM(v, a) case v: return g_atom_##a;
-#define END_ATOM_CONVERT default: return enif_make_badarg(env); }
-
 #define ENSURE_ARGC(x) if (argc != x) { return enif_make_badarg(env); }
 
 static ErlNifResourceType *g_res_type_surface;
@@ -73,11 +62,21 @@ static ErlNifResourceType *g_res_type_surface;
 ATOMS
 #undef ATOM_DECL
 
+#define ATOM_DECL(a, e) { #a, e },
+template <typename T> std::unordered_map<std::string, T> g_atom_map;
+template <> std::unordered_map<std::string, cairo_format_t> g_atom_map<cairo_format_t> { FORMAT_ATOMS };
+template <> std::unordered_map<std::string, cairo_content_t> g_atom_map<cairo_content_t> { CONTENT_ATOMS };
+template <> std::unordered_map<std::string, cairo_surface_type_t> g_atom_map<cairo_surface_type_t> { SURFACE_TYPE_ATOMS };
+#undef ATOM_DECL
+
+#define ATOM_DECL(a, e) { e, &g_atom_##a },
+template <typename T> std::unordered_map<T, ERL_NIF_TERM *> g_enum_map;
+template <> std::unordered_map<cairo_format_t, ERL_NIF_TERM *> g_enum_map<cairo_format_t> { FORMAT_ATOMS };
+template <> std::unordered_map<cairo_content_t, ERL_NIF_TERM *> g_enum_map<cairo_content_t> { CONTENT_ATOMS };
+template <> std::unordered_map<cairo_surface_type_t, ERL_NIF_TERM *> g_enum_map<cairo_surface_type_t> { SURFACE_TYPE_ATOMS };
+#undef ATOM_DECL
+
 void surface_dtor(ErlNifEnv *env, void *obj);
-int format_from_atom(ErlNifEnv *env, const ERL_NIF_TERM, cairo_format_t *);
-ERL_NIF_TERM format_to_atom(ErlNifEnv *env, const cairo_format_t);
-int content_from_atom(ErlNifEnv *env, const ERL_NIF_TERM, cairo_content_t *);
-ERL_NIF_TERM content_to_atom(ErlNifEnv *env, const cairo_content_t);
 
 int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 {
@@ -104,59 +103,28 @@ void surface_dtor(ErlNifEnv *env, void *obj)
   cairo_surface_destroy(surface);
 }
 
-int format_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_format_t *content)
+template <typename T> int enum_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term, T *dest)
 {
-  BEGIN_ATOM_MATCH(term)
-#define ATOM_DECL(a, e) MATCH_ATOM(a, e)
-    FORMAT_ATOMS
-#undef ATOM_DECL
-  END_ATOM_MATCH
+  char buf[256];
+  size_t read_bytes = enif_get_atom(env, term, buf, 256, ERL_NIF_LATIN1);
+  std::string atom_name(buf);
+
+  if (read_bytes == 0) { return 0; }
+  if (g_atom_map<T>.find(atom_name) == g_atom_map<T>.end()) { return 0; }
+
+  *dest = g_atom_map<T>[atom_name];
+
+  return 1;
 }
 
-ERL_NIF_TERM format_to_atom(ErlNifEnv *env, const cairo_format_t format)
-{
-  BEGIN_ATOM_CONVERT(format)
-#define ATOM_DECL(a, e) CONVERT_ATOM(e, a)
-    FORMAT_ATOMS
-#undef ATOM_DECL
-  END_ATOM_CONVERT
-}
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_format_t *);
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_content_t *);
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_surface_type_t *);
 
-int content_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_content_t *content)
-{
-  BEGIN_ATOM_MATCH(term)
-#define ATOM_DECL(a, e) MATCH_ATOM(a, e)
-    CONTENT_ATOMS
-#undef ATOM_DECL
-  END_ATOM_MATCH
-}
-
-ERL_NIF_TERM content_to_atom(ErlNifEnv *env, const cairo_content_t content)
-{
-  BEGIN_ATOM_CONVERT(content)
-#define ATOM_DECL(a, e) CONVERT_ATOM(e, a)
-    CONTENT_ATOMS
-#undef ATOM_DECL
-  END_ATOM_CONVERT
-}
-
-int surface_type_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_surface_type_t *content)
-{
-  BEGIN_ATOM_MATCH(term)
-#define ATOM_DECL(a, e) MATCH_ATOM(a, e)
-    SURFACE_TYPE_ATOMS
-#undef ATOM_DECL
-  END_ATOM_MATCH
-}
-
-int surface_type_to_atom(ErlNifEnv *env, const cairo_surface_type_t term, cairo_surface_type_t *content)
-{
-  BEGIN_ATOM_CONVERT(term)
-#define ATOM_DECL(a, e) CONVERT_ATOM(e, a)
-    SURFACE_TYPE_ATOMS
-#undef ATOM_DECL
-  END_ATOM_CONVERT
-}
+template <typename T> ERL_NIF_TERM enum_to_atom(ErlNifEnv *env, const T value) { return *g_enum_map<T>[value]; }
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_format_t);
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_content_t);
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_surface_type_t);
 
 int get_number(ErlNifEnv *env, const ERL_NIF_TERM term, double *dest)
 {
@@ -198,7 +166,7 @@ NIF_DECL(nif_surface_create_similar)
   int width;
   int height;
 
-  if (!content_from_atom(env, argv[1], &content)
+  if (!enum_from_atom<cairo_content_t>(env, argv[1], &content)
       || !enif_get_int(env, argv[2], &width)
       || !enif_get_int(env, argv[3], &height))
   {
@@ -226,7 +194,7 @@ NIF_DECL(nif_surface_create_similar_image)
   int width;
   int height;
 
-  if (!format_from_atom(env, argv[1], &format)
+  if (!enum_from_atom<cairo_format_t>(env, argv[1], &format)
       || !enif_get_int(env, argv[2], &width)
       || !enif_get_int(env, argv[3], &height))
   {
@@ -256,7 +224,7 @@ NIF_DECL(nif_surface_create_for_rectangle)
   double width;
   double height;
 
-  if (!format_from_atom(env, argv[1], &format)
+  if (!enum_from_atom<cairo_format_t>(env, argv[1], &format)
       || !get_number(env, argv[2], &x)
       || !get_number(env, argv[3], &y)
       || !get_number(env, argv[4], &width)
@@ -282,7 +250,7 @@ NIF_DECL(nif_surface_get_content)
   ENSURE_ARGC(1)
   REQUIRE_SURFACE(surface, 0)
 
-  return content_to_atom(env, cairo_surface_get_content(surface));
+  return enum_to_atom<cairo_content_t>(env, cairo_surface_get_content(surface));
 }
 
 NIF_DECL(nif_surface_mark_dirty)
@@ -422,7 +390,7 @@ NIF_DECL(nif_format_stride_for_width)
 
   ENSURE_ARGC(2)
 
-  if (!format_from_atom(env, argv[0], &format) || !enif_get_int(env, argv[1], &width))
+  if (!enum_from_atom<cairo_format_t>(env, argv[0], &format) || !enif_get_int(env, argv[1], &width))
   {
     return enif_make_badarg(env);
   }
@@ -438,7 +406,7 @@ NIF_DECL(nif_image_surface_create)
   int width;
   int height;
 
-  if (!format_from_atom(env, argv[0], &format)
+  if (!enum_from_atom<cairo_format_t>(env, argv[0], &format)
       || !enif_get_int(env, argv[1], &width)
       || !enif_get_int(env, argv[2], &height))
   {
@@ -468,7 +436,7 @@ NIF_DECL(nif_image_surface_create_for_data)
   int stride;
 
   if (!enif_inspect_binary(env, argv[0], &data)
-      || !format_from_atom(env, argv[1], &format)
+      || !enum_from_atom<cairo_format_t>(env, argv[1], &format)
       || !enif_get_int(env, argv[2], &width)
       || !enif_get_int(env, argv[3], &height)
       || !enif_get_int(env, argv[4], &stride))
@@ -510,7 +478,7 @@ NIF_DECL(nif_image_surface_get_format)
   ENSURE_ARGC(1)
   REQUIRE_SURFACE(surface, 0)
 
-  return format_to_atom(env, cairo_image_surface_get_format(surface));
+  return enum_to_atom<cairo_format_t>(env, cairo_image_surface_get_format(surface));
 }
 
 NIF_DECL(nif_image_surface_get_width)
