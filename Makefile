@@ -6,5 +6,8 @@ CFLAGS += -I$(ERL_DIR)
 CFLAGS += $(shell pkg-config --cflags --libs pangocairo)
 CFLAGS += -Wno-unused-function
 
-priv/nif_lib/nif_cairo_surface.so: src/nif_cairo_surface.c
-	$(CC) $(CFLAGS) -shared $(LDFLAGS) -o $@ src/nif_cairo_surface.c
+priv/nif_lib/nif_cairo.so: src/nif_cairo.c
+	$(CC) $(CFLAGS) -shared $(LDFLAGS) -o $@ src/nif_cairo.c
+
+clean:
+	rm -rf priv/nif_lib/*
