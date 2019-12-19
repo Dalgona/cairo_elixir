@@ -21,26 +21,6 @@ template <typename T> void resource_dtor(ErlNifEnv *env, void *obj) { T *resourc
 template void resource_dtor<cairo_t>(ErlNifEnv *env, void *obj);
 template void resource_dtor<cairo_surface_t>(ErlNifEnv *env, void *obj);
 
-#define ATOM_DECL(a, _) static ERL_NIF_TERM g_atom_##a;
-ATOMS
-#undef ATOM_DECL
-
-#define ATOM_DECL(a, e) { #a, e },
-template <typename T> std::unordered_map<std::string, T> g_atom_map;
-template <> std::unordered_map<std::string, cairo_format_t> g_atom_map<cairo_format_t> { FORMAT_ATOMS };
-template <> std::unordered_map<std::string, cairo_content_t> g_atom_map<cairo_content_t> { CONTENT_ATOMS };
-template <> std::unordered_map<std::string, cairo_surface_type_t> g_atom_map<cairo_surface_type_t> { SURFACE_TYPE_ATOMS };
-template <> std::unordered_map<std::string, cairo_status_t> g_atom_map<cairo_status_t> { STATUS_ATOMS };
-#undef ATOM_DECL
-
-#define ATOM_DECL(a, e) { e, &g_atom_##a },
-template <typename T> std::unordered_map<T, ERL_NIF_TERM *> g_enum_map;
-template <> std::unordered_map<cairo_format_t, ERL_NIF_TERM *> g_enum_map<cairo_format_t> { FORMAT_ATOMS };
-template <> std::unordered_map<cairo_content_t, ERL_NIF_TERM *> g_enum_map<cairo_content_t> { CONTENT_ATOMS };
-template <> std::unordered_map<cairo_surface_type_t, ERL_NIF_TERM *> g_enum_map<cairo_surface_type_t> { SURFACE_TYPE_ATOMS };
-template <> std::unordered_map<cairo_status_t, ERL_NIF_TERM *> g_enum_map<cairo_status_t> { STATUS_ATOMS };
-#undef ATOM_DECL
-
 #define REQUIRE_OBJECT(T, TRes, var, argi) \
   T **_ppobj = NULL; \
   if (!enif_get_resource(env, argv[argi], g_res_type_##TRes, (void **)&_ppobj)) { \
@@ -76,29 +56,6 @@ int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 
   return 0;
 }
-
-template <typename T> int enum_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term, T *dest)
-{
-  char buf[256];
-  size_t read_bytes = enif_get_atom(env, term, buf, 256, ERL_NIF_LATIN1);
-  std::string atom_name(buf);
-
-  if (read_bytes == 0) { return 0; }
-  if (g_atom_map<T>.find(atom_name) == g_atom_map<T>.end()) { return 0; }
-
-  *dest = g_atom_map<T>[atom_name];
-
-  return 1;
-}
-
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_format_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_content_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_surface_type_t *);
-
-template <typename T> ERL_NIF_TERM enum_to_atom(ErlNifEnv *env, const T value) { return *g_enum_map<T>[value]; }
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_format_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_content_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_surface_type_t);
 
 int get_number(ErlNifEnv *env, const ERL_NIF_TERM term, double *dest)
 {
