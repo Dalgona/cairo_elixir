@@ -6,9 +6,7 @@
 #include <erl_nif.h>
 
 #include "atoms.h"
-
-#define NIF_DECL(name) ERL_NIF_TERM name(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[])
-#define ENSURE_ARGC(x) if (argc != x) { return enif_make_badarg(env); }
+#include "macros.h"
 
 static ErlNifResourceType *g_res_type_cairo;
 static ErlNifResourceType *g_res_type_surface;
@@ -20,13 +18,6 @@ template <> struct _destroy<cairo_surface_t> { static void call(cairo_surface_t 
 template <typename T> void resource_dtor(ErlNifEnv *env, void *obj) { T *resource = (T *)obj; _destroy<T>::call(resource); }
 template void resource_dtor<cairo_t>(ErlNifEnv *env, void *obj);
 template void resource_dtor<cairo_surface_t>(ErlNifEnv *env, void *obj);
-
-#define REQUIRE_OBJECT(T, TRes, var, argi) \
-  T **_ppobj = NULL; \
-  if (!enif_get_resource(env, argv[argi], g_res_type_##TRes, (void **)&_ppobj)) { \
-    return enif_make_badarg(env); \
-  } \
-  T *var = *_ppobj;
 
 int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 {
