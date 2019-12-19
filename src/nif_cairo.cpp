@@ -32,6 +32,13 @@ template <> std::unordered_map<cairo_surface_type_t, ERL_NIF_TERM *> g_enum_map<
 template <> std::unordered_map<cairo_status_t, ERL_NIF_TERM *> g_enum_map<cairo_status_t> { STATUS_ATOMS };
 #undef ATOM_DECL
 
+#define REQUIRE_OBJECT(T, TRes, var, argi) \
+  T **_ppobj = NULL; \
+  if (!enif_get_resource(env, argv[argi], g_res_type_##TRes, (void **)&_ppobj)) { \
+    return enif_make_badarg(env); \
+  } \
+  T *var = *_ppobj;
+
 void surface_dtor(ErlNifEnv *env, void *obj);
 
 int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
@@ -106,17 +113,10 @@ int get_number(ErlNifEnv *env, const ERL_NIF_TERM term, double *dest)
 /* SURFACES */
 /************/
 
-#define REQUIRE_SURFACE(var, argi) \
-  cairo_surface_t **_ppsurface = NULL; \
-  if (!enif_get_resource(env, argv[argi], g_res_type_surface, (void **)&_ppsurface)) { \
-    return enif_make_badarg(env); \
-  } \
-  cairo_surface_t *var = *_ppsurface;
-
 NIF_DECL(nif_surface_create_similar)
 {
   ENSURE_ARGC(4)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   cairo_content_t content;
   int width;
@@ -144,7 +144,7 @@ NIF_DECL(nif_surface_create_similar)
 NIF_DECL(nif_surface_create_similar_image)
 {
   ENSURE_ARGC(4)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   cairo_format_t format;
   int width;
@@ -172,7 +172,7 @@ NIF_DECL(nif_surface_create_similar_image)
 NIF_DECL(nif_surface_create_for_rectangle)
 {
   ENSURE_ARGC(5)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   cairo_format_t format;
   double x;
@@ -204,7 +204,7 @@ NIF_DECL(nif_surface_create_for_rectangle)
 NIF_DECL(nif_surface_get_content)
 {
   ENSURE_ARGC(1)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   return enum_to_atom<cairo_content_t>(env, cairo_surface_get_content(surface));
 }
@@ -212,7 +212,7 @@ NIF_DECL(nif_surface_get_content)
 NIF_DECL(nif_surface_mark_dirty)
 {
   ENSURE_ARGC(1)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   cairo_surface_mark_dirty(surface);
 
@@ -222,7 +222,7 @@ NIF_DECL(nif_surface_mark_dirty)
 NIF_DECL(nif_surface_mark_dirty_rectangle)
 {
   ENSURE_ARGC(5)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   int x;
   int y;
@@ -245,7 +245,7 @@ NIF_DECL(nif_surface_mark_dirty_rectangle)
 NIF_DECL(nif_surface_set_device_offset)
 {
   ENSURE_ARGC(3)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   double x_offset;
   double y_offset;
@@ -263,7 +263,7 @@ NIF_DECL(nif_surface_set_device_offset)
 NIF_DECL(nif_surface_get_device_offset)
 {
   ENSURE_ARGC(1)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   double x_offset;
   double y_offset;
@@ -276,7 +276,7 @@ NIF_DECL(nif_surface_get_device_offset)
 NIF_DECL(nif_surface_set_device_scale)
 {
   ENSURE_ARGC(3)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   double x_scale;
   double y_scale;
@@ -294,7 +294,7 @@ NIF_DECL(nif_surface_set_device_scale)
 NIF_DECL(nif_surface_get_device_scale)
 {
   ENSURE_ARGC(1)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   double x_scale;
   double y_scale;
@@ -307,7 +307,7 @@ NIF_DECL(nif_surface_get_device_scale)
 NIF_DECL(nif_surface_set_fallback_resolution)
 {
   ENSURE_ARGC(3)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   double x_ppi;
   double y_ppi;
@@ -325,7 +325,7 @@ NIF_DECL(nif_surface_set_fallback_resolution)
 NIF_DECL(nif_surface_get_fallback_resolution)
 {
   ENSURE_ARGC(1)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   double x_ppi;
   double y_ppi;
@@ -415,7 +415,7 @@ NIF_DECL(nif_image_surface_create_for_data)
 NIF_DECL(nif_image_surface_get_data)
 {
   ENSURE_ARGC(1)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   ErlNifBinary binary;
   unsigned char *data = cairo_image_surface_get_data(surface);
@@ -432,7 +432,7 @@ NIF_DECL(nif_image_surface_get_data)
 NIF_DECL(nif_image_surface_get_format)
 {
   ENSURE_ARGC(1)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   return enum_to_atom<cairo_format_t>(env, cairo_image_surface_get_format(surface));
 }
@@ -440,7 +440,7 @@ NIF_DECL(nif_image_surface_get_format)
 NIF_DECL(nif_image_surface_get_width)
 {
   ENSURE_ARGC(1)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   return enif_make_int(env, cairo_image_surface_get_width(surface));
 }
@@ -448,7 +448,7 @@ NIF_DECL(nif_image_surface_get_width)
 NIF_DECL(nif_image_surface_get_height)
 {
   ENSURE_ARGC(1)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   return enif_make_int(env, cairo_image_surface_get_height(surface));
 }
@@ -456,7 +456,7 @@ NIF_DECL(nif_image_surface_get_height)
 NIF_DECL(nif_image_surface_get_stride)
 {
   ENSURE_ARGC(1)
-  REQUIRE_SURFACE(surface, 0)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
   return enif_make_int(env, cairo_image_surface_get_stride(surface));
 }
