@@ -10,7 +10,16 @@
 #define NIF_DECL(name) ERL_NIF_TERM name(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[])
 #define ENSURE_ARGC(x) if (argc != x) { return enif_make_badarg(env); }
 
+static ErlNifResourceType *g_res_type_cairo;
 static ErlNifResourceType *g_res_type_surface;
+
+template <typename T> struct _destroy;
+template <> struct _destroy<cairo_t> { static void call(cairo_t *obj) { cairo_destroy(obj); } };
+template <> struct _destroy<cairo_surface_t> { static void call(cairo_surface_t *obj) { cairo_surface_destroy(obj); } };
+
+template <typename T> void resource_dtor(ErlNifEnv *env, void *obj) { T *resource = (T *)obj; _destroy<T>::call(resource); }
+template void resource_dtor<cairo_t>(ErlNifEnv *env, void *obj);
+template void resource_dtor<cairo_surface_t>(ErlNifEnv *env, void *obj);
 
 #define ATOM_DECL(a, _) static ERL_NIF_TERM g_atom_##a;
 ATOMS
@@ -39,17 +48,26 @@ template <> std::unordered_map<cairo_status_t, ERL_NIF_TERM *> g_enum_map<cairo_
   } \
   T *var = *_ppobj;
 
-void surface_dtor(ErlNifEnv *env, void *obj);
-
 int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 {
-  g_res_type_surface =
-    enif_open_resource_type(env,
-        NULL,
-        "cairo_surface_t",
-        surface_dtor,
+  g_res_type_cairo =
+    enif_open_resource_type(
+        env,
+        nullptr,
+        "cairo_t",
+        resource_dtor<cairo_t>,
         ERL_NIF_RT_CREATE,
-        NULL
+        nullptr
+    );
+
+  g_res_type_surface =
+    enif_open_resource_type(
+        env,
+        nullptr,
+        "cairo_surface_t",
+        resource_dtor<cairo_surface_t>,
+        ERL_NIF_RT_CREATE,
+        nullptr
     );
 
 #define ATOM_DECL(a, _) g_atom_##a = enif_make_atom(env, #a);
@@ -57,13 +75,6 @@ int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 #undef ATOM_DECL
 
   return 0;
-}
-
-void surface_dtor(ErlNifEnv *env, void *obj)
-{
-  cairo_surface_t *surface = (cairo_surface_t *)obj;
-
-  cairo_surface_destroy(surface);
 }
 
 template <typename T> int enum_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term, T *dest)
