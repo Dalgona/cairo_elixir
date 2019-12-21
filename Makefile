@@ -6,7 +6,7 @@ CXXFLAGS += -I$(ERL_DIR)
 CXXFLAGS += $(shell pkg-config --cflags --libs pangocairo)
 CXXFLAGS += -Wno-unused-function
 
-FILES = src/atoms.cpp src/resource_types.cpp src/utils.cpp src/nif_surfaces.cpp src/nif_image_surfaces.cpp src/nif_cairo.cpp
+FILES = src/atoms.cpp src/resource_types.cpp src/utils.cpp src/nif_surfaces.cpp src/nif_image_surfaces.cpp src/nif_main.cpp
 
 priv/nif_lib/nif_cairo.so: $(FILES)
 	$(CXX) $(CXXFLAGS) -shared $(LDFLAGS) -o $@ $(FILES)
