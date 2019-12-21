@@ -6,8 +6,10 @@ CXXFLAGS += -I$(ERL_DIR)
 CXXFLAGS += $(shell pkg-config --cflags --libs pangocairo)
 CXXFLAGS += -Wno-unused-function
 
-priv/nif_lib/nif_cairo.so: src/nif_cairo.cpp
-	$(CXX) $(CXXFLAGS) -shared $(LDFLAGS) -o $@ src/nif_cairo.cpp
+FILES = src/atoms.cpp src/nif_cairo.cpp
+
+priv/nif_lib/nif_cairo.so: $(FILES)
+	$(CXX) $(CXXFLAGS) -shared $(LDFLAGS) -o $@ $(FILES)
 
 clean:
 	rm -rf priv/nif_lib/*
