@@ -40,6 +40,10 @@ ErlNifFunc nif_funcs[] = {
   NIF(surface_create_similar, 4),
   NIF(surface_create_similar_image, 4),
   NIF(surface_create_for_rectangle, 5),
+  NIF(surface_status, 1),
+  NIF(surface_finish, 1),
+  NIF(surface_flush, 1),
+  // NIF(surface_get_font_options, 1),
   NIF(surface_get_content, 1),
   NIF(surface_mark_dirty, 1),
   NIF(surface_mark_dirty_rectangle, 5),
@@ -49,6 +53,7 @@ ErlNifFunc nif_funcs[] = {
   NIF(surface_get_device_scale, 1),
   NIF(surface_set_fallback_resolution, 3),
   NIF(surface_get_fallback_resolution, 1),
+  NIF(surface_get_type, 1),
 
   NIF(format_stride_for_width, 2),
   NIF(image_surface_create, 3),

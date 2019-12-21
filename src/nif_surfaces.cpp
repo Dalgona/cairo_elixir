@@ -90,6 +90,36 @@ NIF_DECL(nif_surface_create_for_rectangle)
   return term;
 }
 
+NIF_DECL(nif_surface_status)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
+
+  return enum_to_atom<cairo_status_t>(env, cairo_surface_status(surface));
+}
+
+NIF_DECL(nif_surface_finish)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
+
+  cairo_surface_finish(surface);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_surface_flush)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
+
+  cairo_surface_flush(surface);
+
+  return g_atom_ok;
+}
+
+// NIF_DECL(nif_surface_get_font_options);
+
 NIF_DECL(nif_surface_get_content)
 {
   ENSURE_ARGC(1)
@@ -222,4 +252,12 @@ NIF_DECL(nif_surface_get_fallback_resolution)
   cairo_surface_get_fallback_resolution(surface, &x_ppi, &y_ppi);
 
   return enif_make_tuple2(env, enif_make_double(env, x_ppi), enif_make_double(env, y_ppi));
+}
+
+NIF_DECL(nif_surface_get_type)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
+
+  return enum_to_atom<cairo_surface_type_t>(env, cairo_surface_get_type(surface));
 }
