@@ -1,10 +1,15 @@
 #include "nif_common.h"
 
-NIF_DECL(nif_format_stride_for_width);
-NIF_DECL(nif_image_surface_create);
-NIF_DECL(nif_image_surface_create_for_data);
-NIF_DECL(nif_image_surface_get_data);
-NIF_DECL(nif_image_surface_get_format);
-NIF_DECL(nif_image_surface_get_width);
-NIF_DECL(nif_image_surface_get_height);
-NIF_DECL(nif_image_surface_get_stride);
+#define IMAGE_SURFACE_NIFS \
+  USE_NIF(format_stride_for_width, 2) \
+  USE_NIF(image_surface_create, 3) \
+  USE_NIF(image_surface_create_for_data, 5) \
+  USE_NIF(image_surface_get_data, 1) \
+  USE_NIF(image_surface_get_format, 1) \
+  USE_NIF(image_surface_get_width, 1) \
+  USE_NIF(image_surface_get_height, 1) \
+  USE_NIF(image_surface_get_stride, 1)
+
+#define USE_NIF(name, arity) NIF_DECL(nif_##name);
+IMAGE_SURFACE_NIFS
+#undef USE_NIF
