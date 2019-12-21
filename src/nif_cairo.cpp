@@ -1,13 +1,6 @@
-#include <unordered_map>
-#include <string>
 #include <cstring>
 
-#include <cairo.h>
-#include <erl_nif.h>
-
-#include "atoms.h"
-#include "macros.h"
-#include "resource_types.h"
+#include "nif_common.h"
 
 #include "nif_image_surfaces.h"
 

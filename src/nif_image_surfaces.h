@@ -1,9 +1,4 @@
-#include <cairo.h>
-#include <erl_nif.h>
-
-#include "atoms.h"
-#include "macros.h"
-#include "resource_types.h"
+#include "nif_common.h"
 
 NIF_DECL(nif_format_stride_for_width);
 NIF_DECL(nif_image_surface_create);
