@@ -7,17 +7,7 @@
 
 #include "atoms.h"
 #include "macros.h"
-
-static ErlNifResourceType *g_res_type_cairo;
-static ErlNifResourceType *g_res_type_surface;
-
-template <typename T> struct _destroy;
-template <> struct _destroy<cairo_t> { static void call(cairo_t *obj) { cairo_destroy(obj); } };
-template <> struct _destroy<cairo_surface_t> { static void call(cairo_surface_t *obj) { cairo_surface_destroy(obj); } };
-
-template <typename T> void resource_dtor(ErlNifEnv *env, void *obj) { T *resource = (T *)obj; _destroy<T>::call(resource); }
-template void resource_dtor<cairo_t>(ErlNifEnv *env, void *obj);
-template void resource_dtor<cairo_surface_t>(ErlNifEnv *env, void *obj);
+#include "resource_types.h"
 
 int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 {
