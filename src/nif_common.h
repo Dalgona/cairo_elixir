@@ -8,5 +8,6 @@
 #include "atoms.h"
 #include "macros.h"
 #include "resource_types.h"
+#include "utils.h"
 
 #endif
