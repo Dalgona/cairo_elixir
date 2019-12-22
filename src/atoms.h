@@ -14,7 +14,10 @@
   CONTENT_ATOMS \
   SURFACE_TYPE_ATOMS \
   STATUS_ATOMS \
-  ANTIALIAS_ATOMS
+  ANTIALIAS_ATOMS \
+  FILL_RULE_ATOMS \
+  LINE_CAP_ATOMS \
+  LINE_JOIN_ATOMS
 
 #define FORMAT_ATOMS \
   ATOM_DECL(invalid, CAIRO_FORMAT_INVALID) \
@@ -112,6 +115,20 @@
   ATOM_DECL(good, CAIRO_ANTIALIAS_GOOD) \
   ATOM_DECL(best, CAIRO_ANTIALIAS_BEST)
 
+#define FILL_RULE_ATOMS \
+  ATOM_DECL(winding, CAIRO_FILL_RULE_WINDING) \
+  ATOM_DECL(even_odd, CAIRO_FILL_RULE_EVEN_ODD)
+
+#define LINE_CAP_ATOMS \
+  ATOM_DECL(butt_cap, CAIRO_LINE_CAP_BUTT) \
+  ATOM_DECL(round_cap, CAIRO_LINE_CAP_ROUND) \
+  ATOM_DECL(square_cap, CAIRO_LINE_CAP_SQUARE)
+
+#define LINE_JOIN_ATOMS \
+  ATOM_DECL(miter_join, CAIRO_LINE_JOIN_MITER) \
+  ATOM_DECL(round_join, CAIRO_LINE_JOIN_ROUND) \
+  ATOM_DECL(bevel_join, CAIRO_LINE_JOIN_BEVEL)
+
 #ifndef CAIRO_ELIXIR_NIF_ATOMS_IMPL
 #define EXTERN extern
 #else
@@ -131,12 +148,18 @@ extern template std::unordered_map<std::string, cairo_content_t> g_atom_map<cair
 extern template std::unordered_map<std::string, cairo_surface_type_t> g_atom_map<cairo_surface_type_t>;
 extern template std::unordered_map<std::string, cairo_status_t> g_atom_map<cairo_status_t>;
 extern template std::unordered_map<std::string, cairo_antialias_t> g_atom_map<cairo_antialias_t>;
+extern template std::unordered_map<std::string, cairo_fill_rule_t> g_atom_map<cairo_fill_rule_t>;
+extern template std::unordered_map<std::string, cairo_line_cap_t> g_atom_map<cairo_line_cap_t>;
+extern template std::unordered_map<std::string, cairo_line_join_t> g_atom_map<cairo_line_join_t>;
 
 extern template std::unordered_map<cairo_format_t, ERL_NIF_TERM *> g_enum_map<cairo_format_t>;
 extern template std::unordered_map<cairo_content_t, ERL_NIF_TERM *> g_enum_map<cairo_content_t>;
 extern template std::unordered_map<cairo_surface_type_t, ERL_NIF_TERM *> g_enum_map<cairo_surface_type_t>;
 extern template std::unordered_map<cairo_status_t, ERL_NIF_TERM *> g_enum_map<cairo_status_t>;
 extern template std::unordered_map<cairo_antialias_t, ERL_NIF_TERM *> g_enum_map<cairo_antialias_t>;
+extern template std::unordered_map<cairo_fill_rule_t, ERL_NIF_TERM *> g_enum_map<cairo_fill_rule_t>;
+extern template std::unordered_map<cairo_line_cap_t, ERL_NIF_TERM *> g_enum_map<cairo_line_cap_t>;
+extern template std::unordered_map<cairo_line_join_t, ERL_NIF_TERM *> g_enum_map<cairo_line_join_t>;
 #endif
 
 template <typename T> int enum_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term, T *dest)
@@ -158,6 +181,9 @@ EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_conten
 EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_surface_type_t *);
 EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_status_t *);
 EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_antialias_t *);
+EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_fill_rule_t *);
+EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_cap_t *);
+EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_join_t *);
 
 template <typename T> ERL_NIF_TERM enum_to_atom(ErlNifEnv *env, const T value) { return *g_enum_map<T>[value]; }
 EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_format_t);
@@ -165,6 +191,9 @@ EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_content_t);
 EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_surface_type_t);
 EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_status_t);
 EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_antialias_t);
+EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_fill_rule_t);
+EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_cap_t);
+EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_join_t);
 
 #undef EXTERN
 
