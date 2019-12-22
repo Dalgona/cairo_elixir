@@ -10,6 +10,7 @@
 
 #define ATOMS \
   ATOM_DECL(ok,) \
+  ATOM_DECL(error,) \
   ATOM_DECL(true,) \
   ATOM_DECL(false,) \
   FORMAT_ATOMS \

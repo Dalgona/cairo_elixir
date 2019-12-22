@@ -6,6 +6,7 @@
 #include "nif_paths.h"
 #include "nif_surfaces.h"
 #include "nif_image_surfaces.h"
+#include "nif_png_support.h"
 
 int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 {
@@ -43,6 +44,7 @@ ErlNifFunc nif_funcs[] = {
   PATH_NIFS
   SURFACE_NIFS
   IMAGE_SURFACE_NIFS
+  PNG_SUPPORT_NIFS
 #undef USE_NIF
 };
 

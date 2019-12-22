@@ -143,4 +143,11 @@ defmodule Cairo.NativeFunctions do
   defnif image_surface_get_width(surface)
   defnif image_surface_get_height(surface)
   defnif image_surface_get_stride(surface)
+
+  #
+  # PNG SUPPORT
+  #
+
+  # defnif image_surface_create_from_png(data)
+  defnif surface_write_to_png(surface)
 end
