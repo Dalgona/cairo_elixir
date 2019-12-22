@@ -16,24 +16,24 @@
   /* USE_NIF(set_source, 2) */ \
   /* USE_NIF(set_source_surface, 4) */ \
   /* USE_NIF(get_source, 1) */ \
-  /* USE_NIF(set_antialias, 2) */ \
-  /* USE_NIF(get_antialias, 1) */ \
+  USE_NIF(set_antialias, 2) \
+  USE_NIF(get_antialias, 1) \
   USE_NIF(set_dash, 3) \
   USE_NIF(get_dash, 1) \
-  /* USE_NIF(set_fill_rule, 2) */ \
-  /* USE_NIF(get_fill_rule, 1) */ \
-  /* USE_NIF(set_line_cap, 2) */ \
-  /* USE_NIF(get_line_cap, 1) */ \
-  /* USE_NIF(set_line_join, 2) */ \
-  /* USE_NIF(get_line_join, 1) */ \
-  /* USE_NIF(set_line_width, 2) */ \
-  /* USE_NIF(get_line_width, 1) */ \
-  /* USE_NIF(set_miter_limit, 2) */ \
-  /* USE_NIF(get_miter_limit, 1) */ \
+  USE_NIF(set_fill_rule, 2) \
+  USE_NIF(get_fill_rule, 1) \
+  USE_NIF(set_line_cap, 2) \
+  USE_NIF(get_line_cap, 1) \
+  USE_NIF(set_line_join, 2) \
+  USE_NIF(get_line_join, 1) \
+  USE_NIF(set_line_width, 2) \
+  USE_NIF(get_line_width, 1) \
+  USE_NIF(set_miter_limit, 2) \
+  USE_NIF(get_miter_limit, 1) \
   /* USE_NIF(set_operator, 2) */ \
   /* USE_NIF(get_operator, 1) */ \
-  /* USE_NIF(set_tolerance, 2) */ \
-  /* USE_NIF(get_tolerance, 1) */ \
+  USE_NIF(set_tolerance, 2) \
+  USE_NIF(get_tolerance, 1) \
   /* USE_NIF(clip, 1) */ \
   /* USE_NIF(clip_preserve, 1) */ \
   /* USE_NIF(clip_extents, 1) */ \
