@@ -13,7 +13,8 @@
   FORMAT_ATOMS \
   CONTENT_ATOMS \
   SURFACE_TYPE_ATOMS \
-  STATUS_ATOMS
+  STATUS_ATOMS \
+  ANTIALIAS_ATOMS
 
 #define FORMAT_ATOMS \
   ATOM_DECL(invalid, CAIRO_FORMAT_INVALID) \
@@ -102,6 +103,15 @@
   ATOM_DECL(tag_error, CAIRO_STATUS_TAG_ERROR) \
   ATOM_DECL(last_status, CAIRO_STATUS_LAST_STATUS)
 
+#define ANTIALIAS_ATOMS \
+  ATOM_DECL(default, CAIRO_ANTIALIAS_DEFAULT) \
+  ATOM_DECL(none, CAIRO_ANTIALIAS_NONE) \
+  ATOM_DECL(gray, CAIRO_ANTIALIAS_GRAY) \
+  ATOM_DECL(subpixel, CAIRO_ANTIALIAS_SUBPIXEL) \
+  ATOM_DECL(fast, CAIRO_ANTIALIAS_FAST) \
+  ATOM_DECL(good, CAIRO_ANTIALIAS_GOOD) \
+  ATOM_DECL(best, CAIRO_ANTIALIAS_BEST)
+
 #ifndef CAIRO_ELIXIR_NIF_ATOMS_IMPL
 #define EXTERN extern
 #else
@@ -120,11 +130,13 @@ extern template std::unordered_map<std::string, cairo_format_t> g_atom_map<cairo
 extern template std::unordered_map<std::string, cairo_content_t> g_atom_map<cairo_content_t>;
 extern template std::unordered_map<std::string, cairo_surface_type_t> g_atom_map<cairo_surface_type_t>;
 extern template std::unordered_map<std::string, cairo_status_t> g_atom_map<cairo_status_t>;
+extern template std::unordered_map<std::string, cairo_antialias_t> g_atom_map<cairo_antialias_t>;
 
 extern template std::unordered_map<cairo_format_t, ERL_NIF_TERM *> g_enum_map<cairo_format_t>;
 extern template std::unordered_map<cairo_content_t, ERL_NIF_TERM *> g_enum_map<cairo_content_t>;
 extern template std::unordered_map<cairo_surface_type_t, ERL_NIF_TERM *> g_enum_map<cairo_surface_type_t>;
 extern template std::unordered_map<cairo_status_t, ERL_NIF_TERM *> g_enum_map<cairo_status_t>;
+extern template std::unordered_map<cairo_antialias_t, ERL_NIF_TERM *> g_enum_map<cairo_antialias_t>;
 #endif
 
 template <typename T> int enum_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term, T *dest)
@@ -144,11 +156,15 @@ template <typename T> int enum_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term
 EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_format_t *);
 EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_content_t *);
 EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_surface_type_t *);
+EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_status_t *);
+EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_antialias_t *);
 
 template <typename T> ERL_NIF_TERM enum_to_atom(ErlNifEnv *env, const T value) { return *g_enum_map<T>[value]; }
 EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_format_t);
 EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_content_t);
 EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_surface_type_t);
+EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_status_t);
+EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_antialias_t);
 
 #undef EXTERN
 
