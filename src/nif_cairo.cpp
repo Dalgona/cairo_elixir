@@ -324,3 +324,211 @@ NIF_DECL(nif_get_tolerance)
 
   return enif_make_double(env, cairo_get_tolerance(cr));
 }
+
+NIF_DECL(nif_clip)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  cairo_clip(cr);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_clip_preserve)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  cairo_clip_preserve(cr);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_clip_extents)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  double x1;
+  double y1;
+  double x2;
+  double y2;
+
+  cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
+
+  return enif_make_tuple4(
+      env,
+      enif_make_double(env, x1),
+      enif_make_double(env, y1),
+      enif_make_double(env, x2),
+      enif_make_double(env, y2)
+  );
+}
+
+NIF_DECL(nif_in_clip)
+{
+  ENSURE_ARGC(3)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  double x;
+  double y;
+
+  if (!get_number(env, argv[1], &x) || !get_number(env, argv[2], &y))
+  {
+    return enif_make_badarg(env);
+  }
+
+  return cairo_in_clip(cr, x, y) ? g_atom_true : g_atom_false;
+}
+
+NIF_DECL(nif_reset_clip)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  cairo_reset_clip(cr);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_fill)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  cairo_fill(cr);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_fill_preserve)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  cairo_fill_preserve(cr);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_fill_extents)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  double x1;
+  double y1;
+  double x2;
+  double y2;
+
+  cairo_fill_extents(cr, &x1, &y1, &x2, &y2);
+
+  return enif_make_tuple4(
+      env,
+      enif_make_double(env, x1),
+      enif_make_double(env, y1),
+      enif_make_double(env, x2),
+      enif_make_double(env, y2)
+  );
+}
+
+NIF_DECL(nif_in_fill)
+{
+  ENSURE_ARGC(3)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  double x;
+  double y;
+
+  if (!get_number(env, argv[1], &x) || !get_number(env, argv[2], &y))
+  {
+    return enif_make_badarg(env);
+  }
+
+  return cairo_in_fill(cr, x, y) ? g_atom_true : g_atom_false;
+}
+
+NIF_DECL(nif_paint)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  cairo_paint(cr);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_paint_with_alpha)
+{
+  ENSURE_ARGC(2)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  double alpha;
+
+  if (!get_number(env, argv[1], &alpha))
+  {
+    return enif_make_badarg(env);
+  }
+
+  cairo_paint_with_alpha(cr, alpha);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_stroke)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  cairo_stroke(cr);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_stroke_preserve)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  cairo_stroke_preserve(cr);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_stroke_extents)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  double x1;
+  double y1;
+  double x2;
+  double y2;
+
+  cairo_stroke_extents(cr, &x1, &y1, &x2, &y2);
+
+  return enif_make_tuple4(
+      env,
+      enif_make_double(env, x1),
+      enif_make_double(env, y1),
+      enif_make_double(env, x2),
+      enif_make_double(env, y2)
+  );
+}
+
+NIF_DECL(nif_in_stroke)
+{
+  ENSURE_ARGC(3)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  double x;
+  double y;
+
+  if (!get_number(env, argv[1], &x) || !get_number(env, argv[2], &y))
+  {
+    return enif_make_badarg(env);
+  }
+
+  return cairo_in_stroke(cr, x, y) ? g_atom_true : g_atom_false;
+}

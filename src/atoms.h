@@ -10,6 +10,8 @@
 
 #define ATOMS \
   ATOM_DECL(ok,) \
+  ATOM_DECL(true,) \
+  ATOM_DECL(false,) \
   FORMAT_ATOMS \
   CONTENT_ATOMS \
   SURFACE_TYPE_ATOMS \
