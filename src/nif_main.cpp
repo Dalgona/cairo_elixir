@@ -3,6 +3,7 @@
 #include "nif_common.h"
 
 #include "nif_cairo.h"
+#include "nif_paths.h"
 #include "nif_surfaces.h"
 #include "nif_image_surfaces.h"
 
@@ -39,6 +40,7 @@ int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 ErlNifFunc nif_funcs[] = {
 #define USE_NIF(name, arity) { #name, arity, nif_##name, 0 },
   CAIRO_NIFS
+  PATH_NIFS
   SURFACE_NIFS
   IMAGE_SURFACE_NIFS
 #undef USE_NIF
