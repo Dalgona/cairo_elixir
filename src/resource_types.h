@@ -21,7 +21,11 @@ extern template struct _destroy<cairo_t>;
 extern template struct _destroy<cairo_surface_t>;
 #endif
 
-template <typename T> void resource_dtor(ErlNifEnv *env, void *obj) { T *resource = (T *)obj; _destroy<T>::call(resource); }
+template <typename T> void resource_dtor(ErlNifEnv *env, void *obj)
+{
+  T **resource = (T **)obj;
+  _destroy<T>::call(*resource);
+}
 
 EXTERN template void resource_dtor<cairo_t>(ErlNifEnv *env, void *obj);
 EXTERN template void resource_dtor<cairo_surface_t>(ErlNifEnv *env, void *obj);
