@@ -3,6 +3,9 @@ defmodule Cairo do
   Documentation for Cairo.
   """
 
+  @type vec2 :: {number(), number()}
+  @type point :: vec2
+
   @type format :: :invalid | :argb32 | :rgb24 | :a8 | :a1 | :rgb16_565 | :rgb30
 
   @type status ::
@@ -50,4 +53,19 @@ defmodule Cairo do
           | :win32_gdi_error
           | :tag_error
           | :last_status
+
+  @type antialias ::
+          :default
+          | :none
+          | :gray
+          | :subpixel
+          | :fast
+          | :good
+          | :best
+
+  @type fill_rule :: :winding | :even_odd
+
+  @type line_cap :: :butt_cap | :round_cap | :square_cap
+
+  @type line_join :: :miter_join | :round_join | :bevel_join
 end
