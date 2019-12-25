@@ -90,49 +90,49 @@ defmodule Cairo.Surface do
   def finish(%__MODULE__{handle: handle} = surface) do
     NF.surface_finish(handle)
 
-    surface
+    refresh_status(surface)
   end
 
   @spec flush(t()) :: t()
   def flush(%__MODULE__{handle: handle} = surface) do
     NF.surface_flush(handle)
 
-    surface
+    refresh_status(surface)
   end
 
   @spec mark_dirty(t()) :: t()
   def mark_dirty(%__MODULE__{handle: handle} = surface) do
     NF.surface_mark_dirty(handle)
 
-    surface
+    refresh_status(surface)
   end
 
   @spec mark_dirty_rectangle(t(), Cairo.point(), Cairo.vec2()) :: t()
   def mark_dirty_rectangle(surface, {x, y}, {width, height}) do
     NF.surface_mark_dirty_rectangle(surface.handle, x, y, width, height)
 
-    surface
+    refresh_status(surface)
   end
 
   @spec set_device_offset(t(), Cairo.vec2()) :: t()
   def set_device_offset(surface, {x_off, y_off} = offset) do
     NF.surface_set_device_offset(surface.handle, x_off, y_off)
 
-    %__MODULE__{surface | device_offset: offset}
+    refresh_status(%__MODULE__{surface | device_offset: offset})
   end
 
   @spec set_device_scale(t(), Cairo.vec2()) :: t()
   def set_device_scale(surface, {x_scale, y_scale} = scale) do
     NF.surface_set_device_scale(surface.handle, x_scale, y_scale)
 
-    %__MODULE__{surface | device_scale: scale}
+    refresh_status(%__MODULE__{surface | device_scale: scale})
   end
 
   @spec set_fallback_resolution(t(), Cairo.vec2()) :: t()
   def set_fallback_resolution(surface, {x_ppi, y_ppi} = resolution) do
     NF.surface_set_fallback_resolution(surface.handle, x_ppi, y_ppi)
 
-    %__MODULE__{surface | fallback_resolution: resolution}
+    refresh_status(%__MODULE__{surface | fallback_resolution: resolution})
   end
 
   @spec refresh(t()) :: t()
@@ -149,6 +149,11 @@ defmodule Cairo.Surface do
         type: type,
         backend_info: refresh_backend_info(handle, type)
     }
+  end
+
+  @spec refresh_status(t()) :: t()
+  def refresh_status(%__MODULE__{handle: handle} = surface) do
+    %__MODULE__{surface | status: NF.surface_status(handle)}
   end
 
   @spec refresh_backend_info(term(), type()) :: term()
