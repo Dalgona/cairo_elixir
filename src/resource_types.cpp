@@ -10,3 +10,6 @@ template <> struct _destroy<cairo_surface_t>
 {
   static void call(cairo_surface_t *obj) { cairo_surface_destroy(obj); }
 };
+
+template void resource_dtor<cairo_t>(ErlNifEnv *env, void *obj);
+template void resource_dtor<cairo_surface_t>(ErlNifEnv *env, void *obj);

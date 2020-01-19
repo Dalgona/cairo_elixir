@@ -142,6 +142,8 @@
 ATOMS
 #undef ATOM_DECL
 
+#undef EXTERN
+
 template <typename T> std::unordered_map<std::string, T> g_atom_map;
 template <typename T> std::unordered_map<T, ERL_NIF_TERM *> g_enum_map;
 
@@ -179,25 +181,28 @@ template <typename T> int enum_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term
   return 1;
 }
 
-EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_format_t *);
-EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_content_t *);
-EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_surface_type_t *);
-EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_status_t *);
-EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_antialias_t *);
-EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_fill_rule_t *);
-EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_cap_t *);
-EXTERN template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_join_t *);
+#ifndef CAIRO_ELIXIR_NIF_ATOMS_IMPL
+extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_format_t *);
+extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_content_t *);
+extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_surface_type_t *);
+extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_status_t *);
+extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_antialias_t *);
+extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_fill_rule_t *);
+extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_cap_t *);
+extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_join_t *);
+#endif
 
 template <typename T> ERL_NIF_TERM enum_to_atom(ErlNifEnv *env, const T value) { return *g_enum_map<T>[value]; }
-EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_format_t);
-EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_content_t);
-EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_surface_type_t);
-EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_status_t);
-EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_antialias_t);
-EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_fill_rule_t);
-EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_cap_t);
-EXTERN template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_join_t);
 
-#undef EXTERN
+#ifndef CAIRO_ELIXIR_NIF_ATOMS_IMPL
+extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_format_t);
+extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_content_t);
+extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_surface_type_t);
+extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_status_t);
+extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_antialias_t);
+extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_fill_rule_t);
+extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_cap_t);
+extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_join_t);
+#endif
 
 #endif

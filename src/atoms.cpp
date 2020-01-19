@@ -22,3 +22,21 @@ template <> std::unordered_map<cairo_fill_rule_t, ERL_NIF_TERM *> g_enum_map<cai
 template <> std::unordered_map<cairo_line_cap_t, ERL_NIF_TERM *> g_enum_map<cairo_line_cap_t> { LINE_CAP_ATOMS };
 template <> std::unordered_map<cairo_line_join_t, ERL_NIF_TERM *> g_enum_map<cairo_line_join_t> { LINE_JOIN_ATOMS };
 #undef ATOM_DECL
+
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_format_t *);
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_content_t *);
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_surface_type_t *);
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_status_t *);
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_antialias_t *);
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_fill_rule_t *);
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_cap_t *);
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_join_t *);
+
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_format_t);
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_content_t);
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_surface_type_t);
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_status_t);
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_antialias_t);
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_fill_rule_t);
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_cap_t);
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_join_t);

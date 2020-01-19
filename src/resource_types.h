@@ -14,6 +14,8 @@
 EXTERN ErlNifResourceType *g_res_type_cairo;
 EXTERN ErlNifResourceType *g_res_type_surface;
 
+#undef EXTERN
+
 template <typename T> struct _destroy { static void call(T *obj); };
 
 #ifndef CAIRO_ELIXIR_NIF_RESOURCE_TYPES_IMPL
@@ -27,9 +29,9 @@ template <typename T> void resource_dtor(ErlNifEnv *env, void *obj)
   _destroy<T>::call(*resource);
 }
 
-EXTERN template void resource_dtor<cairo_t>(ErlNifEnv *env, void *obj);
-EXTERN template void resource_dtor<cairo_surface_t>(ErlNifEnv *env, void *obj);
-
-#undef EXTERN
+#ifndef CAIRO_ELIXIR_NIF_RESOURCE_TYPES_IMPL
+extern template void resource_dtor<cairo_t>(ErlNifEnv *env, void *obj);
+extern template void resource_dtor<cairo_surface_t>(ErlNifEnv *env, void *obj);
+#endif
 
 #endif
