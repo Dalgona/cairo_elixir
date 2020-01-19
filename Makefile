@@ -1,5 +1,5 @@
 MIX = mix
-CXX = g++
+CXX = clang++
 ERL_DIR = $(shell erl -eval 'io:format("~s", [lists:concat([code:root_dir(), "/erts-", erlang:system_info(version), "/include"])])' -s init stop -noshell)
 CXXFLAGS += -std=c++17 -O3 -fPIC -Wall -Wextra -Wno-unused-parameter
 CXXFLAGS += -I$(ERL_DIR)
