@@ -135,6 +135,11 @@ defmodule Cairo.Surface do
     refresh_status(%__MODULE__{surface | fallback_resolution: resolution})
   end
 
+  @spec write_png(t()) :: iodata()
+  def write_png(%__MODULE__{handle: handle}) do
+    NF.surface_write_to_png(handle)
+  end
+
   @spec refresh(%__MODULE__{handle: term()}) :: t()
   def refresh(%__MODULE__{handle: handle} = surface) do
     type = NF.surface_get_type(handle)
