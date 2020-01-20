@@ -91,6 +91,31 @@ NIF_DECL(nif_set_source_rgba)
   return g_atom_ok;
 }
 
+NIF_DECL(nif_set_antialias)
+{
+  ENSURE_ARGC(2)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  cairo_antialias_t antialias;
+
+  if (!enum_from_atom<cairo_antialias_t>(env, argv[1], &antialias))
+  {
+    return enif_make_badarg(env);
+  }
+
+  cairo_set_antialias(cr, antialias);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_get_antialias)
+{
+  ENSURE_ARGC(1)
+  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
+
+  return enum_to_atom<cairo_antialias_t>(env, cairo_get_antialias(cr));
+}
+
 NIF_DECL(nif_set_dash)
 {
   ENSURE_ARGC(3)
@@ -122,31 +147,6 @@ NIF_DECL(nif_set_dash)
   delete[] dashes;
 
   return g_atom_ok;
-}
-
-NIF_DECL(nif_set_antialias)
-{
-  ENSURE_ARGC(2)
-  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
-
-  cairo_antialias_t antialias;
-
-  if (!enum_from_atom<cairo_antialias_t>(env, argv[1], &antialias))
-  {
-    return enif_make_badarg(env);
-  }
-
-  cairo_set_antialias(cr, antialias);
-
-  return g_atom_ok;
-}
-
-NIF_DECL(nif_get_antialias)
-{
-  ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
-
-  return enum_to_atom<cairo_antialias_t>(env, cairo_get_antialias(cr));
 }
 
 NIF_DECL(nif_get_dash)
