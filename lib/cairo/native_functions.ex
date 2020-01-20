@@ -107,7 +107,7 @@ defmodule Cairo.NativeFunctions do
   @spec clip_preserve(cairo_handle()) :: :ok
   defnif clip_preserve(cr)
 
-  @spec clip_extents(cairo_handle()) :: {number(), number(), number(), number()}
+  @spec clip_extents(cairo_handle()) :: {Cairo.vec2(), Cairo.vec2()}
   defnif clip_extents(cr)
 
   @spec in_clip(cairo_handle(), Cairo.vec2()) :: boolean()
@@ -125,7 +125,7 @@ defmodule Cairo.NativeFunctions do
   @spec fill_preserve(cairo_handle()) :: :ok
   defnif fill_preserve(cr)
 
-  @spec fill_extents(cairo_handle()) :: {number(), number(), number(), number()}
+  @spec fill_extents(cairo_handle()) :: {Cairo.vec2(), Cairo.vec2()}
   defnif fill_extents(cr)
 
   @spec in_fill(cairo_handle(), Cairo.vec2()) :: boolean()
@@ -146,7 +146,7 @@ defmodule Cairo.NativeFunctions do
   @spec stroke_preserve(cairo_handle()) :: :ok
   defnif stroke_preserve(cr)
 
-  @spec stroke_extents(cairo_handle()) :: {number(), number(), number(), number()}
+  @spec stroke_extents(cairo_handle()) :: {Cairo.vec2(), Cairo.vec2()}
   defnif stroke_extents(cr)
 
   @spec in_stroke(cairo_handle(), Cairo.vec2()) :: boolean()
@@ -168,7 +168,7 @@ defmodule Cairo.NativeFunctions do
   @spec has_current_point(cairo_handle()) :: boolean()
   defnif has_current_point(cr)
 
-  @spec get_current_point(cairo_handle()) :: {number(), number()}
+  @spec get_current_point(cairo_handle()) :: Cairo.vec2()
   defnif get_current_point(cr)
 
   @spec new_path(cairo_handle()) :: :ok
@@ -212,7 +212,7 @@ defmodule Cairo.NativeFunctions do
   @spec rel_move_to(cairo_handle(), Cairo.vec2()) :: :ok
   defnif rel_move_to(cr, diff)
 
-  @spec path_extents(cairo_handle()) :: {number(), number(), number(), number()}
+  @spec path_extents(cairo_handle()) :: {Cairo.vec2(), Cairo.vec2()}
   defnif path_extents(cr)
 
   #
@@ -255,19 +255,19 @@ defmodule Cairo.NativeFunctions do
   @spec surface_set_device_offset(surface_handle(), Cairo.vec2()) :: :ok
   defnif surface_set_device_offset(surface, offset)
 
-  @spec surface_get_device_offset(surface_handle()) :: {number(), number()}
+  @spec surface_get_device_offset(surface_handle()) :: Cairo.vec2()
   defnif surface_get_device_offset(surface)
 
   @spec surface_set_device_scale(surface_handle(), Cairo.vec2()) :: :ok
   defnif surface_set_device_scale(surface, scale)
 
-  @spec surface_get_device_scale(surface_handle()) :: {number(), number()}
+  @spec surface_get_device_scale(surface_handle()) :: Cairo.vec2()
   defnif surface_get_device_scale(surface)
 
   @spec surface_set_fallback_resolution(surface_handle(), Cairo.vec2()) :: :ok
   defnif surface_set_fallback_resolution(surface, ppi)
 
-  @spec surface_get_fallback_resolution(surface_handle()) :: {number(), number()}
+  @spec surface_get_fallback_resolution(surface_handle()) :: Cairo.vec2()
   defnif surface_get_fallback_resolution(surface)
 
   @spec surface_get_type(surface_handle()) :: Surface.type()

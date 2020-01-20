@@ -357,13 +357,7 @@ NIF_DECL(nif_clip_extents)
 
   cairo_clip_extents(cr, &x1, &y1, &x2, &y2);
 
-  return enif_make_tuple4(
-      env,
-      enif_make_double(env, x1),
-      enif_make_double(env, y1),
-      enif_make_double(env, x2),
-      enif_make_double(env, y2)
-  );
+  return enif_make_tuple2(env, make_vec2(env, x1, y1), make_vec2(env, x2, y2));
 }
 
 NIF_DECL(nif_in_clip)
@@ -423,13 +417,7 @@ NIF_DECL(nif_fill_extents)
 
   cairo_fill_extents(cr, &x1, &y1, &x2, &y2);
 
-  return enif_make_tuple4(
-      env,
-      enif_make_double(env, x1),
-      enif_make_double(env, y1),
-      enif_make_double(env, x2),
-      enif_make_double(env, y2)
-  );
+  return enif_make_tuple2(env, make_vec2(env, x1, y1), make_vec2(env, x2, y2));
 }
 
 NIF_DECL(nif_in_fill)
@@ -506,13 +494,7 @@ NIF_DECL(nif_stroke_extents)
 
   cairo_stroke_extents(cr, &x1, &y1, &x2, &y2);
 
-  return enif_make_tuple4(
-      env,
-      enif_make_double(env, x1),
-      enif_make_double(env, y1),
-      enif_make_double(env, x2),
-      enif_make_double(env, y2)
-  );
+  return enif_make_tuple2(env, make_vec2(env, x1, y1), make_vec2(env, x2, y2));
 }
 
 NIF_DECL(nif_in_stroke)

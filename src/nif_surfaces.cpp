@@ -188,7 +188,7 @@ NIF_DECL(nif_surface_get_device_offset)
 
   cairo_surface_get_device_offset(surface, &x_offset, &y_offset);
 
-  return enif_make_tuple2(env, enif_make_double(env, x_offset), enif_make_double(env, y_offset));
+  return make_vec2(env, x_offset, y_offset);
 }
 
 NIF_DECL(nif_surface_set_device_scale)
@@ -218,7 +218,7 @@ NIF_DECL(nif_surface_get_device_scale)
 
   cairo_surface_get_device_scale(surface, &x_scale, &y_scale);
 
-  return enif_make_tuple2(env, enif_make_double(env, x_scale), enif_make_double(env, y_scale));
+  return make_vec2(env, x_scale, y_scale);
 }
 
 NIF_DECL(nif_surface_set_fallback_resolution)
@@ -248,7 +248,7 @@ NIF_DECL(nif_surface_get_fallback_resolution)
 
   cairo_surface_get_fallback_resolution(surface, &x_ppi, &y_ppi);
 
-  return enif_make_tuple2(env, enif_make_double(env, x_ppi), enif_make_double(env, y_ppi));
+  return make_vec2(env, x_ppi, y_ppi);
 }
 
 NIF_DECL(nif_surface_get_type)
