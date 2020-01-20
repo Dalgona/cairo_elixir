@@ -14,7 +14,7 @@ defmodule Cairo.Surface do
   ]
 
   @type t :: %__MODULE__{
-          handle: term(),
+          handle: NF.surface_handle(),
           status: Cairo.status(),
           content_type: content_type(),
           device_offset: Cairo.vec2(),
