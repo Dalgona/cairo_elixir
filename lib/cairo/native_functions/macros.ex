@@ -6,7 +6,9 @@ defmodule Cairo.NativeFunctions.Macros do
     args2 = Enum.map(args, fn _ -> Macro.var(:_, __MODULE__) end)
 
     quote do
-      def unquote(name)(unquote_splicing(args2)), do: raise "nif not loaded"
+      def unquote(name)(unquote_splicing(args2)) do
+        :erlang.nif_error("NIF is not loaded")
+      end
     end
   end
 end

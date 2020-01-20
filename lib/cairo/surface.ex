@@ -135,7 +135,7 @@ defmodule Cairo.Surface do
     refresh_status(%__MODULE__{surface | fallback_resolution: resolution})
   end
 
-  @spec refresh(t()) :: t()
+  @spec refresh(%__MODULE__{handle: term()}) :: t()
   def refresh(%__MODULE__{handle: handle} = surface) do
     type = NF.surface_get_type(handle)
 
@@ -151,7 +151,7 @@ defmodule Cairo.Surface do
     }
   end
 
-  @spec refresh_status(t()) :: t()
+  @spec refresh_status(%__MODULE__{handle: term()}) :: t()
   def refresh_status(%__MODULE__{handle: handle} = surface) do
     %__MODULE__{surface | status: NF.surface_status(handle)}
   end
