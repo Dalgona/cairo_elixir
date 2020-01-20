@@ -15,5 +15,6 @@ using vec2_t = std::pair<double, double>;
 
 EXTERN int get_number(ErlNifEnv *env, const ERL_NIF_TERM term, double *dest);
 EXTERN int get_vec2(ErlNifEnv *env, const ERL_NIF_TERM term, vec2_t *dest);
+EXTERN ERL_NIF_TERM make_vec2(ErlNifEnv *env, const double e1, const double e2);
 
 #endif

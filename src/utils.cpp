@@ -46,3 +46,8 @@ int get_vec2(ErlNifEnv *env, const ERL_NIF_TERM term, vec2_t *dest)
     return 0;
   }
 }
+
+ERL_NIF_TERM make_vec2(ErlNifEnv *env, const double e1, const double e2)
+{
+  return enif_make_tuple2(env, enif_make_double(env, e1), enif_make_double(env, e2));
+}
