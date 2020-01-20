@@ -12,4 +12,3 @@ defmodule Cairo.NativeFunctions.Macros do
     end
   end
 end
-

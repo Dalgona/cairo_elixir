@@ -87,51 +87,44 @@ defmodule Cairo.Surface do
   #
 
   @spec finish(t()) :: t()
-  def finish(%__MODULE__{handle: handle} = surface) do
-    NF.surface_finish(handle)
-
+  def finish(surface) do
+    NF.surface_finish(surface.handle)
     refresh_status(surface)
   end
 
   @spec flush(t()) :: t()
-  def flush(%__MODULE__{handle: handle} = surface) do
-    NF.surface_flush(handle)
-
+  def flush(surface) do
+    NF.surface_flush(surface.handle)
     refresh_status(surface)
   end
 
   @spec mark_dirty(t()) :: t()
-  def mark_dirty(%__MODULE__{handle: handle} = surface) do
-    NF.surface_mark_dirty(handle)
-
+  def mark_dirty(surface) do
+    NF.surface_mark_dirty(surface.handle)
     refresh_status(surface)
   end
 
   @spec mark_dirty_rectangle(t(), Cairo.point(), Cairo.vec2()) :: t()
   def mark_dirty_rectangle(surface, {x, y}, {width, height}) do
     NF.surface_mark_dirty_rectangle(surface.handle, x, y, width, height)
-
     refresh_status(surface)
   end
 
   @spec set_device_offset(t(), Cairo.vec2()) :: t()
   def set_device_offset(surface, offset) do
     NF.surface_set_device_offset(surface.handle, offset)
-
     refresh_status(%__MODULE__{surface | device_offset: offset})
   end
 
   @spec set_device_scale(t(), Cairo.vec2()) :: t()
   def set_device_scale(surface, scale) do
     NF.surface_set_device_scale(surface.handle, scale)
-
     refresh_status(%__MODULE__{surface | device_scale: scale})
   end
 
   @spec set_fallback_resolution(t(), Cairo.vec2()) :: t()
   def set_fallback_resolution(surface, resolution) do
     NF.surface_set_fallback_resolution(surface.handle, resolution)
-
     refresh_status(%__MODULE__{surface | fallback_resolution: resolution})
   end
 
@@ -140,7 +133,7 @@ defmodule Cairo.Surface do
     NF.surface_write_to_png(handle)
   end
 
-  @spec refresh(%__MODULE__{handle: term()}) :: t()
+  @spec refresh(%__MODULE__{handle: NF.surface_handle()}) :: t()
   def refresh(%__MODULE__{handle: handle} = surface) do
     type = NF.surface_get_type(handle)
 
@@ -156,7 +149,7 @@ defmodule Cairo.Surface do
     }
   end
 
-  @spec refresh_status(%__MODULE__{handle: term()}) :: t()
+  @spec refresh_status(%__MODULE__{handle: NF.surface_handle()}) :: t()
   def refresh_status(%__MODULE__{handle: handle} = surface) do
     %__MODULE__{surface | status: NF.surface_status(handle)}
   end
