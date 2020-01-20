@@ -7,16 +7,7 @@ NIF_DECL(nif_create)
   ENSURE_ARGC(1)
   REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
-  cairo_t *cr = cairo_create(surface);
-  cairo_t **resource = (cairo_t **)enif_alloc_resource(g_res_type_cairo, sizeof(cairo_t *));
-
-  memcpy(resource, &cr, sizeof(cairo_t *));
-
-  ERL_NIF_TERM term = enif_make_resource(env, resource);
-
-  enif_release_resource(resource);
-
-  return term;
+  return create_resource(env, g_res_type_cairo, cairo_create(surface));
 }
 
 NIF_DECL(nif_status)

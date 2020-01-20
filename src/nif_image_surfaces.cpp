@@ -32,16 +32,7 @@ NIF_DECL(nif_image_surface_create)
     return enif_make_badarg(env);
   }
 
-  cairo_surface_t *surface = cairo_image_surface_create(format, width, height);
-  cairo_surface_t **resource = (cairo_surface_t **)enif_alloc_resource(g_res_type_surface, sizeof(cairo_surface_t *));
-
-  memcpy(resource, &surface, sizeof(cairo_surface_t *));
-
-  ERL_NIF_TERM term = enif_make_resource(env, resource);
-
-  enif_release_resource(resource);
-
-  return term;
+  return create_resource(env, g_res_type_surface, cairo_image_surface_create(format, width, height));
 }
 
 NIF_DECL(nif_image_surface_create_for_data)
@@ -63,16 +54,7 @@ NIF_DECL(nif_image_surface_create_for_data)
     return enif_make_badarg(env);
   }
 
-  cairo_surface_t *surface = cairo_image_surface_create_for_data(data.data, format, width, height, stride);
-  cairo_surface_t **resource = (cairo_surface_t **)enif_alloc_resource(g_res_type_surface, sizeof(cairo_surface_t *));
-
-  memcpy(resource, &surface, sizeof(cairo_surface_t *));
-
-  ERL_NIF_TERM term = enif_make_resource(env, resource);
-
-  enif_release_resource(resource);
-
-  return term;
+  return create_resource(env, g_res_type_surface, cairo_image_surface_create_for_data(data.data, format, width, height, stride));
 }
 
 NIF_DECL(nif_image_surface_get_data)
