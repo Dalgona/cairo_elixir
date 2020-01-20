@@ -198,7 +198,7 @@ defmodule Cairo.Context do
   end
 
   @spec refresh(%__MODULE__{handle: NF.cairo_handle(), target: Surface.t()}) :: t()
-  defp refresh(%__MODULE__{handle: handle, target: target} = context) do
+  def refresh(%__MODULE__{handle: handle, target: target} = context) do
     %__MODULE__{
       context
       | status: NF.status(handle),
