@@ -53,113 +53,101 @@ NIF_DECL(nif_close_path)
 
 NIF_DECL(nif_arc)
 {
-  ENSURE_ARGC(6)
+  ENSURE_ARGC(5)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  double xc;
-  double yc;
+  vec2_t center;
   double radius;
   double angle1;
   double angle2;
 
-  if (!get_number(env, argv[1], &xc)
-      || !get_number(env, argv[2], &yc)
-      || !get_number(env, argv[3], &radius)
-      || !get_number(env, argv[4], &angle1)
-      || !get_number(env, argv[5], &angle2))
+  if (!get_vec2(env, argv[1], &center)
+      || !get_number(env, argv[2], &radius)
+      || !get_number(env, argv[3], &angle1)
+      || !get_number(env, argv[4], &angle2))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_arc(cr, xc, yc, radius, angle1, angle2);
+  cairo_arc(cr, center.first, center.second, radius, angle1, angle2);
 
   return g_atom_ok;
 }
 
 NIF_DECL(nif_arc_negative)
 {
-  ENSURE_ARGC(6)
+  ENSURE_ARGC(5)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  double xc;
-  double yc;
+  vec2_t center;
   double radius;
   double angle1;
   double angle2;
 
-  if (!get_number(env, argv[1], &xc)
-      || !get_number(env, argv[2], &yc)
-      || !get_number(env, argv[3], &radius)
-      || !get_number(env, argv[4], &angle1)
-      || !get_number(env, argv[5], &angle2))
+  if (!get_vec2(env, argv[1], &center)
+      || !get_number(env, argv[2], &radius)
+      || !get_number(env, argv[3], &angle1)
+      || !get_number(env, argv[4], &angle2))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_arc_negative(cr, xc, yc, radius, angle1, angle2);
+  cairo_arc_negative(cr, center.first, center.second, radius, angle1, angle2);
 
   return g_atom_ok;
 }
 
 NIF_DECL(nif_curve_to)
 {
-  ENSURE_ARGC(7)
+  ENSURE_ARGC(4)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  double x1;
-  double y1;
-  double x2;
-  double y2;
-  double x3;
-  double y3;
+  vec2_t pt1;
+  vec2_t pt2;
+  vec2_t pt3;
 
-  if (!get_number(env, argv[1], &x1)
-      || !get_number(env, argv[2], &y1)
-      || !get_number(env, argv[3], &x2)
-      || !get_number(env, argv[4], &y2)
-      || !get_number(env, argv[5], &x3)
-      || !get_number(env, argv[6], &y3))
+  if (!get_vec2(env, argv[1], &pt1)
+      || !get_vec2(env, argv[2], &pt2)
+      || !get_vec2(env, argv[3], &pt3))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_curve_to(cr, x1, y1, x2, y2, x3, y3);
+  cairo_curve_to(cr, pt1.first, pt1.second, pt2.first, pt2.second, pt3.first, pt3.second);
 
   return g_atom_ok;
 }
 
 NIF_DECL(nif_line_to)
 {
-  ENSURE_ARGC(3)
+  ENSURE_ARGC(2)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  double x;
-  double y;
+  vec2_t pt;
 
-  if (!get_number(env, argv[1], &x) || !get_number(env, argv[2], &y))
+  if (!get_vec2(env, argv[1], &pt))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_line_to(cr, x, y);
+  cairo_line_to(cr, pt.first, pt.second);
 
   return g_atom_ok;
 }
 
 NIF_DECL(nif_move_to)
 {
-  ENSURE_ARGC(3)
+  ENSURE_ARGC(2)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  double x;
-  double y;
+  vec2_t pt;
 
-  if (!get_number(env, argv[1], &x) || !get_number(env, argv[2], &y))
+  if (!get_vec2(env, argv[1], &pt))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_move_to(cr, x, y);
+  cairo_move_to(cr, pt.first, pt.second);
 
   return g_atom_ok;
 }
@@ -207,63 +195,55 @@ NIF_DECL(nif_text_path)
 
 NIF_DECL(nif_rel_curve_to)
 {
-  ENSURE_ARGC(7)
+  ENSURE_ARGC(4)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  double dx1;
-  double dy1;
-  double dx2;
-  double dy2;
-  double dx3;
-  double dy3;
+  vec2_t pt1;
+  vec2_t pt2;
+  vec2_t pt3;
 
-  if (!get_number(env, argv[1], &dx1)
-      || !get_number(env, argv[2], &dy1)
-      || !get_number(env, argv[3], &dx2)
-      || !get_number(env, argv[4], &dy2)
-      || !get_number(env, argv[5], &dx3)
-      || !get_number(env, argv[6], &dy3))
+  if (!get_vec2(env, argv[1], &pt1)
+      || !get_vec2(env, argv[2], &pt2)
+      || !get_vec2(env, argv[3], &pt3))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_rel_curve_to(cr, dx1, dy1, dx2, dy2, dx3, dy3);
+  cairo_rel_curve_to(cr, pt1.first, pt1.second, pt2.first, pt2.second, pt3.first, pt3.second);
 
   return g_atom_ok;
 }
 
 NIF_DECL(nif_rel_line_to)
 {
-  ENSURE_ARGC(3)
+  ENSURE_ARGC(2)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  double dx;
-  double dy;
+  vec2_t diff;
 
-  if (!get_number(env, argv[1], &dx) || !get_number(env, argv[2], &dy))
+  if (!get_vec2(env, argv[1], &diff))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_rel_line_to(cr, dx, dy);
+  cairo_rel_line_to(cr, diff.first, diff.second);
 
   return g_atom_ok;
 }
 
 NIF_DECL(nif_rel_move_to)
 {
-  ENSURE_ARGC(3)
+  ENSURE_ARGC(2)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  double dx;
-  double dy;
+  vec2_t diff;
 
-  if (!get_number(env, argv[1], &dx) || !get_number(env, argv[2], &dy))
+  if (!get_vec2(env, argv[1], &diff))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_rel_move_to(cr, dx, dy);
+  cairo_rel_move_to(cr, diff.first, diff.second);
 
   return g_atom_ok;
 }

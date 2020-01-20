@@ -368,18 +368,17 @@ NIF_DECL(nif_clip_extents)
 
 NIF_DECL(nif_in_clip)
 {
-  ENSURE_ARGC(3)
+  ENSURE_ARGC(2)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  double x;
-  double y;
+  vec2_t pt;
 
-  if (!get_number(env, argv[1], &x) || !get_number(env, argv[2], &y))
+  if (!get_vec2(env, argv[1], &pt))
   {
     return enif_make_badarg(env);
   }
 
-  return cairo_in_clip(cr, x, y) ? g_atom_true : g_atom_false;
+  return cairo_in_clip(cr, pt.first, pt.second) ? g_atom_true : g_atom_false;
 }
 
 NIF_DECL(nif_reset_clip)
@@ -435,18 +434,17 @@ NIF_DECL(nif_fill_extents)
 
 NIF_DECL(nif_in_fill)
 {
-  ENSURE_ARGC(3)
+  ENSURE_ARGC(2)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  double x;
-  double y;
+  vec2_t pt;
 
-  if (!get_number(env, argv[1], &x) || !get_number(env, argv[2], &y))
+  if (!get_vec2(env, argv[1], &pt))
   {
     return enif_make_badarg(env);
   }
 
-  return cairo_in_fill(cr, x, y) ? g_atom_true : g_atom_false;
+  return cairo_in_fill(cr, pt.first, pt.second) ? g_atom_true : g_atom_false;
 }
 
 NIF_DECL(nif_paint)
@@ -519,16 +517,15 @@ NIF_DECL(nif_stroke_extents)
 
 NIF_DECL(nif_in_stroke)
 {
-  ENSURE_ARGC(3)
+  ENSURE_ARGC(2)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  double x;
-  double y;
+  vec2_t pt;
 
-  if (!get_number(env, argv[1], &x) || !get_number(env, argv[2], &y))
+  if (!get_vec2(env, argv[1], &pt))
   {
     return enif_make_badarg(env);
   }
 
-  return cairo_in_stroke(cr, x, y) ? g_atom_true : g_atom_false;
+  return cairo_in_stroke(cr, pt.first, pt.second) ? g_atom_true : g_atom_false;
 }

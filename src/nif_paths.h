@@ -10,17 +10,17 @@
   USE_NIF(new_path, 1) \
   USE_NIF(new_sub_path, 1) \
   USE_NIF(close_path, 1) \
-  USE_NIF(arc, 6) \
-  USE_NIF(arc_negative, 6) \
-  USE_NIF(curve_to, 7) \
-  USE_NIF(line_to, 3) \
-  USE_NIF(move_to, 3) \
+  USE_NIF(arc, 5) \
+  USE_NIF(arc_negative, 5) \
+  USE_NIF(curve_to, 4) \
+  USE_NIF(line_to, 2) \
+  USE_NIF(move_to, 2) \
   USE_NIF(rectangle, 5) \
   /* USE_NIF(glyph_path, 2) */ \
   USE_NIF(text_path, 2) \
-  USE_NIF(rel_curve_to, 7) \
-  USE_NIF(rel_line_to, 3) \
-  USE_NIF(rel_move_to, 3) \
+  USE_NIF(rel_curve_to, 4) \
+  USE_NIF(rel_line_to, 2) \
+  USE_NIF(rel_move_to, 2) \
   USE_NIF(path_extents, 1)
 
 #define USE_NIF(name, arity) NIF_DECL(nif_##name);

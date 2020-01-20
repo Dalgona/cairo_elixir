@@ -37,14 +37,14 @@
   USE_NIF(clip, 1) \
   USE_NIF(clip_preserve, 1) \
   USE_NIF(clip_extents, 1) \
-  USE_NIF(in_clip, 3) \
+  USE_NIF(in_clip, 2) \
   USE_NIF(reset_clip, 1) \
   /* USE_NIF(rectangle_list_destroy, 2) */ \
   /* USE_NIF(copy_clip_rectangle_list, 1) */ \
   USE_NIF(fill, 1) \
   USE_NIF(fill_preserve, 1) \
   USE_NIF(fill_extents, 1) \
-  USE_NIF(in_fill, 3) \
+  USE_NIF(in_fill, 2) \
   /* USE_NIF(mask, 2) */ \
   /* USE_NIF(mask_surface, 4) */ \
   USE_NIF(paint, 1) \
@@ -52,7 +52,7 @@
   USE_NIF(stroke, 1) \
   USE_NIF(stroke_preserve, 1) \
   USE_NIF(stroke_extents, 1) \
-  USE_NIF(in_stroke, 3) \
+  USE_NIF(in_stroke, 2) \
   /* USE_NIF(copy_page, 1) */ \
   /* USE_NIF(show_page, 1) */ \
   /* USE_NIF(set_user_data, 4) */ \

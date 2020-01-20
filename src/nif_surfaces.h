@@ -11,11 +11,11 @@
   USE_NIF(surface_get_content, 1) \
   USE_NIF(surface_mark_dirty, 1) \
   USE_NIF(surface_mark_dirty_rectangle, 5) \
-  USE_NIF(surface_set_device_offset, 3) \
+  USE_NIF(surface_set_device_offset, 2) \
   USE_NIF(surface_get_device_offset, 1) \
-  USE_NIF(surface_set_device_scale, 3) \
+  USE_NIF(surface_set_device_scale, 2) \
   USE_NIF(surface_get_device_scale, 1) \
-  USE_NIF(surface_set_fallback_resolution, 3) \
+  USE_NIF(surface_set_fallback_resolution, 2) \
   USE_NIF(surface_get_fallback_resolution, 1) \
   USE_NIF(surface_get_type, 1)
 

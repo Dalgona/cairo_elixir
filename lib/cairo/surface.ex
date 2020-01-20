@@ -115,22 +115,22 @@ defmodule Cairo.Surface do
   end
 
   @spec set_device_offset(t(), Cairo.vec2()) :: t()
-  def set_device_offset(surface, {x_off, y_off} = offset) do
-    NF.surface_set_device_offset(surface.handle, x_off, y_off)
+  def set_device_offset(surface, offset) do
+    NF.surface_set_device_offset(surface.handle, offset)
 
     refresh_status(%__MODULE__{surface | device_offset: offset})
   end
 
   @spec set_device_scale(t(), Cairo.vec2()) :: t()
-  def set_device_scale(surface, {x_scale, y_scale} = scale) do
-    NF.surface_set_device_scale(surface.handle, x_scale, y_scale)
+  def set_device_scale(surface, scale) do
+    NF.surface_set_device_scale(surface.handle, scale)
 
     refresh_status(%__MODULE__{surface | device_scale: scale})
   end
 
   @spec set_fallback_resolution(t(), Cairo.vec2()) :: t()
-  def set_fallback_resolution(surface, {x_ppi, y_ppi} = resolution) do
-    NF.surface_set_fallback_resolution(surface.handle, x_ppi, y_ppi)
+  def set_fallback_resolution(surface, resolution) do
+    NF.surface_set_fallback_resolution(surface.handle, resolution)
 
     refresh_status(%__MODULE__{surface | fallback_resolution: resolution})
   end

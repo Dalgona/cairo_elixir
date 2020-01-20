@@ -110,8 +110,8 @@ defmodule Cairo.NativeFunctions do
   @spec clip_extents(cairo_handle()) :: {number(), number(), number(), number()}
   defnif clip_extents(cr)
 
-  @spec in_clip(cairo_handle(), number(), number()) :: boolean()
-  defnif in_clip(cr, x, y)
+  @spec in_clip(cairo_handle(), Cairo.vec2()) :: boolean()
+  defnif in_clip(cr, pt)
 
   @spec reset_clip(cairo_handle()) :: :ok
   defnif reset_clip(cr)
@@ -128,8 +128,8 @@ defmodule Cairo.NativeFunctions do
   @spec fill_extents(cairo_handle()) :: {number(), number(), number(), number()}
   defnif fill_extents(cr)
 
-  @spec in_fill(cairo_handle(), number(), number()) :: boolean()
-  defnif in_fill(cr, x, y)
+  @spec in_fill(cairo_handle(), Cairo.vec2()) :: boolean()
+  defnif in_fill(cr, pt)
 
   # defnif mask(cr, pattern)
   # defnif mask_surface(cr, surface, surface_x, surface_y)
@@ -149,8 +149,8 @@ defmodule Cairo.NativeFunctions do
   @spec stroke_extents(cairo_handle()) :: {number(), number(), number(), number()}
   defnif stroke_extents(cr)
 
-  @spec in_stroke(cairo_handle(), number(), number()) :: boolean()
-  defnif in_stroke(cr, x, y)
+  @spec in_stroke(cairo_handle(), Cairo.vec2()) :: boolean()
+  defnif in_stroke(cr, pt)
 
   # defnif copy_page(cr)
   # defnif show_page(cr)
@@ -180,21 +180,20 @@ defmodule Cairo.NativeFunctions do
   @spec close_path(cairo_handle()) :: :ok
   defnif close_path(cr)
 
-  @spec arc(cairo_handle(), number(), number(), number(), number(), number()) :: :ok
-  defnif arc(cr, xc, yc, radius, angle1, angle2)
+  @spec arc(cairo_handle(), Cairo.vec2(), number(), number(), number()) :: :ok
+  defnif arc(cr, center, radius, angle1, angle2)
 
-  @spec arc_negative(cairo_handle(), number(), number(), number(), number(), number()) :: :ok
-  defnif arc_negative(cr, xc, yc, radius, angle1, angle2)
+  @spec arc_negative(cairo_handle(), Cairo.vec2(), number(), number(), number()) :: :ok
+  defnif arc_negative(cr, center, radius, angle1, angle2)
 
-  @spec curve_to(cairo_handle(), number(), number(), number(), number(), number(), number()) ::
-          :ok
-  defnif curve_to(cr, x1, y1, x2, y2, x3, y3)
+  @spec curve_to(cairo_handle(), Cairo.vec2(), Cairo.vec2(), Cairo.vec2()) :: :ok
+  defnif curve_to(cr, pt1, pt2, pt3)
 
-  @spec line_to(cairo_handle(), number(), number()) :: :ok
-  defnif line_to(cr, x, y)
+  @spec line_to(cairo_handle(), Cairo.vec2()) :: :ok
+  defnif line_to(cr, pt)
 
-  @spec move_to(cairo_handle(), number(), number()) :: :ok
-  defnif move_to(cr, x, y)
+  @spec move_to(cairo_handle(), Cairo.vec2()) :: :ok
+  defnif move_to(cr, pt)
 
   @spec rectangle(cairo_handle(), number(), number(), number(), number()) :: :ok
   defnif rectangle(cr, x, y, width, height)
@@ -204,15 +203,14 @@ defmodule Cairo.NativeFunctions do
   @spec text_path(cairo_handle(), binary()) :: :ok
   defnif text_path(cr, utf8)
 
-  @spec rel_curve_to(cairo_handle(), number(), number(), number(), number(), number(), number()) ::
-          :ok
-  defnif rel_curve_to(cr, dx1, dy1, dx2, dy2, dx3, dy3)
+  @spec rel_curve_to(cairo_handle(), Cairo.vec2(), Cairo.vec2(), Cairo.vec2()) :: :ok
+  defnif rel_curve_to(cr, pt1, pt2, pt3)
 
-  @spec rel_line_to(cairo_handle(), number(), number()) :: :ok
-  defnif rel_line_to(cr, dx, dy)
+  @spec rel_line_to(cairo_handle(), Cairo.vec2()) :: :ok
+  defnif rel_line_to(cr, diff)
 
-  @spec rel_move_to(cairo_handle(), number(), number()) :: :ok
-  defnif rel_move_to(cr, dx, dy)
+  @spec rel_move_to(cairo_handle(), Cairo.vec2()) :: :ok
+  defnif rel_move_to(cr, diff)
 
   @spec path_extents(cairo_handle()) :: {number(), number(), number(), number()}
   defnif path_extents(cr)
@@ -254,20 +252,20 @@ defmodule Cairo.NativeFunctions do
           :ok
   defnif surface_mark_dirty_rectangle(surface, x, y, width, height)
 
-  @spec surface_set_device_offset(surface_handle(), number(), number()) :: :ok
-  defnif surface_set_device_offset(surface, x_offset, y_offset)
+  @spec surface_set_device_offset(surface_handle(), Cairo.vec2()) :: :ok
+  defnif surface_set_device_offset(surface, offset)
 
   @spec surface_get_device_offset(surface_handle()) :: {number(), number()}
   defnif surface_get_device_offset(surface)
 
-  @spec surface_set_device_scale(surface_handle(), number(), number()) :: :ok
-  defnif surface_set_device_scale(surface, x_scale, y_scale)
+  @spec surface_set_device_scale(surface_handle(), Cairo.vec2()) :: :ok
+  defnif surface_set_device_scale(surface, scale)
 
   @spec surface_get_device_scale(surface_handle()) :: {number(), number()}
   defnif surface_get_device_scale(surface)
 
-  @spec surface_set_fallback_resolution(surface_handle(), number(), number()) :: :ok
-  defnif surface_set_fallback_resolution(surface, x_ppi, y_ppi)
+  @spec surface_set_fallback_resolution(surface_handle(), Cairo.vec2()) :: :ok
+  defnif surface_set_fallback_resolution(surface, ppi)
 
   @spec surface_get_fallback_resolution(surface_handle()) :: {number(), number()}
   defnif surface_get_fallback_resolution(surface)

@@ -163,18 +163,17 @@ NIF_DECL(nif_surface_mark_dirty_rectangle)
 
 NIF_DECL(nif_surface_set_device_offset)
 {
-  ENSURE_ARGC(3)
+  ENSURE_ARGC(2)
   REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
-  double x_offset;
-  double y_offset;
+  vec2_t offset;
 
-  if (!get_number(env, argv[1], &x_offset) || !get_number(env, argv[2], &y_offset))
+  if (!get_vec2(env, argv[1], &offset))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_surface_set_device_offset(surface, x_offset, y_offset);
+  cairo_surface_set_device_offset(surface, offset.first, offset.second);
 
   return g_atom_ok;
 }
@@ -194,18 +193,17 @@ NIF_DECL(nif_surface_get_device_offset)
 
 NIF_DECL(nif_surface_set_device_scale)
 {
-  ENSURE_ARGC(3)
+  ENSURE_ARGC(2)
   REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
-  double x_scale;
-  double y_scale;
+  vec2_t scale;
 
-  if (!get_number(env, argv[1], &x_scale) || !get_number(env, argv[2], &y_scale))
+  if (!get_vec2(env, argv[1], &scale))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_surface_set_device_scale(surface, x_scale, y_scale);
+  cairo_surface_set_device_scale(surface, scale.first, scale.second);
 
   return g_atom_ok;
 }
@@ -225,18 +223,17 @@ NIF_DECL(nif_surface_get_device_scale)
 
 NIF_DECL(nif_surface_set_fallback_resolution)
 {
-  ENSURE_ARGC(3)
+  ENSURE_ARGC(2)
   REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
-  double x_ppi;
-  double y_ppi;
+  vec2_t ppi;
 
-  if (!get_number(env, argv[1], &x_ppi) || !get_number(env, argv[2], &y_ppi))
+  if (!get_vec2(env, argv[1], &ppi))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_surface_set_fallback_resolution(surface, x_ppi, y_ppi);
+  cairo_surface_set_fallback_resolution(surface, ppi.first, ppi.second);
 
   return g_atom_ok;
 }
