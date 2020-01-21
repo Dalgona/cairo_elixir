@@ -20,5 +20,15 @@ template <> struct _destroy<cairo_surface_t>
   }
 };
 
+template <> struct _destroy<cairo_font_options_t>
+{
+  static void call(cairo_font_options_t *obj)
+  {
+    dbgprintf("\x1b[90mDestroying cairo_surface_t @ %p\x1b[m\r\n", obj);
+    cairo_font_options_destroy(obj);
+  }
+};
+
 template void resource_dtor<cairo_t>(ErlNifEnv *env, void *obj);
 template void resource_dtor<cairo_surface_t>(ErlNifEnv *env, void *obj);
+template void resource_dtor<cairo_font_options_t>(ErlNifEnv *env, void *obj);

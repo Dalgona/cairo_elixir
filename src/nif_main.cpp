@@ -30,6 +30,16 @@ int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
         nullptr
     );
 
+  g_res_type_font_options =
+    enif_open_resource_type(
+        env,
+        nullptr,
+        "cairo_font_options_t",
+        resource_dtor<cairo_font_options_t>,
+        ERL_NIF_RT_CREATE,
+        nullptr
+    );
+
 #define ATOM_DECL(a, _) g_atom_##a = enif_make_atom(env, #a);
   ATOMS
 #undef ATOM_DECL
