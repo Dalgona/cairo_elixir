@@ -13,6 +13,7 @@
   ATOM_DECL(error,) \
   ATOM_DECL(true,) \
   ATOM_DECL(false,) \
+  ATOM_DECL(nil,) \
   FORMAT_ATOMS \
   CONTENT_ATOMS \
   SURFACE_TYPE_ATOMS \
