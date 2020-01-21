@@ -10,7 +10,7 @@ ifeq ($(DEBUG),DEBUG)
 	CXXFLAGS += -DCAIRO_ELIXIR_NIF_DEBUG
 endif
 
-FILES = src/atoms.cpp src/resource_types.cpp src/utils.cpp src/nif_cairo.cpp src/nif_paths.cpp src/nif_surfaces.cpp src/nif_image_surfaces.cpp src/nif_png_support.cpp src/nif_main.cpp
+FILES = src/atoms.cpp src/resource_types.cpp src/utils.cpp src/nif_cairo.cpp src/nif_paths.cpp src/nif_font_options.cpp src/nif_surfaces.cpp src/nif_image_surfaces.cpp src/nif_png_support.cpp src/nif_main.cpp
 
 priv/nif_lib/nif_cairo.so: $(FILES)
 	$(CXX) $(CXXFLAGS) -shared $(LDFLAGS) -o $@ $(FILES)
