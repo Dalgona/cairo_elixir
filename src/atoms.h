@@ -20,7 +20,10 @@
   ANTIALIAS_ATOMS \
   FILL_RULE_ATOMS \
   LINE_CAP_ATOMS \
-  LINE_JOIN_ATOMS
+  LINE_JOIN_ATOMS \
+  SUBPIXEL_ORDER_ATOMS \
+  HINT_STYLE_ATOMS \
+  HINT_METRICS_ATOMS
 
 #define FORMAT_ATOMS \
   ATOM_DECL(invalid, CAIRO_FORMAT_INVALID) \
@@ -132,6 +135,25 @@
   ATOM_DECL(round_join, CAIRO_LINE_JOIN_ROUND) \
   ATOM_DECL(bevel_join, CAIRO_LINE_JOIN_BEVEL)
 
+#define SUBPIXEL_ORDER_ATOMS \
+  ATOM_DECL(subpixel_default, CAIRO_SUBPIXEL_ORDER_DEFAULT) \
+  ATOM_DECL(subpixel_rgb, CAIRO_SUBPIXEL_ORDER_RGB) \
+  ATOM_DECL(subpixel_bgr, CAIRO_SUBPIXEL_ORDER_BGR) \
+  ATOM_DECL(subpixel_vrgb, CAIRO_SUBPIXEL_ORDER_VRGB) \
+  ATOM_DECL(subpixel_vbgr, CAIRO_SUBPIXEL_ORDER_VBGR)
+
+#define HINT_STYLE_ATOMS \
+  ATOM_DECL(hint_default, CAIRO_HINT_STYLE_DEFAULT) \
+  ATOM_DECL(hint_none, CAIRO_HINT_STYLE_NONE) \
+  ATOM_DECL(hint_slight, CAIRO_HINT_STYLE_SLIGHT) \
+  ATOM_DECL(hint_medium, CAIRO_HINT_STYLE_MEDIUM) \
+  ATOM_DECL(hint_full, CAIRO_HINT_STYLE_FULL)
+
+#define HINT_METRICS_ATOMS \
+  ATOM_DECL(metrics_default, CAIRO_HINT_METRICS_DEFAULT) \
+  ATOM_DECL(metrics_off, CAIRO_HINT_METRICS_OFF) \
+  ATOM_DECL(metrics_on, CAIRO_HINT_METRICS_ON)
+
 #ifndef CAIRO_ELIXIR_NIF_ATOMS_IMPL
 #define EXTERN extern
 #else
@@ -156,6 +178,9 @@ extern template std::unordered_map<std::string, cairo_antialias_t> g_atom_map<ca
 extern template std::unordered_map<std::string, cairo_fill_rule_t> g_atom_map<cairo_fill_rule_t>;
 extern template std::unordered_map<std::string, cairo_line_cap_t> g_atom_map<cairo_line_cap_t>;
 extern template std::unordered_map<std::string, cairo_line_join_t> g_atom_map<cairo_line_join_t>;
+extern template std::unordered_map<std::string, cairo_subpixel_order_t> g_atom_map<cairo_subpixel_order_t>;
+extern template std::unordered_map<std::string, cairo_hint_style_t> g_atom_map<cairo_hint_style_t>;
+extern template std::unordered_map<std::string, cairo_hint_metrics_t> g_atom_map<cairo_hint_metrics_t>;
 
 extern template std::unordered_map<cairo_format_t, ERL_NIF_TERM *> g_enum_map<cairo_format_t>;
 extern template std::unordered_map<cairo_content_t, ERL_NIF_TERM *> g_enum_map<cairo_content_t>;
@@ -165,6 +190,9 @@ extern template std::unordered_map<cairo_antialias_t, ERL_NIF_TERM *> g_enum_map
 extern template std::unordered_map<cairo_fill_rule_t, ERL_NIF_TERM *> g_enum_map<cairo_fill_rule_t>;
 extern template std::unordered_map<cairo_line_cap_t, ERL_NIF_TERM *> g_enum_map<cairo_line_cap_t>;
 extern template std::unordered_map<cairo_line_join_t, ERL_NIF_TERM *> g_enum_map<cairo_line_join_t>;
+extern template std::unordered_map<cairo_subpixel_order_t, ERL_NIF_TERM *> g_enum_map<cairo_subpixel_order_t>;
+extern template std::unordered_map<cairo_hint_style_t, ERL_NIF_TERM *> g_enum_map<cairo_hint_style_t>;
+extern template std::unordered_map<cairo_hint_metrics_t, ERL_NIF_TERM *> g_enum_map<cairo_hint_metrics_t>;
 #endif
 
 template <typename T> int enum_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term, T *dest)
