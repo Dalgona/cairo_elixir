@@ -3,9 +3,11 @@ defmodule Cairo.NativeFunctions do
 
   require __MODULE__.Macros
   import __MODULE__.Macros
+  alias Cairo.FontOptions
   alias Cairo.Surface
 
   @type cairo_handle :: term()
+  @type font_options_handle :: term()
   @type surface_handle :: term()
 
   @on_load :load_nif
@@ -214,6 +216,52 @@ defmodule Cairo.NativeFunctions do
 
   @spec path_extents(cairo_handle()) :: {Cairo.vec2(), Cairo.vec2()}
   defnif path_extents(cr)
+
+  #
+  # FONT OPTIONS
+  #
+
+  @spec font_options_create() :: font_options_handle()
+  defnif font_options_create()
+
+  @spec font_options_copy(font_options_handle()) :: font_options_handle()
+  defnif font_options_copy(options)
+
+  @spec font_options_status(font_options_handle()) :: Cairo.status()
+  defnif font_options_status(options)
+
+  @spec font_options_merge(font_options_handle(), font_options_handle()) :: :ok
+  defnif font_options_merge(options, other)
+
+  @spec font_options_set_antialias(font_options_handle(), Cairo.antialias()) :: :ok
+  defnif font_options_set_antialias(options, antialias)
+
+  @spec font_options_get_antialias(font_options_handle()) :: Cairo.antialias()
+  defnif font_options_get_antialias(options)
+
+  @spec font_options_set_subpixel_order(font_options_handle(), FontOptions.subpixel_order()) :: :ok
+  defnif font_options_set_subpixel_order(options, subpixel_order)
+
+  @spec font_options_get_subpixel_order(font_options_handle()) :: FontOptions.subpixel_order()
+  defnif font_options_get_subpixel_order(options)
+
+  @spec font_options_set_hint_style(font_options_handle(), FontOptions.hint_style()) :: :ok
+  defnif font_options_set_hint_style(options, hint_style)
+
+  @spec font_options_get_hint_style(font_options_handle()) :: FontOptions.hint_style()
+  defnif font_options_get_hint_style(font_options_handle())
+
+  @spec font_options_set_hint_metrics(font_options_handle(), FontOptions.font_metrics()) :: :ok
+  defnif font_options_set_hint_metrics(options, font_metrics)
+
+  @spec font_options_get_hint_metrics(font_options_handle()) :: FontOptions.font_metrics()
+  defnif font_options_get_hint_metrics(options)
+
+  @spec font_options_set_variations(font_options_handle(), binary()) :: :ok
+  defnif font_options_set_variations(options, variations)
+
+  @spec font_options_get_variations(font_options_handle()) :: binary()
+  defnif font_options_get_variations(options)
 
   #
   # SURFACES
