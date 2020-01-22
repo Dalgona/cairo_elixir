@@ -47,7 +47,53 @@ int get_vec2(ErlNifEnv *env, const ERL_NIF_TERM term, vec2_t *dest)
   }
 }
 
+int get_matrix(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_matrix_t *dest)
+{
+  const ERL_NIF_TERM *outer_arr;
+  const ERL_NIF_TERM *inner_arrs[3];
+  int arity;
+  double tuple_values[3][2] { 0 };
+
+  if (!enif_get_tuple(env, term, &arity, &outer_arr) || arity != 3)
+  {
+    return 0;
+  }
+
+  for (int i = 0; i < 3; i++)
+  {
+    if (!enif_get_tuple(env, outer_arr[i], &arity, &inner_arrs[i]) || arity != 2)
+    {
+      return 0;
+    }
+
+    if (!get_number(env, inner_arrs[i][0], &tuple_values[i][0])
+        || !get_number(env, inner_arrs[i][1], &tuple_values[i][1]))
+    {
+      return 0;
+    }
+  }
+
+  dest->xx = tuple_values[0][0];
+  dest->yx = tuple_values[0][1];
+  dest->xy = tuple_values[1][0];
+  dest->yy = tuple_values[1][1];
+  dest->x0 = tuple_values[2][0];
+  dest->y0 = tuple_values[2][1];
+
+  return 1;
+}
+
 ERL_NIF_TERM make_vec2(ErlNifEnv *env, const double e1, const double e2)
 {
   return enif_make_tuple2(env, enif_make_double(env, e1), enif_make_double(env, e2));
+}
+
+ERL_NIF_TERM make_matrix(ErlNifEnv *env, const cairo_matrix_t *matrix)
+{
+  return enif_make_tuple3(
+    env,
+    enif_make_tuple2(env, enif_make_double(env, matrix->xx), enif_make_double(env, matrix->yx)),
+    enif_make_tuple2(env, enif_make_double(env, matrix->xy), enif_make_double(env, matrix->yy)),
+    enif_make_tuple2(env, enif_make_double(env, matrix->x0), enif_make_double(env, matrix->y0))
+  );
 }
