@@ -26,18 +26,13 @@ int get_vec2(ErlNifEnv *env, const ERL_NIF_TERM term, vec2_t *dest)
   const ERL_NIF_TERM *arr;
   int arity;
 
-  if (!enif_get_tuple(env, term, &arity, &arr))
+  if (!enif_get_tuple(env, term, &arity, &arr) || arity != 2)
   {
     return 0;
   }
 
-  if (arity != 2)
-  {
-    return 0;
-  }
-
-  if (get_number(env, arr[0], &std::get<0>(*dest))
-      && get_number(env, arr[1], &std::get<1>(*dest)))
+  if (get_number(env, arr[0], &dest->first)
+      && get_number(env, arr[1], &dest->second))
   {
     return 1;
   }
