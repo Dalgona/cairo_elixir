@@ -364,7 +364,8 @@ defmodule Cairo.NativeFunctions do
   # PNG SUPPORT
   #
 
-  # defnif image_surface_create_from_png(data)
+  @spec image_surface_create_from_png(binary()) :: surface_handle()
+  defnif image_surface_create_from_png(data)
 
   @spec surface_write_to_png(surface_handle()) :: iodata()
   defnif surface_write_to_png(surface)

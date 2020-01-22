@@ -4,6 +4,36 @@
 
 #include "nif_png_support.h"
 
+cairo_status_t read_func(void *closure, unsigned char *data, unsigned int length)
+{
+  auto state = (std::pair<unsigned char *, unsigned char *> *)closure;
+  size_t remaining = state->second - state->first;
+
+  memcpy(data, state->first, remaining < length ? remaining : length);
+
+  state->first += length;
+
+  return CAIRO_STATUS_SUCCESS;
+}
+
+NIF_DECL(nif_image_surface_create_from_png)
+{
+  ENSURE_ARGC(1)
+
+  ErlNifBinary bin_data;
+
+  if (!enif_inspect_binary(env, argv[0], &bin_data))
+  {
+    return enif_make_badarg(env);
+  }
+
+  unsigned char *start = bin_data.data;
+  unsigned char *end = start + bin_data.size;
+  auto state = std::make_pair(start, end);
+
+  return create_resource(env, g_res_type_surface, cairo_image_surface_create_from_png_stream(read_func, &state));
+}
+
 cairo_status_t write_func(void *closure, const unsigned char *data, unsigned int length)
 {
   auto binaries = (std::vector<ErlNifBinary> *)closure;
