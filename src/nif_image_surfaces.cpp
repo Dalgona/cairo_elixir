@@ -1,6 +1,6 @@
 #include <cstring>
 
-#include "nif_image_surfaces.h"
+#include "include/nif_image_surfaces.h"
 
 NIF_DECL(nif_format_stride_for_width)
 {

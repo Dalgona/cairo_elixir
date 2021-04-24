@@ -1,6 +1,6 @@
 #include <cstring>
 
-#include "nif_cairo.h"
+#include "include/nif_cairo.h"
 
 NIF_DECL(nif_create)
 {

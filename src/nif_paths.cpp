@@ -1,4 +1,4 @@
-#include "nif_paths.h"
+#include "include/nif_paths.h"
 
 NIF_DECL(nif_has_current_point)
 {

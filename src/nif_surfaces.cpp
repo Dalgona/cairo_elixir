@@ -1,6 +1,6 @@
 #include <cstring>
 
-#include "nif_surfaces.h"
+#include "include/nif_surfaces.h"
 
 NIF_DECL(nif_surface_create_similar)
 {

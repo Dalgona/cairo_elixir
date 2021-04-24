@@ -1,5 +1,5 @@
 #define CAIRO_ELIXIR_NIF_ATOMS_IMPL
-#include "atoms.h"
+#include "include/atoms.h"
 
 #define ATOM_DECL(a, e) { #a, e },
 template <> std::unordered_map<std::string, cairo_format_t> g_atom_map<cairo_format_t> { FORMAT_ATOMS };

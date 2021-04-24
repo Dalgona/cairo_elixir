@@ -1,6 +1,6 @@
 #include <cstring>
 
-#include "nif_font_options.h"
+#include "include/nif_font_options.h"
 
 NIF_DECL(nif_font_options_create)
 {

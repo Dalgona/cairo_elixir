@@ -2,7 +2,7 @@
 #include <vector>
 #include <cstring>
 
-#include "nif_png_support.h"
+#include "include/nif_png_support.h"
 
 cairo_status_t read_func(void *closure, unsigned char *data, unsigned int length)
 {

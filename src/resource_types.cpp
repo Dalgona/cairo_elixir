@@ -1,6 +1,6 @@
 #define CAIRO_ELIXIR_NIF_RESOURCE_TYPES_IMPL
-#include "debug.h"
-#include "resource_types.h"
+#include "include/debug.h"
+#include "include/resource_types.h"
 
 template <> struct _destroy<cairo_t>
 {

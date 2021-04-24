@@ -1,13 +1,13 @@
 #include <cstring>
 
-#include "nif_common.h"
+#include "include/nif_common.h"
 
-#include "nif_cairo.h"
-#include "nif_paths.h"
-#include "nif_font_options.h"
-#include "nif_surfaces.h"
-#include "nif_image_surfaces.h"
-#include "nif_png_support.h"
+#include "include/nif_cairo.h"
+#include "include/nif_paths.h"
+#include "include/nif_font_options.h"
+#include "include/nif_surfaces.h"
+#include "include/nif_image_surfaces.h"
+#include "include/nif_png_support.h"
 
 int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 {
