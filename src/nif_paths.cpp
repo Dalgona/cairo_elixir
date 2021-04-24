@@ -61,14 +61,7 @@ NIF_DECL(nif_arc)
   double angle1;
   double angle2;
 
-  if (!get_vec2(env, argv[1], &center)
-      || !get_number(env, argv[2], &radius)
-      || !get_number(env, argv[3], &angle1)
-      || !get_number(env, argv[4], &angle2))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &center, &radius, &angle1, &angle2);
   cairo_arc(cr, center.first, center.second, radius, angle1, angle2);
 
   return g_atom_ok;
@@ -84,14 +77,7 @@ NIF_DECL(nif_arc_negative)
   double angle1;
   double angle2;
 
-  if (!get_vec2(env, argv[1], &center)
-      || !get_number(env, argv[2], &radius)
-      || !get_number(env, argv[3], &angle1)
-      || !get_number(env, argv[4], &angle2))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &center, &radius, &angle1, &angle2);
   cairo_arc_negative(cr, center.first, center.second, radius, angle1, angle2);
 
   return g_atom_ok;
@@ -106,13 +92,7 @@ NIF_DECL(nif_curve_to)
   vec2_t pt2;
   vec2_t pt3;
 
-  if (!get_vec2(env, argv[1], &pt1)
-      || !get_vec2(env, argv[2], &pt2)
-      || !get_vec2(env, argv[3], &pt3))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &pt1, &pt2, &pt3);
   cairo_curve_to(cr, pt1.first, pt1.second, pt2.first, pt2.second, pt3.first, pt3.second);
 
   return g_atom_ok;
@@ -125,11 +105,7 @@ NIF_DECL(nif_line_to)
 
   vec2_t pt;
 
-  if (!get_vec2(env, argv[1], &pt))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &pt);
   cairo_line_to(cr, pt.first, pt.second);
 
   return g_atom_ok;
@@ -142,11 +118,7 @@ NIF_DECL(nif_move_to)
 
   vec2_t pt;
 
-  if (!get_vec2(env, argv[1], &pt))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &pt);
   cairo_move_to(cr, pt.first, pt.second);
 
   return g_atom_ok;
@@ -162,14 +134,7 @@ NIF_DECL(nif_rectangle)
   double width;
   double height;
 
-  if (!get_number(env, argv[1], &x)
-      || !get_number(env, argv[2], &y)
-      || !get_number(env, argv[3], &width)
-      || !get_number(env, argv[4], &height))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &x, &y, &width, &height);
   cairo_rectangle(cr, x, y, width, height);
 
   return g_atom_ok;
@@ -202,13 +167,7 @@ NIF_DECL(nif_rel_curve_to)
   vec2_t pt2;
   vec2_t pt3;
 
-  if (!get_vec2(env, argv[1], &pt1)
-      || !get_vec2(env, argv[2], &pt2)
-      || !get_vec2(env, argv[3], &pt3))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &pt1, &pt2, &pt3);
   cairo_rel_curve_to(cr, pt1.first, pt1.second, pt2.first, pt2.second, pt3.first, pt3.second);
 
   return g_atom_ok;
@@ -221,11 +180,7 @@ NIF_DECL(nif_rel_line_to)
 
   vec2_t diff;
 
-  if (!get_vec2(env, argv[1], &diff))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &diff);
   cairo_rel_line_to(cr, diff.first, diff.second);
 
   return g_atom_ok;
@@ -238,11 +193,7 @@ NIF_DECL(nif_rel_move_to)
 
   vec2_t diff;
 
-  if (!get_vec2(env, argv[1], &diff))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &diff);
   cairo_rel_move_to(cr, diff.first, diff.second);
 
   return g_atom_ok;

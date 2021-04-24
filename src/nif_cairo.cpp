@@ -47,13 +47,7 @@ NIF_DECL(nif_set_source_rgb)
   double green;
   double blue;
 
-  if (!get_number(env, argv[1], &red)
-      || !get_number(env, argv[2], &green)
-      || !get_number(env, argv[3], &blue))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &red, &green, &blue);
   cairo_set_source_rgb(cr, red, green, blue);
 
   return g_atom_ok;
@@ -69,14 +63,7 @@ NIF_DECL(nif_set_source_rgba)
   double blue;
   double alpha;
 
-  if (!get_number(env, argv[1], &red)
-      || !get_number(env, argv[2], &green)
-      || !get_number(env, argv[3], &blue)
-      || !get_number(env, argv[4], &alpha))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &red, &green, &blue, &alpha);
   cairo_set_source_rgba(cr, red, green, blue, alpha);
 
   return g_atom_ok;
@@ -248,11 +235,7 @@ NIF_DECL(nif_set_line_width)
 
   double line_width;
 
-  if (!get_number(env, argv[1], &line_width))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &line_width);
   cairo_set_line_width(cr, line_width);
 
   return g_atom_ok;
@@ -273,11 +256,7 @@ NIF_DECL(nif_set_miter_limit)
 
   double limit;
 
-  if (!get_number(env, argv[1], &limit))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &limit);
   cairo_set_miter_limit(cr, limit);
 
   return g_atom_ok;
@@ -298,11 +277,7 @@ NIF_DECL(nif_set_tolerance)
 
   double tolerance;
 
-  if (!get_number(env, argv[1], &tolerance))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &tolerance);
   cairo_set_tolerance(cr, tolerance);
 
   return g_atom_ok;
@@ -443,11 +418,7 @@ NIF_DECL(nif_paint_with_alpha)
 
   double alpha;
 
-  if (!get_number(env, argv[1], &alpha))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &alpha);
   cairo_paint_with_alpha(cr, alpha);
 
   return g_atom_ok;
