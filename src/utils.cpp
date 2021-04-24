@@ -78,9 +78,38 @@ int get_matrix(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_matrix_t *dest)
   return 1;
 }
 
-template <> int _getvalue<double>(ErlNifEnv *env, ERL_NIF_TERM term, double *dest) { return get_number(env, term, dest); }
-template <> int _getvalue<vec2_t>(ErlNifEnv *env, ERL_NIF_TERM term, vec2_t *dest) { return get_vec2(env, term, dest); }
-template <> int _getvalue<cairo_matrix_t>(ErlNifEnv *env, ERL_NIF_TERM term, cairo_matrix_t *dest) { return get_matrix(env, term, dest); }
+template <typename T> int _getlist(ErlNifEnv *env, const ERL_NIF_TERM term, std::vector<T> *dest)
+{
+  ERL_NIF_TERM head;
+  ERL_NIF_TERM tail = term;
+  T item;
+
+  if (!enif_is_list(env, term))
+  {
+    return 0;
+  }
+
+  while (enif_get_list_cell(env, tail, &head, &tail))
+  {
+    if (_getvalue(env, head, &item))
+    {
+      dest->push_back(item);
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+  return 1;
+}
+
+template <> int _getvalue<double>(ErlNifEnv *env, const ERL_NIF_TERM term, double *dest) { return get_number(env, term, dest); }
+template <> int _getvalue<vec2_t>(ErlNifEnv *env, const ERL_NIF_TERM term, vec2_t *dest) { return get_vec2(env, term, dest); }
+template <> int _getvalue<cairo_matrix_t>(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_matrix_t *dest) { return get_matrix(env, term, dest); }
+
+template <typename T> int _getvalue(ErlNifEnv *env, const ERL_NIF_TERM term, std::vector<T> *dest) { return _getlist(env, term, dest); }
+template int _getvalue<double>(ErlNifEnv *env, const ERL_NIF_TERM term, std::vector<double> *dest);
 
 ERL_NIF_TERM make_vec2(ErlNifEnv *env, const double e1, const double e2)
 {
