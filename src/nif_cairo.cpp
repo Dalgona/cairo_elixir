@@ -99,30 +99,11 @@ NIF_DECL(nif_set_dash)
   ENSURE_ARGC(3)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  unsigned int list_length;
+  std::vector<double> dashes;
   double dash_offset;
-  ERL_NIF_TERM head;
-  ERL_NIF_TERM tail = argv[1];
 
-  if (!enif_get_list_length(env, argv[1], &list_length)
-      || !get_number(env, argv[2], &dash_offset))
-  {
-    return enif_make_badarg(env);
-  }
-
-  double *dashes = new double[list_length];
-
-  for (int i = 0; enif_get_list_cell(env, tail, &head, &tail); i++)
-  {
-    if (!get_number(env, head, dashes + i))
-    {
-      return enif_make_badarg(env);
-    }
-  }
-
-  cairo_set_dash(cr, dashes, list_length, dash_offset);
-
-  delete[] dashes;
+  get_values(env, argv, &dashes, &dash_offset);
+  cairo_set_dash(cr, dashes.data(), dashes.size(), dash_offset);
 
   return g_atom_ok;
 }

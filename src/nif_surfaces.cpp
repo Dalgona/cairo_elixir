@@ -121,14 +121,7 @@ NIF_DECL(nif_surface_mark_dirty_rectangle)
   int width;
   int height;
 
-  if (!enif_get_int(env, argv[1], &x)
-      || !enif_get_int(env, argv[2], &y)
-      || !enif_get_int(env, argv[3], &width)
-      || !enif_get_int(env, argv[4], &height))
-  {
-    return enif_make_badarg(env);
-  }
-
+  get_values(env, argv, &x, &y, &width, &height);
   cairo_surface_mark_dirty_rectangle(surface, x, y, width, height);
 
   return g_atom_ok;
