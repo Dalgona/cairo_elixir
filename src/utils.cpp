@@ -104,6 +104,7 @@ template <typename T> int _getlist(ErlNifEnv *env, const ERL_NIF_TERM term, std:
   return 1;
 }
 
+template <> int _getvalue<int>(ErlNifEnv *env, const ERL_NIF_TERM term, int *dest) { return enif_get_int(env, term, dest); }
 template <> int _getvalue<double>(ErlNifEnv *env, const ERL_NIF_TERM term, double *dest) { return get_number(env, term, dest); }
 template <> int _getvalue<vec2_t>(ErlNifEnv *env, const ERL_NIF_TERM term, vec2_t *dest) { return get_vec2(env, term, dest); }
 template <> int _getvalue<cairo_matrix_t>(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_matrix_t *dest) { return get_matrix(env, term, dest); }

@@ -23,6 +23,7 @@ template <typename T> int _getvalue(ErlNifEnv *env, const ERL_NIF_TERM term, T *
 template <typename T> int _getvalue(ErlNifEnv *env, const ERL_NIF_TERM term, std::vector<T> *dest);
 
 #ifndef CAIRO_ELIXIR_NIF_UTILS_IMPL
+extern template int _getvalue<int>(ErlNifEnv *env, const ERL_NIF_TERM term, int *dest);
 extern template int _getvalue<double>(ErlNifEnv *env, const ERL_NIF_TERM term, double *dest);
 extern template int _getvalue<vec2_t>(ErlNifEnv *env, const ERL_NIF_TERM term, vec2_t *dest);
 extern template int _getvalue<cairo_matrix_t>(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_matrix_t *dest);
