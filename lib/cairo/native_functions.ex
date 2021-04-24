@@ -16,6 +16,7 @@ defmodule Cairo.NativeFunctions do
     :cairo
     |> :code.priv_dir()
     |> Path.join("nif_lib/nif_cairo")
+    |> to_charlist()
     |> :erlang.load_nif(nil)
   end
 
