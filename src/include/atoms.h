@@ -27,7 +27,8 @@
   HINT_STYLE_ATOMS \
   HINT_METRICS_ATOMS \
   WRAP_MODE_ATOMS \
-  ELLIPSIZE_MODE_ATOMS
+  ELLIPSIZE_MODE_ATOMS \
+  ALIGNMENT_ATOMS
 
 #define FORMAT_ATOMS \
   ATOM_DECL(invalid, CAIRO_FORMAT_INVALID) \
@@ -169,6 +170,11 @@
   ATOM_DECL(ellipsize_middle, PANGO_ELLIPSIZE_MIDDLE) \
   ATOM_DECL(ellipsize_end, PANGO_ELLIPSIZE_END)
 
+#define ALIGNMENT_ATOMS \
+  ATOM_DECL(align_left, PANGO_ALIGN_LEFT) \
+  ATOM_DECL(align_center, PANGO_ALIGN_CENTER) \
+  ATOM_DECL(align_right, PANGO_ALIGN_RIGHT)
+
 #ifndef CAIRO_ELIXIR_NIF_ATOMS_IMPL
 #define EXTERN extern
 #else
@@ -198,6 +204,7 @@ extern template std::unordered_map<std::string, cairo_hint_style_t> g_atom_map<c
 extern template std::unordered_map<std::string, cairo_hint_metrics_t> g_atom_map<cairo_hint_metrics_t>;
 extern template std::unordered_map<std::string, PangoWrapMode> g_atom_map<PangoWrapMode>;
 extern template std::unordered_map<std::string, PangoEllipsizeMode> g_atom_map<PangoEllipsizeMode>;
+extern template std::unordered_map<std::string, PangoAlignment> g_atom_map<PangoAlignment>;
 
 extern template std::unordered_map<cairo_format_t, ERL_NIF_TERM *> g_enum_map<cairo_format_t>;
 extern template std::unordered_map<cairo_content_t, ERL_NIF_TERM *> g_enum_map<cairo_content_t>;
@@ -212,6 +219,7 @@ extern template std::unordered_map<cairo_hint_style_t, ERL_NIF_TERM *> g_enum_ma
 extern template std::unordered_map<cairo_hint_metrics_t, ERL_NIF_TERM *> g_enum_map<cairo_hint_metrics_t>;
 extern template std::unordered_map<PangoWrapMode, ERL_NIF_TERM *> g_enum_map<PangoWrapMode>;
 extern template std::unordered_map<PangoEllipsizeMode, ERL_NIF_TERM *> g_enum_map<PangoEllipsizeMode>;
+extern template std::unordered_map<PangoAlignment, ERL_NIF_TERM *> g_enum_map<PangoAlignment>;
 #endif
 
 template <typename T> int enum_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term, T *dest)
@@ -239,6 +247,7 @@ extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_c
 extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_join_t *);
 extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, PangoWrapMode *);
 extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, PangoEllipsizeMode *);
+extern template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, PangoAlignment *);
 #endif
 
 template <typename T> ERL_NIF_TERM enum_to_atom(ErlNifEnv *env, const T value) { return *g_enum_map<T>[value]; }
@@ -254,6 +263,7 @@ extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_cap_t);
 extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_join_t);
 extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const PangoWrapMode);
 extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const PangoEllipsizeMode);
+extern template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const PangoAlignment);
 #endif
 
 #endif
