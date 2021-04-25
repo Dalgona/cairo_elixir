@@ -42,6 +42,16 @@ int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
         nullptr
     );
 
+  g_res_type_pango_font_description =
+    enif_open_resource_type(
+        env,
+        nullptr,
+        "PangoFontDescription",
+        resource_dtor<PangoFontDescription>,
+        ERL_NIF_RT_CREATE,
+        nullptr
+    );
+
   g_res_type_pango_layout =
     enif_open_resource_type(
         env,

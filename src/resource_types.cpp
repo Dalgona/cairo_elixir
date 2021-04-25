@@ -29,6 +29,15 @@ template <> struct _destroy<cairo_font_options_t>
   }
 };
 
+template <> struct _destroy<PangoFontDescription>
+{
+  static void call(PangoFontDescription *obj)
+  {
+    dbgprintf("\x1b[90mDestroying PangoFontDescription @ %p\x1b[m\r\n", obj);
+    pango_font_description_free(obj);
+  }
+};
+
 template <> struct _destroy<PangoLayout>
 {
   static void call(PangoLayout *obj)
@@ -41,4 +50,5 @@ template <> struct _destroy<PangoLayout>
 template void resource_dtor<cairo_t>(ErlNifEnv *env, void *obj);
 template void resource_dtor<cairo_surface_t>(ErlNifEnv *env, void *obj);
 template void resource_dtor<cairo_font_options_t>(ErlNifEnv *env, void *obj);
+template void resource_dtor<PangoFontDescription>(ErlNifEnv *env, void *obj);
 template void resource_dtor<PangoLayout>(ErlNifEnv *env, void *obj);
