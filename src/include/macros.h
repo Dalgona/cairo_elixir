@@ -6,10 +6,14 @@
 #define ENSURE_ARGC(x) if (argc != x) { return enif_make_badarg(env); }
 
 #define REQUIRE_OBJECT(T, TRes, var, argi) \
-  T **_ppobj = NULL; \
-  if (!enif_get_resource(env, argv[argi], g_res_type_##TRes, (void **)&_ppobj)) { \
-    return enif_make_badarg(env); \
-  } \
-  T *var = *_ppobj;
+  T *var = nullptr; \
+  { \
+    T **_ppobj = nullptr; \
+    if (!enif_get_resource(env, argv[argi], g_res_type_##TRes, (void **)&_ppobj)) \
+    { \
+      return enif_make_badarg(env); \
+    } \
+    var = *_ppobj; \
+  }
 
 #endif
