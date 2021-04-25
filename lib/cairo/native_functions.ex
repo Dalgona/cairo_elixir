@@ -9,6 +9,7 @@ defmodule Cairo.NativeFunctions do
   @type cairo_handle :: term()
   @type font_options_handle :: term()
   @type surface_handle :: term()
+  @type pango_font_desc_handle :: term()
   @type pango_layout_handle :: term()
 
   @on_load :load_nif
@@ -371,6 +372,13 @@ defmodule Cairo.NativeFunctions do
 
   @spec surface_write_to_png(surface_handle()) :: iodata()
   defnif surface_write_to_png(surface)
+
+  #
+  # PANGO FONT DESCRIPTIONS
+  #
+
+  @spec pango_font_desc_from_string(binary()) :: pango_font_desc_handle()
+  defnif pango_font_desc_from_string(str)
 
   #
   # PANGO CAIRO
