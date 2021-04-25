@@ -9,6 +9,7 @@
 #include "include/nif_image_surfaces.h"
 #include "include/nif_png_support.h"
 #include "include/nif_pango_font_desc.h"
+#include "include/nif_pango_layout.h"
 #include "include/nif_pango_cairo.h"
 
 int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
@@ -79,6 +80,7 @@ ErlNifFunc nif_funcs[] = {
   IMAGE_SURFACE_NIFS
   PNG_SUPPORT_NIFS
   PANGO_FONT_DESC_NIFS
+  PANGO_LAYOUT_NIFS
   PANGO_CAIRO_NIFS
 #undef USE_NIF
 };

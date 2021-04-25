@@ -4,6 +4,7 @@ defmodule Cairo.NativeFunctions do
   require __MODULE__.Macros
   import __MODULE__.Macros
   alias Cairo.FontOptions
+  alias Cairo.Pango
   alias Cairo.Surface
 
   @type cairo_handle :: term()
@@ -379,6 +380,49 @@ defmodule Cairo.NativeFunctions do
 
   @spec pango_font_desc_from_string(binary()) :: pango_font_desc_handle()
   defnif pango_font_desc_from_string(str)
+
+  #
+  # PANGO LAYOUTS
+  #
+
+  @spec pango_layout_set_ellipsize(pango_layout_handle(), Pango.ellipsize_mode()) :: :ok
+  defnif pango_layout_set_ellipsize(layout, ellipsize)
+
+  @spec pango_layout_set_font_description(pango_layout_handle(), pango_font_desc_handle()) :: :ok
+  defnif pango_layout_set_font_description(layout, font_desc)
+
+  @spec pango_layout_set_height(pango_layout_handle(), number()) :: :ok
+  defnif pango_layout_set_height(layout, height)
+
+  @spec pango_layout_set_indent(pango_layout_handle(), number()) :: :ok
+  defnif pango_layout_set_indent(layout, indent)
+
+  @spec pango_layout_set_justify(pango_layout_handle(), boolean()) :: :ok
+  defnif pango_layout_set_justify(layout, justify)
+
+  # pango_layout_set_line_spacing
+
+  @spec pango_layout_set_markup(pango_layout_handle(), binary()) :: :ok
+  defnif pango_layout_set_markup(layout, markup)
+
+  # pango_layout_set_markup_with_accel
+
+  @spec pango_layout_set_single_paragraph_mode(pango_layout_handle(), boolean()) :: :ok
+  defnif pango_layout_set_single_paragraph_mode(layout, setting)
+
+  # pango_layout_set_spacing
+  # pango_layout_set_tabs
+
+  @spec pango_layout_set_text(pango_layout_handle(), binary()) :: :ok
+  defnif pango_layout_set_text(layout, text)
+
+  @spec pango_layout_set_width(pango_layout_handle(), number()) :: :ok
+  defnif pango_layout_set_width(layout, width)
+
+  @spec pango_layout_set_wrap(pango_layout_handle(), Pango.wrap_mode()) :: :ok
+  defnif pango_layout_set_wrap(layout, wrap)
+
+  # pango_layout_xy_to_index
 
   #
   # PANGO CAIRO
