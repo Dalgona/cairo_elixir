@@ -18,7 +18,7 @@ ifeq ($(DEBUG),DEBUG)
 	CXXFLAGS += -DCAIRO_ELIXIR_NIF_DEBUG
 endif
 
-FILES = atoms resource_types utils nif_cairo nif_paths nif_font_options nif_surfaces nif_image_surfaces nif_png_support
+FILES = atoms resource_types utils nif_cairo nif_paths nif_font_options nif_surfaces nif_image_surfaces nif_png_support nif_pango_cairo
 SRCFILES = $(addsuffix .cpp, $(addprefix src/, $(FILES)))
 OBJFILES = $(addsuffix .o, $(addprefix $(OUT_DIR)/build/, $(FILES)))
 MAIN_SRCFILE = src/nif_main.cpp

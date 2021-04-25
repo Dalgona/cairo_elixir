@@ -9,6 +9,7 @@ defmodule Cairo.NativeFunctions do
   @type cairo_handle :: term()
   @type font_options_handle :: term()
   @type surface_handle :: term()
+  @type pango_layout_handle :: term()
 
   @on_load :load_nif
 
@@ -370,4 +371,43 @@ defmodule Cairo.NativeFunctions do
 
   @spec surface_write_to_png(surface_handle()) :: iodata()
   defnif surface_write_to_png(surface)
+
+  #
+  # PANGO CAIRO
+  #
+
+  # pc_context_get_font_options
+  # pc_context_get_resolution
+  # pc_context_get_shape_renderer
+  # pc_context_set_font_options
+  # pc_context_set_resolution
+  # pc_context_set_shape_renderer
+  # pc_create_context
+
+  @spec pc_create_layout(cairo_handle()) :: pango_layout_handle()
+  defnif pc_create_layout(cr)
+
+  @spec pc_error_underline_path(cairo_handle(), number(), number(), number(), number()) :: :ok
+  defnif pc_error_underline_path(cr, x, y, width, height)
+
+  # pc_glyph_string_path
+  # pc_layout_line_path
+
+  @spec pc_layout_path(cairo_handle(), pango_layout_handle()) :: :ok
+  defnif pc_layout_path(cr, layout)
+
+  @spec pc_show_error_underline(cairo_handle(), number(), number(), number(), number()) :: :ok
+  defnif pc_show_error_underline(cr, x, y, width, height)
+
+  # pc_show_glyph_item
+  # pc_show_glyph_string
+
+  @spec pc_show_layout(cairo_handle(), pango_layout_handle()) :: :ok
+  defnif pc_show_layout(cr, layout)
+
+  # pc_show_layout_line
+  # pc_update_context
+
+  @spec pc_update_layout(cairo_handle(), pango_layout_handle()) :: :ok
+  defnif pc_update_layout(cr, layout)
 end

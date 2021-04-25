@@ -8,6 +8,7 @@
 #include "include/nif_surfaces.h"
 #include "include/nif_image_surfaces.h"
 #include "include/nif_png_support.h"
+#include "include/nif_pango_cairo.h"
 
 int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 {
@@ -41,13 +42,22 @@ int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
         nullptr
     );
 
+  g_res_type_pango_layout =
+    enif_open_resource_type(
+        env,
+        nullptr,
+        "PangoLayout",
+        resource_dtor<PangoLayout>,
+        ERL_NIF_RT_CREATE,
+        nullptr
+    );
+
 #define ATOM_DECL(a, _) g_atom_##a = enif_make_atom(env, #a);
   ATOMS
 #undef ATOM_DECL
 
   return 0;
 }
-
 
 ErlNifFunc nif_funcs[] = {
 #define USE_NIF(name, arity) { #name, arity, nif_##name, 0 },
@@ -57,6 +67,7 @@ ErlNifFunc nif_funcs[] = {
   SURFACE_NIFS
   IMAGE_SURFACE_NIFS
   PNG_SUPPORT_NIFS
+  PANGO_CAIRO_NIFS
 #undef USE_NIF
 };
 
