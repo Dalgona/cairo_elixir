@@ -13,6 +13,8 @@ template <> std::unordered_map<std::string, cairo_line_join_t> g_atom_map<cairo_
 template <> std::unordered_map<std::string, cairo_subpixel_order_t> g_atom_map<cairo_subpixel_order_t> { SUBPIXEL_ORDER_ATOMS };
 template <> std::unordered_map<std::string, cairo_hint_style_t> g_atom_map<cairo_hint_style_t> { HINT_STYLE_ATOMS };
 template <> std::unordered_map<std::string, cairo_hint_metrics_t> g_atom_map<cairo_hint_metrics_t> { HINT_METRICS_ATOMS };
+template <> std::unordered_map<std::string, PangoWrapMode> g_atom_map<PangoWrapMode> { WRAP_MODE_ATOMS };
+template <> std::unordered_map<std::string, PangoEllipsizeMode> g_atom_map<PangoEllipsizeMode> { ELLIPSIZE_MODE_ATOMS };
 #undef ATOM_DECL
 
 #define ATOM_DECL(a, e) { e, &g_atom_##a },
@@ -27,6 +29,8 @@ template <> std::unordered_map<cairo_line_join_t, ERL_NIF_TERM *> g_enum_map<cai
 template <> std::unordered_map<cairo_subpixel_order_t, ERL_NIF_TERM *> g_enum_map<cairo_subpixel_order_t> { SUBPIXEL_ORDER_ATOMS };
 template <> std::unordered_map<cairo_hint_style_t, ERL_NIF_TERM *> g_enum_map<cairo_hint_style_t> { HINT_STYLE_ATOMS };
 template <> std::unordered_map<cairo_hint_metrics_t, ERL_NIF_TERM *> g_enum_map<cairo_hint_metrics_t> { HINT_METRICS_ATOMS };
+template <> std::unordered_map<PangoWrapMode, ERL_NIF_TERM *> g_enum_map<PangoWrapMode> { WRAP_MODE_ATOMS };
+template <> std::unordered_map<PangoEllipsizeMode, ERL_NIF_TERM *> g_enum_map<PangoEllipsizeMode> { ELLIPSIZE_MODE_ATOMS };
 #undef ATOM_DECL
 
 template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_format_t *);
@@ -40,6 +44,8 @@ template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_join_t *
 template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_subpixel_order_t *);
 template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_hint_style_t *);
 template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_hint_metrics_t *);
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, PangoWrapMode *);
+template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, PangoEllipsizeMode *);
 
 template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_format_t);
 template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_content_t);
@@ -52,3 +58,5 @@ template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_join_t);
 template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_subpixel_order_t);
 template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_hint_style_t);
 template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_hint_metrics_t);
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const PangoWrapMode);
+template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const PangoEllipsizeMode);
