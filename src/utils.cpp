@@ -1,5 +1,21 @@
 #define CAIRO_ELIXIR_NIF_UTILS_IMPL
+#include <cstring>
 #include "include/utils.h"
+
+int get_bool(ErlNifEnv *env, const ERL_NIF_TERM term, bool *dest)
+{
+  char buf[256];
+  int atom_len = enif_get_atom(env, term, buf, 256, ERL_NIF_LATIN1);
+
+  if (!atom_len)
+  {
+    return 0;
+  }
+
+  *dest = strncmp(buf, "true", atom_len) == 0;
+
+  return 1;
+}
 
 int get_number(ErlNifEnv *env, const ERL_NIF_TERM term, double *dest)
 {
@@ -104,6 +120,7 @@ template <typename T> int _getlist(ErlNifEnv *env, const ERL_NIF_TERM term, std:
   return 1;
 }
 
+template <> int _getvalue<bool>(ErlNifEnv *env, const ERL_NIF_TERM term, bool *dest) { return get_bool(env, term, dest); }
 template <> int _getvalue<int>(ErlNifEnv *env, const ERL_NIF_TERM term, int *dest) { return enif_get_int(env, term, dest); }
 template <> int _getvalue<double>(ErlNifEnv *env, const ERL_NIF_TERM term, double *dest) { return get_number(env, term, dest); }
 template <> int _getvalue<vec2_t>(ErlNifEnv *env, const ERL_NIF_TERM term, vec2_t *dest) { return get_vec2(env, term, dest); }

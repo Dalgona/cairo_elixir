@@ -15,6 +15,7 @@
 
 using vec2_t = std::pair<double, double>;
 
+EXTERN int get_bool(ErlNifEnv *env, const ERL_NIF_TERM term, bool *dest);
 EXTERN int get_number(ErlNifEnv *env, const ERL_NIF_TERM term, double *dest);
 EXTERN int get_vec2(ErlNifEnv *env, const ERL_NIF_TERM term, vec2_t *dest);
 EXTERN int get_matrix(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_matrix_t *dest);
@@ -23,6 +24,7 @@ template <typename T> int _getvalue(ErlNifEnv *env, const ERL_NIF_TERM term, T *
 template <typename T> int _getvalue(ErlNifEnv *env, const ERL_NIF_TERM term, std::vector<T> *dest);
 
 #ifndef CAIRO_ELIXIR_NIF_UTILS_IMPL
+extern template int _getvalue<bool>(ErlNifEnv *env, const ERL_NIF_TERM term, bool *dest);
 extern template int _getvalue<int>(ErlNifEnv *env, const ERL_NIF_TERM term, int *dest);
 extern template int _getvalue<double>(ErlNifEnv *env, const ERL_NIF_TERM term, double *dest);
 extern template int _getvalue<vec2_t>(ErlNifEnv *env, const ERL_NIF_TERM term, vec2_t *dest);
