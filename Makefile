@@ -18,16 +18,21 @@ ifeq ($(DEBUG),DEBUG)
 	CXXFLAGS += -DCAIRO_ELIXIR_NIF_DEBUG
 endif
 
-FILES = atoms resource_types utils nif_cairo nif_paths nif_font_options nif_surfaces nif_image_surfaces nif_png_support nif_main
+FILES = atoms resource_types utils nif_cairo nif_paths nif_font_options nif_surfaces nif_image_surfaces nif_png_support
 SRCFILES = $(addsuffix .cpp, $(addprefix src/, $(FILES)))
 OBJFILES = $(addsuffix .o, $(addprefix $(OUT_DIR)/build/, $(FILES)))
+MAIN_SRCFILE = src/nif_main.cpp
+MAIN_OBJFILE = $(OUT_DIR)/build/nif_main.o
 
 #
 # TARGETS
 #
 
-priv/nif_lib/nif_cairo.so: $(OBJFILES)
+priv/nif_lib/nif_cairo.so: $(OBJFILES) $(MAIN_OBJFILE)
 	$(CXX) $(CXXFLAGS) $(LIBS) $(SHAREDFLAGS) $(LDFLAGS) -o $@ $^
+
+$(MAIN_OBJFILE): $(OBJFILES)
+	$(CXX) -c $(CXXFLAGS) $(INCLUDES) -o $@ $(MAIN_SRCFILE)
 
 $(SRCFILES): build_dir
 
