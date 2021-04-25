@@ -47,15 +47,16 @@
   /* USE_NIF(pango_layout_is_ellipsized, ?) */ \
   /* USE_NIF(pango_layout_is_wrapped, ?) */ \
   /* USE_NIF(pango_layout_move_cursor_visually, ?) */ \
-  /* USE_NIF(pango_layout_set_alignment, ?) */ \
+  USE_NIF(pango_layout_set_alignment, 2) \
   /* USE_NIF(pango_layout_set_attributes, ?) */ \
   /* USE_NIF(pango_layout_set_auto_dir, ?) */ \
   USE_NIF(pango_layout_set_ellipsize, 2) \
   USE_NIF(pango_layout_set_font_description, 2) \
   USE_NIF(pango_layout_set_height, 2) \
+  USE_NIF(pango_layout_set_height_pu, 2) \
   USE_NIF(pango_layout_set_indent, 2) \
   USE_NIF(pango_layout_set_justify, 2) \
-  /* USE_NIF(pango_layout_set_line_spacing, ?) */ \
+  USE_NIF(pango_layout_set_line_spacing, 2) \
   USE_NIF(pango_layout_set_markup, 2) \
   /* USE_NIF(pango_layout_set_markup_with_accel, ?) */ \
   USE_NIF(pango_layout_set_single_paragraph_mode, 2) \

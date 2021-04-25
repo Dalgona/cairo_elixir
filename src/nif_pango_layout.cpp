@@ -1,5 +1,22 @@
 #include "include/nif_pango_layout.h"
 
+NIF_DECL(nif_pango_layout_set_alignment)
+{
+  ENSURE_ARGC(2)
+  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
+
+  PangoAlignment alignment;
+
+  if (!enum_from_atom(env, argv[1], &alignment))
+  {
+    return enif_make_badarg(env);
+  }
+
+  pango_layout_set_alignment(layout, alignment);
+
+  return g_atom_ok;
+}
+
 NIF_DECL(nif_pango_layout_set_ellipsize)
 {
   ENSURE_ARGC(2)
@@ -41,6 +58,20 @@ NIF_DECL(nif_pango_layout_set_height)
   return g_atom_ok;
 }
 
+// This NIF takes the value in Pango units directly.
+NIF_DECL(nif_pango_layout_set_height_pu)
+{
+  ENSURE_ARGC(2)
+  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
+
+  int height;
+
+  get_values(env, argv, &height);
+  pango_layout_set_height(layout, height);
+
+  return g_atom_ok;
+}
+
 NIF_DECL(nif_pango_layout_set_indent)
 {
   ENSURE_ARGC(2)
@@ -67,7 +98,18 @@ NIF_DECL(nif_pango_layout_set_justify)
   return g_atom_ok;
 }
 
-// NIF_DECL(nif_pango_layout_set_line_spacing)
+NIF_DECL(nif_pango_layout_set_line_spacing)
+{
+  ENSURE_ARGC(2)
+  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
+
+  double factor;
+
+  get_values(env, argv, &factor);
+  pango_layout_set_line_spacing(layout, factor);
+
+  return g_atom_ok;
+}
 
 NIF_DECL(nif_pango_layout_set_markup)
 {

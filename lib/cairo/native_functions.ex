@@ -385,6 +385,9 @@ defmodule Cairo.NativeFunctions do
   # PANGO LAYOUTS
   #
 
+  @spec pango_layout_set_alignment(pango_layout_handle(), Pango.alignment()) :: :ok
+  defnif pango_layout_set_alignment(layout, alignment)
+
   @spec pango_layout_set_ellipsize(pango_layout_handle(), Pango.ellipsize_mode()) :: :ok
   defnif pango_layout_set_ellipsize(layout, ellipsize)
 
@@ -394,13 +397,18 @@ defmodule Cairo.NativeFunctions do
   @spec pango_layout_set_height(pango_layout_handle(), number()) :: :ok
   defnif pango_layout_set_height(layout, height)
 
+  # This NIF takes a value in Pango units directly.
+  @spec pango_layout_set_height_pu(pango_layout_handle(), number()) :: :ok
+  defnif pango_layout_set_height_pu(layout, height)
+
   @spec pango_layout_set_indent(pango_layout_handle(), number()) :: :ok
   defnif pango_layout_set_indent(layout, indent)
 
   @spec pango_layout_set_justify(pango_layout_handle(), boolean()) :: :ok
   defnif pango_layout_set_justify(layout, justify)
 
-  # pango_layout_set_line_spacing
+  @spec pango_layout_set_line_spacing(pango_layout_handle(), number()) :: :ok
+  defnif pango_layout_set_line_spacing(layout, factor)
 
   @spec pango_layout_set_markup(pango_layout_handle(), binary()) :: :ok
   defnif pango_layout_set_markup(layout, markup)
