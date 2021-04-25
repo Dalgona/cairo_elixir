@@ -9,4 +9,9 @@ defmodule Cairo.Pango do
           | :ellipsize_start
           | :ellipsize_middle
           | :ellipsize_end
+
+  @type alignment ::
+          :align_left
+          | :align_center
+          | :align_right
 end
