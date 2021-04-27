@@ -32,7 +32,7 @@ NIF_DECL(nif_image_surface_create)
     return enif_make_badarg(env);
   }
 
-  return create_resource(env, nif_resource<cairo_surface_t>::type, cairo_image_surface_create(format, width, height));
+  return nif_resource(env, cairo_image_surface_create(format, width, height)).term;
 }
 
 NIF_DECL(nif_image_surface_create_for_data)
@@ -54,7 +54,7 @@ NIF_DECL(nif_image_surface_create_for_data)
     return enif_make_badarg(env);
   }
 
-  return create_resource(env, nif_resource<cairo_surface_t>::type, cairo_image_surface_create_for_data(data.data, format, width, height, stride));
+  return nif_resource(env, cairo_image_surface_create_for_data(data.data, format, width, height, stride)).term;
 }
 
 NIF_DECL(nif_image_surface_get_data)

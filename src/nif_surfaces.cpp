@@ -18,7 +18,7 @@ NIF_DECL(nif_surface_create_similar)
     return enif_make_badarg(env);
   }
 
-  return create_resource(env, nif_resource<cairo_surface_t>::type, cairo_surface_create_similar(surface, content, width, height));
+  return nif_resource(env, cairo_surface_create_similar(surface, content, width, height)).term;
 }
 
 NIF_DECL(nif_surface_create_similar_image)
@@ -37,7 +37,7 @@ NIF_DECL(nif_surface_create_similar_image)
     return enif_make_badarg(env);
   }
 
-  return create_resource(env, nif_resource<cairo_surface_t>::type, cairo_surface_create_similar_image(surface, format, width, height));
+  return nif_resource(env, cairo_surface_create_similar_image(surface, format, width, height)).term;
 }
 
 NIF_DECL(nif_surface_create_for_rectangle)
@@ -45,22 +45,20 @@ NIF_DECL(nif_surface_create_for_rectangle)
   ENSURE_ARGC(5)
   REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
-  cairo_format_t format;
   double x;
   double y;
   double width;
   double height;
 
-  if (!enum_from_atom<cairo_format_t>(env, argv[1], &format)
-      || !get_number(env, argv[2], &x)
-      || !get_number(env, argv[3], &y)
-      || !get_number(env, argv[4], &width)
-      || !get_number(env, argv[5], &height))
+  if (!get_number(env, argv[1], &x)
+      || !get_number(env, argv[2], &y)
+      || !get_number(env, argv[3], &width)
+      || !get_number(env, argv[4], &height))
   {
     return enif_make_badarg(env);
   }
 
-  return create_resource(env, nif_resource<cairo_surface_t>::type, cairo_surface_create_for_rectangle(surface, x, y, width, height));
+  return nif_resource(env, cairo_surface_create_for_rectangle(surface, x, y, width, height)).term;
 }
 
 NIF_DECL(nif_surface_status)

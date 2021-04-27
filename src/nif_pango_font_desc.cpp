@@ -11,9 +11,5 @@ NIF_DECL(nif_pango_font_desc_from_string)
     return enif_make_badarg(env);
   }
 
-  return create_resource(
-    env,
-    nif_resource<PangoFontDescription>::type,
-    pango_font_description_from_string((char *)bin.data)
-  );
+  return nif_resource(env, pango_font_description_from_string((char *)bin.data)).term;
 }

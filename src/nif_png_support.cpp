@@ -31,7 +31,7 @@ NIF_DECL(nif_image_surface_create_from_png)
   unsigned char *end = start + bin_data.size;
   auto state = std::make_pair(start, end);
 
-  return create_resource(env, nif_resource<cairo_surface_t>::type, cairo_image_surface_create_from_png_stream(read_func, &state));
+  return nif_resource(env, cairo_image_surface_create_from_png_stream(read_func, &state)).term;
 }
 
 cairo_status_t write_func(void *closure, const unsigned char *data, unsigned int length)

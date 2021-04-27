@@ -7,7 +7,7 @@ NIF_DECL(nif_create)
   ENSURE_ARGC(1)
   REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
-  return create_resource(env, nif_resource<cairo_t>::type, cairo_create(surface));
+  return nif_resource(env, cairo_create(surface)).term;
 }
 
 NIF_DECL(nif_status)

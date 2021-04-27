@@ -8,12 +8,6 @@
 #include <pango/pango-layout.h>
 #include <erl_nif.h>
 
-#ifndef CAIRO_ELIXIR_NIF_RESOURCE_TYPES_IMPL
-#define EXTERN extern
-#else
-#define EXTERN
-#endif
-
 template <typename T> struct _destroy { static void call(T *obj); };
 
 #ifndef CAIRO_ELIXIR_NIF_RESOURCE_TYPES_IMPL
@@ -23,27 +17,6 @@ extern template struct _destroy<cairo_font_options_t>;
 extern template struct _destroy<PangoFontDescription>;
 extern template struct _destroy<PangoLayout>;
 #endif
-
-template <typename T> ERL_NIF_TERM create_resource(ErlNifEnv *env, ErlNifResourceType *resource_type, T *obj)
-{
-  T **resource = (T **)enif_alloc_resource(resource_type, sizeof(T *));
-
-  memcpy(resource, &obj, sizeof(T *));
-
-  ERL_NIF_TERM term = enif_make_resource(env, resource);
-
-  enif_release_resource(resource);
-
-  return term;
-}
-
-EXTERN template ERL_NIF_TERM create_resource(ErlNifEnv *, ErlNifResourceType *, cairo_t *);
-EXTERN template ERL_NIF_TERM create_resource(ErlNifEnv *, ErlNifResourceType *, cairo_surface_t *);
-EXTERN template ERL_NIF_TERM create_resource(ErlNifEnv *, ErlNifResourceType *, cairo_font_options_t *);
-EXTERN template ERL_NIF_TERM create_resource(ErlNifEnv *, ErlNifResourceType *, PangoFontDescription *);
-EXTERN template ERL_NIF_TERM create_resource(ErlNifEnv *, ErlNifResourceType *, PangoLayout *);
-
-#undef EXTERN
 
 template <typename T> struct nif_resource
 {
