@@ -53,7 +53,7 @@ NIF_DECL(nif_surface_write_to_png)
   nif_resource<cairo_surface_t> res_surface;
   std::vector<ErlNifBinary> data;
 
-  get_values(env, argv, &res_surface);
+  get_values(env, argv, res_surface);
 
   cairo_status_t status = cairo_surface_write_to_png_stream(res_surface.obj, write_func, &data);
   ERL_NIF_TERM list = enif_make_list(env, 0);

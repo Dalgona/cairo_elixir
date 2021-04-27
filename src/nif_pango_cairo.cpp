@@ -18,7 +18,7 @@ NIF_DECL(nif_pc_create_layout)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   return nif_resource(env, pango_cairo_create_layout(res_cr.obj)).term;
 }
@@ -33,7 +33,7 @@ NIF_DECL(nif_pc_error_underline_path)
   double width;
   double height;
 
-  get_values(env, argv, &res_cr, &x, &y, &width, &height);
+  get_values(env, argv, res_cr, x, y, width, height);
   pango_cairo_error_underline_path(res_cr.obj, x, y, width, height);
 
   return g_atom_ok;
@@ -50,7 +50,7 @@ NIF_DECL(nif_pc_layout_path)
   nif_resource<cairo_t> res_cr;
   nif_resource<PangoLayout> res_layout;
 
-  get_values(env, argv, &res_cr, &res_layout);
+  get_values(env, argv, res_cr, res_layout);
   pango_cairo_layout_path(res_cr.obj, res_layout.obj);
 
   return g_atom_ok;
@@ -66,7 +66,7 @@ NIF_DECL(nif_pc_show_error_underline)
   double width;
   double height;
 
-  get_values(env, argv, &res_cr, &x, &y, &width, &height);
+  get_values(env, argv, res_cr, x, y, width, height);
   pango_cairo_show_error_underline(res_cr.obj, x, y, width, height);
 
   return g_atom_ok;
@@ -83,7 +83,7 @@ NIF_DECL(nif_pc_show_layout)
   nif_resource<cairo_t> res_cr;
   nif_resource<PangoLayout> res_layout;
 
-  get_values(env, argv, &res_cr, &res_layout);
+  get_values(env, argv, res_cr, res_layout);
   pango_cairo_show_layout(res_cr.obj, res_layout.obj);
 
   return g_atom_ok;
@@ -100,7 +100,7 @@ NIF_DECL(nif_pc_update_layout)
   nif_resource<cairo_t> res_cr;
   nif_resource<PangoLayout> res_layout;
 
-  get_values(env, argv, &res_cr, &res_layout);
+  get_values(env, argv, res_cr, res_layout);
   pango_cairo_update_layout(res_cr.obj, res_layout.obj);
 
   return g_atom_ok;

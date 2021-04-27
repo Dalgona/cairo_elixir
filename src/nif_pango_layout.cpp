@@ -7,7 +7,7 @@ NIF_DECL(nif_pango_layout_set_alignment)
   nif_resource<PangoLayout> res_layout;
   PangoAlignment alignment;
 
-  get_values(env, argv, &res_layout);
+  get_values(env, argv, res_layout);
 
   if (!enum_from_atom(env, argv[1], &alignment))
   {
@@ -26,7 +26,7 @@ NIF_DECL(nif_pango_layout_set_ellipsize)
   nif_resource<PangoLayout> res_layout;
   PangoEllipsizeMode ellipsize;
 
-  get_values(env, argv, &res_layout);
+  get_values(env, argv, res_layout);
 
   if (!enum_from_atom(env, argv[1], &ellipsize))
   {
@@ -45,7 +45,7 @@ NIF_DECL(nif_pango_layout_set_font_description)
   nif_resource<PangoLayout> res_layout;
   nif_resource<PangoFontDescription> res_font_desc;
 
-  get_values(env, argv, &res_layout, &res_font_desc);
+  get_values(env, argv, res_layout, res_font_desc);
   pango_layout_set_font_description(res_layout.obj, res_font_desc.obj);
 
   return g_atom_ok;
@@ -58,7 +58,7 @@ NIF_DECL(nif_pango_layout_set_height)
   nif_resource<PangoLayout> res_layout;
   double height;
 
-  get_values(env, argv, &res_layout, &height);
+  get_values(env, argv, res_layout, height);
   pango_layout_set_height(res_layout.obj, pango_units_from_double(height));
 
   return g_atom_ok;
@@ -72,7 +72,7 @@ NIF_DECL(nif_pango_layout_set_height_pu)
   nif_resource<PangoLayout> res_layout;
   int height;
 
-  get_values(env, argv, &res_layout, &height);
+  get_values(env, argv, res_layout, height);
   pango_layout_set_height(res_layout.obj, height);
 
   return g_atom_ok;
@@ -85,7 +85,7 @@ NIF_DECL(nif_pango_layout_set_indent)
   nif_resource<PangoLayout> res_layout;
   double indent;
 
-  get_values(env, argv, &res_layout, &indent);
+  get_values(env, argv, res_layout, indent);
   pango_layout_set_indent(res_layout.obj, pango_units_from_double(indent));
 
   return g_atom_ok;
@@ -98,7 +98,7 @@ NIF_DECL(nif_pango_layout_set_justify)
   nif_resource<PangoLayout> res_layout;
   bool justify;
 
-  get_values(env, argv, &res_layout, &justify);
+  get_values(env, argv, res_layout, justify);
   pango_layout_set_justify(res_layout.obj, justify);
 
   return g_atom_ok;
@@ -111,7 +111,7 @@ NIF_DECL(nif_pango_layout_set_line_spacing)
   nif_resource<PangoLayout> res_layout;
   double factor;
 
-  get_values(env, argv, &res_layout, &factor);
+  get_values(env, argv, res_layout, factor);
   pango_layout_set_line_spacing(res_layout.obj, factor);
 
   return g_atom_ok;
@@ -124,7 +124,7 @@ NIF_DECL(nif_pango_layout_set_markup)
   nif_resource<PangoLayout> res_layout;
   ErlNifBinary bin;
 
-  get_values(env, argv, &res_layout);
+  get_values(env, argv, res_layout);
 
   if (!enif_inspect_binary(env, argv[1], &bin))
   {
@@ -145,7 +145,7 @@ NIF_DECL(nif_pango_layout_set_single_paragraph_mode)
   nif_resource<PangoLayout> res_layout;
   bool setting;
 
-  get_values(env, argv, &res_layout, &setting);
+  get_values(env, argv, res_layout, setting);
   pango_layout_set_single_paragraph_mode(res_layout.obj, setting);
 
   return g_atom_ok;
@@ -162,7 +162,7 @@ NIF_DECL(nif_pango_layout_set_text)
   nif_resource<PangoLayout> res_layout;
   ErlNifBinary bin;
 
-  get_values(env, argv, &res_layout);
+  get_values(env, argv, res_layout);
 
   if (!enif_inspect_binary(env, argv[1], &bin))
   {
@@ -181,7 +181,7 @@ NIF_DECL(nif_pango_layout_set_width)
   nif_resource<PangoLayout> res_layout;
   double width;
 
-  get_values(env, argv, &res_layout, &width);
+  get_values(env, argv, res_layout, width);
   pango_layout_set_width(res_layout.obj, pango_units_from_double(width));
 
   return g_atom_ok;
@@ -194,7 +194,7 @@ NIF_DECL(nif_pango_layout_set_wrap)
   nif_resource<PangoLayout> res_layout;
   PangoWrapMode wrap;
 
-  get_values(env, argv, &res_layout);
+  get_values(env, argv, res_layout);
 
   if (!enum_from_atom(env, argv[1], &wrap))
   {

@@ -63,7 +63,7 @@ NIF_DECL(nif_image_surface_get_data)
 
   nif_resource<cairo_surface_t> res_surface;
 
-  get_values(env, argv, &res_surface);
+  get_values(env, argv, res_surface);
 
   ErlNifBinary binary;
   unsigned char *data = cairo_image_surface_get_data(res_surface.obj);
@@ -83,7 +83,7 @@ NIF_DECL(nif_image_surface_get_format)
 
   nif_resource<cairo_surface_t> res_surface;
 
-  get_values(env, argv, &res_surface);
+  get_values(env, argv, res_surface);
 
   return enum_to_atom<cairo_format_t>(env, cairo_image_surface_get_format(res_surface.obj));
 }
@@ -94,7 +94,7 @@ NIF_DECL(nif_image_surface_get_width)
 
   nif_resource<cairo_surface_t> res_surface;
 
-  get_values(env, argv, &res_surface);
+  get_values(env, argv, res_surface);
 
   return enif_make_int(env, cairo_image_surface_get_width(res_surface.obj));
 }
@@ -105,7 +105,7 @@ NIF_DECL(nif_image_surface_get_height)
 
   nif_resource<cairo_surface_t> res_surface;
 
-  get_values(env, argv, &res_surface);
+  get_values(env, argv, res_surface);
 
   return enif_make_int(env, cairo_image_surface_get_height(res_surface.obj));
 }
@@ -116,7 +116,7 @@ NIF_DECL(nif_image_surface_get_stride)
 
   nif_resource<cairo_surface_t> res_surface;
 
-  get_values(env, argv, &res_surface);
+  get_values(env, argv, res_surface);
 
   return enif_make_int(env, cairo_image_surface_get_stride(res_surface.obj));
 }

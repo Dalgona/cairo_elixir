@@ -8,7 +8,7 @@ NIF_DECL(nif_create)
 
   nif_resource<cairo_surface_t> res_surface;
 
-  get_values(env, argv, &res_surface);
+  get_values(env, argv, res_surface);
 
   return nif_resource(env, cairo_create(res_surface.obj)).term;
 }
@@ -19,7 +19,7 @@ NIF_DECL(nif_status)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   return enum_to_atom<cairo_status_t>(env, cairo_status(res_cr.obj));
 }
@@ -30,7 +30,7 @@ NIF_DECL(nif_save)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_save(res_cr.obj);
 
   return g_atom_ok;
@@ -42,7 +42,7 @@ NIF_DECL(nif_restore)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_restore(res_cr.obj);
 
   return g_atom_ok;
@@ -57,7 +57,7 @@ NIF_DECL(nif_set_source_rgb)
   double green;
   double blue;
 
-  get_values(env, argv, &res_cr, &red, &green, &blue);
+  get_values(env, argv, res_cr, red, green, blue);
   cairo_set_source_rgb(res_cr.obj, red, green, blue);
 
   return g_atom_ok;
@@ -73,7 +73,7 @@ NIF_DECL(nif_set_source_rgba)
   double blue;
   double alpha;
 
-  get_values(env, argv, &res_cr, &red, &green, &blue, &alpha);
+  get_values(env, argv, res_cr, red, green, blue, alpha);
   cairo_set_source_rgba(res_cr.obj, red, green, blue, alpha);
 
   return g_atom_ok;
@@ -86,7 +86,7 @@ NIF_DECL(nif_set_antialias)
   nif_resource<cairo_t> res_cr;
   cairo_antialias_t antialias;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   if (!enum_from_atom<cairo_antialias_t>(env, argv[1], &antialias))
   {
@@ -104,7 +104,7 @@ NIF_DECL(nif_get_antialias)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   return enum_to_atom<cairo_antialias_t>(env, cairo_get_antialias(res_cr.obj));
 }
@@ -117,7 +117,7 @@ NIF_DECL(nif_set_dash)
   std::vector<double> dashes;
   double dash_offset;
 
-  get_values(env, argv, &res_cr, &dashes, &dash_offset);
+  get_values(env, argv, res_cr, dashes, dash_offset);
   cairo_set_dash(res_cr.obj, dashes.data(), dashes.size(), dash_offset);
 
   return g_atom_ok;
@@ -129,7 +129,7 @@ NIF_DECL(nif_get_dash)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   int dash_count = cairo_get_dash_count(res_cr.obj);
   double *dashes = new double[dash_count];
@@ -159,7 +159,7 @@ NIF_DECL(nif_set_fill_rule)
   nif_resource<cairo_t> res_cr;
   cairo_fill_rule_t fill_rule;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   if (!enum_from_atom<cairo_fill_rule_t>(env, argv[1], &fill_rule))
   {
@@ -177,7 +177,7 @@ NIF_DECL(nif_get_fill_rule)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   return enum_to_atom<cairo_fill_rule_t>(env, cairo_get_fill_rule(res_cr.obj));
 }
@@ -189,7 +189,7 @@ NIF_DECL(nif_set_line_cap)
   nif_resource<cairo_t> res_cr;
   cairo_line_cap_t line_cap;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   if (!enum_from_atom<cairo_line_cap_t>(env, argv[1], &line_cap))
   {
@@ -207,7 +207,7 @@ NIF_DECL(nif_get_line_cap)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   return enum_to_atom<cairo_line_cap_t>(env, cairo_get_line_cap(res_cr.obj));
 }
@@ -219,7 +219,7 @@ NIF_DECL(nif_set_line_join)
   nif_resource<cairo_t> res_cr;
   cairo_line_join_t line_join;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   if (!enum_from_atom<cairo_line_join_t>(env, argv[1], &line_join))
   {
@@ -237,7 +237,7 @@ NIF_DECL(nif_get_line_join)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   return enum_to_atom<cairo_line_join_t>(env, cairo_get_line_join(res_cr.obj));
 }
@@ -249,7 +249,7 @@ NIF_DECL(nif_set_line_width)
   nif_resource<cairo_t> res_cr;
   double line_width;
 
-  get_values(env, argv, &res_cr, &line_width);
+  get_values(env, argv, res_cr, line_width);
   cairo_set_line_width(res_cr.obj, line_width);
 
   return g_atom_ok;
@@ -261,7 +261,7 @@ NIF_DECL(nif_get_line_width)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   return enif_make_double(env, cairo_get_line_width(res_cr.obj));
 }
@@ -273,7 +273,7 @@ NIF_DECL(nif_set_miter_limit)
   nif_resource<cairo_t> res_cr;
   double limit;
 
-  get_values(env, argv, &res_cr, &limit);
+  get_values(env, argv, res_cr, limit);
   cairo_set_miter_limit(res_cr.obj, limit);
 
   return g_atom_ok;
@@ -285,7 +285,7 @@ NIF_DECL(nif_get_miter_limit)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   return enif_make_double(env, cairo_get_miter_limit(res_cr.obj));
 }
@@ -297,7 +297,7 @@ NIF_DECL(nif_set_tolerance)
   nif_resource<cairo_t> res_cr;
   double tolerance;
 
-  get_values(env, argv, &res_cr, &tolerance);
+  get_values(env, argv, res_cr, tolerance);
   cairo_set_tolerance(res_cr.obj, tolerance);
 
   return g_atom_ok;
@@ -309,7 +309,7 @@ NIF_DECL(nif_get_tolerance)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
 
   return enif_make_double(env, cairo_get_tolerance(res_cr.obj));
 }
@@ -320,7 +320,7 @@ NIF_DECL(nif_clip)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_clip(res_cr.obj);
 
   return g_atom_ok;
@@ -332,7 +332,7 @@ NIF_DECL(nif_clip_preserve)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_clip_preserve(res_cr.obj);
 
   return g_atom_ok;
@@ -348,7 +348,7 @@ NIF_DECL(nif_clip_extents)
   double x2;
   double y2;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_clip_extents(res_cr.obj, &x1, &y1, &x2, &y2);
 
   return enif_make_tuple2(env, make_vec2(env, x1, y1), make_vec2(env, x2, y2));
@@ -361,7 +361,7 @@ NIF_DECL(nif_in_clip)
   nif_resource<cairo_t> res_cr;
   vec2_t pt;
 
-  get_values(env, argv, &res_cr, &pt);
+  get_values(env, argv, res_cr, pt);
 
   return cairo_in_clip(res_cr.obj, pt.first, pt.second) ? g_atom_true : g_atom_false;
 }
@@ -372,7 +372,7 @@ NIF_DECL(nif_reset_clip)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_reset_clip(res_cr.obj);
 
   return g_atom_ok;
@@ -384,7 +384,7 @@ NIF_DECL(nif_fill)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_fill(res_cr.obj);
 
   return g_atom_ok;
@@ -396,7 +396,7 @@ NIF_DECL(nif_fill_preserve)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_fill_preserve(res_cr.obj);
 
   return g_atom_ok;
@@ -412,7 +412,7 @@ NIF_DECL(nif_fill_extents)
   double x2;
   double y2;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_fill_extents(res_cr.obj, &x1, &y1, &x2, &y2);
 
   return enif_make_tuple2(env, make_vec2(env, x1, y1), make_vec2(env, x2, y2));
@@ -425,7 +425,7 @@ NIF_DECL(nif_in_fill)
   nif_resource<cairo_t> res_cr;
   vec2_t pt;
 
-  get_values(env, argv, &res_cr, &pt);
+  get_values(env, argv, res_cr, pt);
 
   return cairo_in_fill(res_cr.obj, pt.first, pt.second) ? g_atom_true : g_atom_false;
 }
@@ -436,7 +436,7 @@ NIF_DECL(nif_paint)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_paint(res_cr.obj);
 
   return g_atom_ok;
@@ -449,7 +449,7 @@ NIF_DECL(nif_paint_with_alpha)
   nif_resource<cairo_t> res_cr;
   double alpha;
 
-  get_values(env, argv, &res_cr, &alpha);
+  get_values(env, argv, res_cr, alpha);
   cairo_paint_with_alpha(res_cr.obj, alpha);
 
   return g_atom_ok;
@@ -461,7 +461,7 @@ NIF_DECL(nif_stroke)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_stroke(res_cr.obj);
 
   return g_atom_ok;
@@ -473,7 +473,7 @@ NIF_DECL(nif_stroke_preserve)
 
   nif_resource<cairo_t> res_cr;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_stroke_preserve(res_cr.obj);
 
   return g_atom_ok;
@@ -489,7 +489,7 @@ NIF_DECL(nif_stroke_extents)
   double x2;
   double y2;
 
-  get_values(env, argv, &res_cr);
+  get_values(env, argv, res_cr);
   cairo_stroke_extents(res_cr.obj, &x1, &y1, &x2, &y2);
 
   return enif_make_tuple2(env, make_vec2(env, x1, y1), make_vec2(env, x2, y2));
@@ -502,7 +502,7 @@ NIF_DECL(nif_in_stroke)
   nif_resource<cairo_t> res_cr;
   vec2_t pt;
 
-  get_values(env, argv, &res_cr, &pt);
+  get_values(env, argv, res_cr, pt);
 
   return cairo_in_stroke(res_cr.obj, pt.first, pt.second) ? g_atom_true : g_atom_false;
 }

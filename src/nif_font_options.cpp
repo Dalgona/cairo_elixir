@@ -15,7 +15,7 @@ NIF_DECL(nif_font_options_copy)
 
   nif_resource<cairo_font_options_t> res_options;
 
-  get_values(env, argv, &res_options);
+  get_values(env, argv, res_options);
 
   return nif_resource(env, cairo_font_options_copy(res_options.obj)).term;
 }
@@ -26,7 +26,7 @@ NIF_DECL(nif_font_options_status)
 
   nif_resource<cairo_font_options_t> res_options;
 
-  get_values(env, argv, &res_options);
+  get_values(env, argv, res_options);
 
   return enum_to_atom<cairo_status_t>(env, cairo_font_options_status(res_options.obj));
 }
@@ -38,7 +38,7 @@ NIF_DECL(nif_font_options_merge)
   nif_resource<cairo_font_options_t> res_options;
   nif_resource<cairo_font_options_t> res_other;
 
-  get_values(env, argv, &res_options, &res_other);
+  get_values(env, argv, res_options, res_other);
   cairo_font_options_merge(res_options.obj, res_other.obj);
 
   return g_atom_ok;
@@ -51,7 +51,7 @@ NIF_DECL(nif_font_options_set_antialias)
   nif_resource<cairo_font_options_t> res_options;
   cairo_antialias_t antialias;
 
-  get_values(env, argv, &res_options);
+  get_values(env, argv, res_options);
 
   if (!enum_from_atom(env, argv[1], &antialias))
   {
@@ -69,7 +69,7 @@ NIF_DECL(nif_font_options_get_antialias)
 
   nif_resource<cairo_font_options_t> res_options;
 
-  get_values(env, argv, &res_options);
+  get_values(env, argv, res_options);
 
   return enum_to_atom(env, cairo_font_options_get_antialias(res_options.obj));
 }
@@ -81,7 +81,7 @@ NIF_DECL(nif_font_options_set_subpixel_order)
   nif_resource<cairo_font_options_t> res_options;
   cairo_subpixel_order_t subpixel_order;
 
-  get_values(env, argv, &res_options);
+  get_values(env, argv, res_options);
 
   if (!enum_from_atom(env, argv[1], &subpixel_order))
   {
@@ -99,7 +99,7 @@ NIF_DECL(nif_font_options_get_subpixel_order)
 
   nif_resource<cairo_font_options_t> res_options;
 
-  get_values(env, argv, &res_options);
+  get_values(env, argv, res_options);
 
   return enum_to_atom(env, cairo_font_options_get_subpixel_order(res_options.obj));
 }
@@ -111,7 +111,7 @@ NIF_DECL(nif_font_options_set_hint_style)
   nif_resource<cairo_font_options_t> res_options;
   cairo_hint_style_t hint_style;
 
-  get_values(env, argv, &res_options);
+  get_values(env, argv, res_options);
 
   if (!enum_from_atom(env, argv[1], &hint_style))
   {
@@ -129,7 +129,7 @@ NIF_DECL(nif_font_options_get_hint_style)
 
   nif_resource<cairo_font_options_t> res_options;
 
-  get_values(env, argv, &res_options);
+  get_values(env, argv, res_options);
 
   return enum_to_atom(env, cairo_font_options_get_hint_style(res_options.obj));
 }
@@ -141,7 +141,7 @@ NIF_DECL(nif_font_options_set_hint_metrics)
   nif_resource<cairo_font_options_t> res_options;
   cairo_hint_metrics_t hint_metrics;
 
-  get_values(env, argv, &res_options);
+  get_values(env, argv, res_options);
 
   if (!enum_from_atom(env, argv[1], &hint_metrics))
   {
@@ -159,7 +159,7 @@ NIF_DECL(nif_font_options_get_hint_metrics)
 
   nif_resource<cairo_font_options_t> res_options;
 
-  get_values(env, argv, &res_options);
+  get_values(env, argv, res_options);
 
   return enum_to_atom(env, cairo_font_options_get_hint_metrics(res_options.obj));
 }
@@ -171,7 +171,7 @@ NIF_DECL(nif_font_options_set_variations)
   nif_resource<cairo_font_options_t> res_options;
   ErlNifBinary bin;
 
-  get_values(env, argv, &res_options);
+  get_values(env, argv, res_options);
 
   if (!enif_inspect_binary(env, argv[1], &bin))
   {
@@ -197,7 +197,7 @@ NIF_DECL(nif_font_options_get_variations)
 
   nif_resource<cairo_font_options_t> res_options;
 
-  get_values(env, argv, &res_options);
+  get_values(env, argv, res_options);
 
   auto variations = cairo_font_options_get_variations(res_options.obj);
 
