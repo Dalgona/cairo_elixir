@@ -30,20 +30,6 @@ extern template struct _destroy<PangoFontDescription>;
 extern template struct _destroy<PangoLayout>;
 #endif
 
-template <typename T> void resource_dtor(ErlNifEnv *env, void *obj)
-{
-  T **resource = (T **)obj;
-  _destroy<T>::call(*resource);
-}
-
-#ifndef CAIRO_ELIXIR_NIF_RESOURCE_TYPES_IMPL
-extern template void resource_dtor<cairo_t>(ErlNifEnv *env, void *obj);
-extern template void resource_dtor<cairo_surface_t>(ErlNifEnv *env, void *obj);
-extern template void resource_dtor<cairo_font_options_t>(ErlNifEnv *env, void *obj);
-extern template void resource_dtor<PangoFontDescription>(ErlNifEnv *env, void *obj);
-extern template void resource_dtor<PangoLayout>(ErlNifEnv *env, void *obj);
-#endif
-
 template <typename T> ERL_NIF_TERM create_resource(ErlNifEnv *env, ErlNifResourceType *resource_type, T *obj)
 {
   T **resource = (T **)enif_alloc_resource(resource_type, sizeof(T *));

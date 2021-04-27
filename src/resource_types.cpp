@@ -31,9 +31,3 @@ template <> void _destroy<PangoLayout>::call(PangoLayout *obj)
   dbgprintf("\x1b[90mDestroying PangoLayout @ %p\x1b[m\r\n", obj);
   g_object_unref(obj);
 }
-
-template void resource_dtor<cairo_t>(ErlNifEnv *env, void *obj);
-template void resource_dtor<cairo_surface_t>(ErlNifEnv *env, void *obj);
-template void resource_dtor<cairo_font_options_t>(ErlNifEnv *env, void *obj);
-template void resource_dtor<PangoFontDescription>(ErlNifEnv *env, void *obj);
-template void resource_dtor<PangoLayout>(ErlNifEnv *env, void *obj);
