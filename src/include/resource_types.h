@@ -14,12 +14,6 @@
 #define EXTERN
 #endif
 
-EXTERN ErlNifResourceType *g_res_type_cairo;
-EXTERN ErlNifResourceType *g_res_type_surface;
-EXTERN ErlNifResourceType *g_res_type_font_options;
-EXTERN ErlNifResourceType *g_res_type_pango_font_description;
-EXTERN ErlNifResourceType *g_res_type_pango_layout;
-
 template <typename T> struct _destroy { static void call(T *obj); };
 
 #ifndef CAIRO_ELIXIR_NIF_RESOURCE_TYPES_IMPL
