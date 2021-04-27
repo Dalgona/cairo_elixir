@@ -65,4 +65,50 @@ EXTERN template ERL_NIF_TERM create_resource(ErlNifEnv *, ErlNifResourceType *, 
 
 #undef EXTERN
 
+template <typename T> struct nif_resource
+{
+  static ErlNifResourceType *type;
+
+  T *obj;
+  ERL_NIF_TERM term;
+
+  static void _initialize(ErlNifEnv *env, const char *name)
+  {
+    type = enif_open_resource_type(
+      env, nullptr, name, _dtor, ERL_NIF_RT_CREATE, nullptr
+    );
+  }
+
+  static void _dtor(ErlNifEnv *env, void *obj)
+  {
+    T **resource = (T **)obj;
+
+    _destroy<T>::call(*resource);
+  }
+
+  nif_resource() { }
+
+  nif_resource(ErlNifEnv *env, T *obj)
+  {
+    T **resource = (T **)enif_alloc_resource(type, sizeof(T *));
+
+    memcpy(resource, &obj, sizeof(T *));
+
+    this->term = enif_make_resource(env, resource);
+    this->obj = obj;
+
+    enif_release_resource(resource);
+  }
+
+  nif_resource(ErlNifEnv *env, const ERL_NIF_TERM term)
+  {
+    T **ppobj = nullptr;
+
+    this->term = term;
+    this->obj = enif_get_resource(env, term, type, (void **)&ppobj) ? *ppobj : nullptr;
+  }
+};
+
+template <typename T> ErlNifResourceType *nif_resource<T>::type {};
+
 #endif
