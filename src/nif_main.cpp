@@ -19,7 +19,7 @@ int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
         env,
         nullptr,
         "cairo_t",
-        resource_dtor<cairo_t>,
+        nif_resource<cairo_t>::_dtor,
         ERL_NIF_RT_CREATE,
         nullptr
     );
@@ -29,7 +29,7 @@ int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
         env,
         nullptr,
         "cairo_surface_t",
-        resource_dtor<cairo_surface_t>,
+        nif_resource<cairo_surface_t>::_dtor,
         ERL_NIF_RT_CREATE,
         nullptr
     );
@@ -39,7 +39,7 @@ int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
         env,
         nullptr,
         "cairo_font_options_t",
-        resource_dtor<cairo_font_options_t>,
+        nif_resource<cairo_font_options_t>::_dtor,
         ERL_NIF_RT_CREATE,
         nullptr
     );
@@ -49,7 +49,7 @@ int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
         env,
         nullptr,
         "PangoFontDescription",
-        resource_dtor<PangoFontDescription>,
+        nif_resource<PangoFontDescription>::_dtor,
         ERL_NIF_RT_CREATE,
         nullptr
     );
@@ -59,7 +59,7 @@ int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
         env,
         nullptr,
         "PangoLayout",
-        resource_dtor<PangoLayout>,
+        nif_resource<PangoLayout>::_dtor,
         ERL_NIF_RT_CREATE,
         nullptr
     );
