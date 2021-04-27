@@ -1,5 +1,6 @@
 #define CAIRO_ELIXIR_NIF_UTILS_IMPL
 #include <cstring>
+#include "include/resource_types.h"
 #include "include/utils.h"
 
 int get_bool(ErlNifEnv *env, const ERL_NIF_TERM term, bool *dest)
@@ -120,6 +121,13 @@ template <typename T> int _getlist(ErlNifEnv *env, const ERL_NIF_TERM term, std:
   return 1;
 }
 
+template <typename T> int _getresource(ErlNifEnv *env, const ERL_NIF_TERM term, nif_resource<T> *dest)
+{
+  *dest = nif_resource<T>(env, term);
+
+  return dest->obj != nullptr;
+}
+
 template <> int _getvalue<bool>(ErlNifEnv *env, const ERL_NIF_TERM term, bool *dest) { return get_bool(env, term, dest); }
 template <> int _getvalue<int>(ErlNifEnv *env, const ERL_NIF_TERM term, int *dest) { return enif_get_int(env, term, dest); }
 template <> int _getvalue<double>(ErlNifEnv *env, const ERL_NIF_TERM term, double *dest) { return get_number(env, term, dest); }
@@ -127,7 +135,14 @@ template <> int _getvalue<vec2_t>(ErlNifEnv *env, const ERL_NIF_TERM term, vec2_
 template <> int _getvalue<cairo_matrix_t>(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_matrix_t *dest) { return get_matrix(env, term, dest); }
 
 template <typename T> int _getvalue(ErlNifEnv *env, const ERL_NIF_TERM term, std::vector<T> *dest) { return _getlist(env, term, dest); }
-template int _getvalue<double>(ErlNifEnv *env, const ERL_NIF_TERM term, std::vector<double> *dest);
+template int _getvalue<double>(ErlNifEnv *, const ERL_NIF_TERM, std::vector<double> *);
+
+template <typename T> int _getvalue(ErlNifEnv *env, const ERL_NIF_TERM term, nif_resource<T> *dest) { return _getresource(env, term, dest); }
+template int _getvalue<cairo_t>(ErlNifEnv *, const ERL_NIF_TERM, nif_resource<cairo_t> *);
+template int _getvalue<cairo_surface_t>(ErlNifEnv *, const ERL_NIF_TERM, nif_resource<cairo_surface_t> *);
+template int _getvalue<cairo_font_options_t>(ErlNifEnv *, const ERL_NIF_TERM, nif_resource<cairo_font_options_t> *);
+template int _getvalue<PangoFontDescription>(ErlNifEnv *, const ERL_NIF_TERM, nif_resource<PangoFontDescription> *);
+template int _getvalue<PangoLayout>(ErlNifEnv *, const ERL_NIF_TERM, nif_resource<PangoLayout> *);
 
 ERL_NIF_TERM make_vec2(ErlNifEnv *env, const double e1, const double e2)
 {

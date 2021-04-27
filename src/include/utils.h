@@ -5,6 +5,7 @@
 #include <utility>
 #include <vector>
 #include <cairo.h>
+#include <pango/pango-layout.h>
 #include <erl_nif.h>
 
 #ifndef CAIRO_ELIXIR_NIF_UTILS_IMPL
@@ -22,6 +23,7 @@ EXTERN int get_matrix(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_matrix_t *d
 
 template <typename T> int _getvalue(ErlNifEnv *env, const ERL_NIF_TERM term, T *dest);
 template <typename T> int _getvalue(ErlNifEnv *env, const ERL_NIF_TERM term, std::vector<T> *dest);
+template <typename T> int _getvalue(ErlNifEnv *env, const ERL_NIF_TERM term, nif_resource<T> *dest);
 
 #ifndef CAIRO_ELIXIR_NIF_UTILS_IMPL
 extern template int _getvalue<bool>(ErlNifEnv *env, const ERL_NIF_TERM term, bool *dest);
@@ -31,6 +33,12 @@ extern template int _getvalue<vec2_t>(ErlNifEnv *env, const ERL_NIF_TERM term, v
 extern template int _getvalue<cairo_matrix_t>(ErlNifEnv *env, const ERL_NIF_TERM term, cairo_matrix_t *dest);
 
 extern template int _getvalue<double>(ErlNifEnv *env, const ERL_NIF_TERM term, std::vector<double> *dest);
+
+extern template int _getvalue<cairo_t>(ErlNifEnv *env, const ERL_NIF_TERM term, nif_resource<cairo_t> *dest);
+extern template int _getvalue<cairo_surface_t>(ErlNifEnv *env, const ERL_NIF_TERM term, nif_resource<cairo_surface_t> *dest);
+extern template int _getvalue<cairo_font_options_t>(ErlNifEnv *env, const ERL_NIF_TERM term, nif_resource<cairo_font_options_t> *dest);
+extern template int _getvalue<PangoFontDescription>(ErlNifEnv *env, const ERL_NIF_TERM term, nif_resource<PangoFontDescription> *dest);
+extern template int _getvalue<PangoLayout>(ErlNifEnv *env, const ERL_NIF_TERM term, nif_resource<PangoLayout> *dest);
 #endif
 
 template <int ArgIndex, typename T>
