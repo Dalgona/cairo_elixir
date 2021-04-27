@@ -6,7 +6,7 @@ NIF_DECL(nif_font_options_create)
 {
   ENSURE_ARGC(0)
 
-  return create_resource(env, g_res_type_font_options, cairo_font_options_create());
+  return create_resource(env, nif_resource<cairo_font_options_t>::type, cairo_font_options_create());
 }
 
 NIF_DECL(nif_font_options_copy)
@@ -14,7 +14,7 @@ NIF_DECL(nif_font_options_copy)
   ENSURE_ARGC(1)
   REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
-  return create_resource(env, g_res_type_font_options, cairo_font_options_copy(options));
+  return create_resource(env, nif_resource<cairo_font_options_t>::type, cairo_font_options_copy(options));
 }
 
 NIF_DECL(nif_font_options_status)

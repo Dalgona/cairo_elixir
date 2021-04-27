@@ -14,55 +14,11 @@
 
 int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 {
-  g_res_type_cairo =
-    enif_open_resource_type(
-        env,
-        nullptr,
-        "cairo_t",
-        nif_resource<cairo_t>::_dtor,
-        ERL_NIF_RT_CREATE,
-        nullptr
-    );
-
-  g_res_type_surface =
-    enif_open_resource_type(
-        env,
-        nullptr,
-        "cairo_surface_t",
-        nif_resource<cairo_surface_t>::_dtor,
-        ERL_NIF_RT_CREATE,
-        nullptr
-    );
-
-  g_res_type_font_options =
-    enif_open_resource_type(
-        env,
-        nullptr,
-        "cairo_font_options_t",
-        nif_resource<cairo_font_options_t>::_dtor,
-        ERL_NIF_RT_CREATE,
-        nullptr
-    );
-
-  g_res_type_pango_font_description =
-    enif_open_resource_type(
-        env,
-        nullptr,
-        "PangoFontDescription",
-        nif_resource<PangoFontDescription>::_dtor,
-        ERL_NIF_RT_CREATE,
-        nullptr
-    );
-
-  g_res_type_pango_layout =
-    enif_open_resource_type(
-        env,
-        nullptr,
-        "PangoLayout",
-        nif_resource<PangoLayout>::_dtor,
-        ERL_NIF_RT_CREATE,
-        nullptr
-    );
+  nif_resource<cairo_t>::_initialize(env, "cairo_t");
+  nif_resource<cairo_surface_t>::_initialize(env, "cairo_surface_t");
+  nif_resource<cairo_font_options_t>::_initialize(env, "cairo_font_options_t");
+  nif_resource<PangoFontDescription>::_initialize(env, "PangoFontDescription");
+  nif_resource<PangoLayout>::_initialize(env, "PangoLayout");
 
 #define ATOM_DECL(a, _) g_atom_##a = enif_make_atom(env, #a);
   ATOMS

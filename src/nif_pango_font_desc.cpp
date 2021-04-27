@@ -13,7 +13,7 @@ NIF_DECL(nif_pango_font_desc_from_string)
 
   return create_resource(
     env,
-    g_res_type_pango_font_description,
+    nif_resource<PangoFontDescription>::type,
     pango_font_description_from_string((char *)bin.data)
   );
 }

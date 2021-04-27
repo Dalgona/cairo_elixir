@@ -9,7 +9,7 @@
   T *var = nullptr; \
   { \
     T **_ppobj = nullptr; \
-    if (!enif_get_resource(env, argv[argi], g_res_type_##TRes, (void **)&_ppobj)) \
+    if (!enif_get_resource(env, argv[argi], nif_resource<T>::type, (void **)&_ppobj)) \
     { \
       return enif_make_badarg(env); \
     } \

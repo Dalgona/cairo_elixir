@@ -17,7 +17,7 @@ NIF_DECL(nif_pc_create_layout)
   ENSURE_ARGC(1)
   REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  return create_resource(env, g_res_type_pango_layout, pango_cairo_create_layout(cr));
+  return create_resource(env, nif_resource<PangoLayout>::type, pango_cairo_create_layout(cr));
 }
 
 NIF_DECL(nif_pc_error_underline_path)
