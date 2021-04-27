@@ -15,23 +15,26 @@
 NIF_DECL(nif_pc_create_layout)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
-  return nif_resource(env, pango_cairo_create_layout(cr)).term;
+  nif_resource<cairo_t> res_cr;
+
+  get_values(env, argv, &res_cr);
+
+  return nif_resource(env, pango_cairo_create_layout(res_cr.obj)).term;
 }
 
 NIF_DECL(nif_pc_error_underline_path)
 {
   ENSURE_ARGC(5)
-  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
+  nif_resource<cairo_t> res_cr;
   double x;
   double y;
   double width;
   double height;
 
-  get_values(env, argv, &x, &y, &width, &height);
-  pango_cairo_error_underline_path(cr, x, y, width, height);
+  get_values(env, argv, &res_cr, &x, &y, &width, &height);
+  pango_cairo_error_underline_path(res_cr.obj, x, y, width, height);
 
   return g_atom_ok;
 }
@@ -43,10 +46,12 @@ NIF_DECL(nif_pc_error_underline_path)
 NIF_DECL(nif_pc_layout_path)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 1)
 
-  pango_cairo_layout_path(cr, layout);
+  nif_resource<cairo_t> res_cr;
+  nif_resource<PangoLayout> res_layout;
+
+  get_values(env, argv, &res_cr, &res_layout);
+  pango_cairo_layout_path(res_cr.obj, res_layout.obj);
 
   return g_atom_ok;
 }
@@ -54,15 +59,15 @@ NIF_DECL(nif_pc_layout_path)
 NIF_DECL(nif_pc_show_error_underline)
 {
   ENSURE_ARGC(5)
-  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
 
+  nif_resource<cairo_t> res_cr;
   double x;
   double y;
   double width;
   double height;
 
-  get_values(env, argv, &x, &y, &width, &height);
-  pango_cairo_show_error_underline(cr, x, y, width, height);
+  get_values(env, argv, &res_cr, &x, &y, &width, &height);
+  pango_cairo_show_error_underline(res_cr.obj, x, y, width, height);
 
   return g_atom_ok;
 }
@@ -74,10 +79,12 @@ NIF_DECL(nif_pc_show_error_underline)
 NIF_DECL(nif_pc_show_layout)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 1)
 
-  pango_cairo_show_layout(cr, layout);
+  nif_resource<cairo_t> res_cr;
+  nif_resource<PangoLayout> res_layout;
+
+  get_values(env, argv, &res_cr, &res_layout);
+  pango_cairo_show_layout(res_cr.obj, res_layout.obj);
 
   return g_atom_ok;
 }
@@ -89,10 +96,12 @@ NIF_DECL(nif_pc_show_layout)
 NIF_DECL(nif_pc_update_layout)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(cairo_t, cairo, cr, 0)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 1)
 
-  pango_cairo_update_layout(cr, layout);
+  nif_resource<cairo_t> res_cr;
+  nif_resource<PangoLayout> res_layout;
+
+  get_values(env, argv, &res_cr, &res_layout);
+  pango_cairo_update_layout(res_cr.obj, res_layout.obj);
 
   return g_atom_ok;
 }

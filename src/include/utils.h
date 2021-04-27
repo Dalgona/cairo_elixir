@@ -63,7 +63,7 @@ void _getvalues(ErlNifEnv *env, const ERL_NIF_TERM argv[], THead *dest, TTail*..
 }
 
 template <typename... T>
-void get_values(ErlNifEnv *env, const ERL_NIF_TERM argv[], T*... dests) { _getvalues<1>(env, argv, dests...); }
+void get_values(ErlNifEnv *env, const ERL_NIF_TERM argv[], T*... dests) { _getvalues<0>(env, argv, dests...); }
 
 EXTERN ERL_NIF_TERM make_vec2(ErlNifEnv *env, const double e1, const double e2);
 EXTERN ERL_NIF_TERM make_matrix(ErlNifEnv *env, const cairo_matrix_t *matrix);

@@ -49,11 +49,13 @@ cairo_status_t write_func(void *closure, const unsigned char *data, unsigned int
 NIF_DECL(nif_surface_write_to_png)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
+  nif_resource<cairo_surface_t> res_surface;
   std::vector<ErlNifBinary> data;
 
-  cairo_status_t status = cairo_surface_write_to_png_stream(surface, write_func, &data);
+  get_values(env, argv, &res_surface);
+
+  cairo_status_t status = cairo_surface_write_to_png_stream(res_surface.obj, write_func, &data);
   ERL_NIF_TERM list = enif_make_list(env, 0);
 
   if (status != CAIRO_STATUS_SUCCESS)

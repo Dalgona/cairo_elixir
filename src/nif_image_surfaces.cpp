@@ -60,12 +60,15 @@ NIF_DECL(nif_image_surface_create_for_data)
 NIF_DECL(nif_image_surface_get_data)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
+
+  nif_resource<cairo_surface_t> res_surface;
+
+  get_values(env, argv, &res_surface);
 
   ErlNifBinary binary;
-  unsigned char *data = cairo_image_surface_get_data(surface);
-  int stride = cairo_image_surface_get_stride(surface);
-  int height = cairo_image_surface_get_height(surface);
+  unsigned char *data = cairo_image_surface_get_data(res_surface.obj);
+  int stride = cairo_image_surface_get_stride(res_surface.obj);
+  int height = cairo_image_surface_get_height(res_surface.obj);
   size_t size = (size_t)(stride * height);
 
   enif_alloc_binary(size, &binary);
@@ -77,31 +80,43 @@ NIF_DECL(nif_image_surface_get_data)
 NIF_DECL(nif_image_surface_get_format)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
-  return enum_to_atom<cairo_format_t>(env, cairo_image_surface_get_format(surface));
+  nif_resource<cairo_surface_t> res_surface;
+
+  get_values(env, argv, &res_surface);
+
+  return enum_to_atom<cairo_format_t>(env, cairo_image_surface_get_format(res_surface.obj));
 }
 
 NIF_DECL(nif_image_surface_get_width)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
-  return enif_make_int(env, cairo_image_surface_get_width(surface));
+  nif_resource<cairo_surface_t> res_surface;
+
+  get_values(env, argv, &res_surface);
+
+  return enif_make_int(env, cairo_image_surface_get_width(res_surface.obj));
 }
 
 NIF_DECL(nif_image_surface_get_height)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
-  return enif_make_int(env, cairo_image_surface_get_height(surface));
+  nif_resource<cairo_surface_t> res_surface;
+
+  get_values(env, argv, &res_surface);
+
+  return enif_make_int(env, cairo_image_surface_get_height(res_surface.obj));
 }
 
 NIF_DECL(nif_image_surface_get_stride)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_surface_t, surface, surface, 0)
 
-  return enif_make_int(env, cairo_image_surface_get_stride(surface));
+  nif_resource<cairo_surface_t> res_surface;
+
+  get_values(env, argv, &res_surface);
+
+  return enif_make_int(env, cairo_image_surface_get_stride(res_surface.obj));
 }

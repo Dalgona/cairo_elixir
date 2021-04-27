@@ -3,16 +3,18 @@
 NIF_DECL(nif_pango_layout_set_alignment)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
 
+  nif_resource<PangoLayout> res_layout;
   PangoAlignment alignment;
+
+  get_values(env, argv, &res_layout);
 
   if (!enum_from_atom(env, argv[1], &alignment))
   {
     return enif_make_badarg(env);
   }
 
-  pango_layout_set_alignment(layout, alignment);
+  pango_layout_set_alignment(res_layout.obj, alignment);
 
   return g_atom_ok;
 }
@@ -20,16 +22,18 @@ NIF_DECL(nif_pango_layout_set_alignment)
 NIF_DECL(nif_pango_layout_set_ellipsize)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
 
+  nif_resource<PangoLayout> res_layout;
   PangoEllipsizeMode ellipsize;
+
+  get_values(env, argv, &res_layout);
 
   if (!enum_from_atom(env, argv[1], &ellipsize))
   {
     return enif_make_badarg(env);
   }
 
-  pango_layout_set_ellipsize(layout, ellipsize);
+  pango_layout_set_ellipsize(res_layout.obj, ellipsize);
 
   return g_atom_ok;
 }
@@ -37,10 +41,12 @@ NIF_DECL(nif_pango_layout_set_ellipsize)
 NIF_DECL(nif_pango_layout_set_font_description)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
-  REQUIRE_OBJECT(PangoFontDescription, pango_font_description, font_desc, 1);
 
-  pango_layout_set_font_description(layout, font_desc);
+  nif_resource<PangoLayout> res_layout;
+  nif_resource<PangoFontDescription> res_font_desc;
+
+  get_values(env, argv, &res_layout, &res_font_desc);
+  pango_layout_set_font_description(res_layout.obj, res_font_desc.obj);
 
   return g_atom_ok;
 }
@@ -48,12 +54,12 @@ NIF_DECL(nif_pango_layout_set_font_description)
 NIF_DECL(nif_pango_layout_set_height)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
 
+  nif_resource<PangoLayout> res_layout;
   double height;
 
-  get_values(env, argv, &height);
-  pango_layout_set_height(layout, pango_units_from_double(height));
+  get_values(env, argv, &res_layout, &height);
+  pango_layout_set_height(res_layout.obj, pango_units_from_double(height));
 
   return g_atom_ok;
 }
@@ -62,12 +68,12 @@ NIF_DECL(nif_pango_layout_set_height)
 NIF_DECL(nif_pango_layout_set_height_pu)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
 
+  nif_resource<PangoLayout> res_layout;
   int height;
 
-  get_values(env, argv, &height);
-  pango_layout_set_height(layout, height);
+  get_values(env, argv, &res_layout, &height);
+  pango_layout_set_height(res_layout.obj, height);
 
   return g_atom_ok;
 }
@@ -75,12 +81,12 @@ NIF_DECL(nif_pango_layout_set_height_pu)
 NIF_DECL(nif_pango_layout_set_indent)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
 
+  nif_resource<PangoLayout> res_layout;
   double indent;
 
-  get_values(env, argv, &indent);
-  pango_layout_set_indent(layout, pango_units_from_double(indent));
+  get_values(env, argv, &res_layout, &indent);
+  pango_layout_set_indent(res_layout.obj, pango_units_from_double(indent));
 
   return g_atom_ok;
 }
@@ -88,12 +94,12 @@ NIF_DECL(nif_pango_layout_set_indent)
 NIF_DECL(nif_pango_layout_set_justify)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
 
+  nif_resource<PangoLayout> res_layout;
   bool justify;
 
-  get_values(env, argv, &justify);
-  pango_layout_set_justify(layout, justify);
+  get_values(env, argv, &res_layout, &justify);
+  pango_layout_set_justify(res_layout.obj, justify);
 
   return g_atom_ok;
 }
@@ -101,12 +107,12 @@ NIF_DECL(nif_pango_layout_set_justify)
 NIF_DECL(nif_pango_layout_set_line_spacing)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
 
+  nif_resource<PangoLayout> res_layout;
   double factor;
 
-  get_values(env, argv, &factor);
-  pango_layout_set_line_spacing(layout, factor);
+  get_values(env, argv, &res_layout, &factor);
+  pango_layout_set_line_spacing(res_layout.obj, factor);
 
   return g_atom_ok;
 }
@@ -114,16 +120,18 @@ NIF_DECL(nif_pango_layout_set_line_spacing)
 NIF_DECL(nif_pango_layout_set_markup)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
 
+  nif_resource<PangoLayout> res_layout;
   ErlNifBinary bin;
+
+  get_values(env, argv, &res_layout);
 
   if (!enif_inspect_binary(env, argv[1], &bin))
   {
     return enif_make_badarg(env);
   }
 
-  pango_layout_set_markup(layout, (char *)bin.data, (int)bin.size);
+  pango_layout_set_markup(res_layout.obj, (char *)bin.data, (int)bin.size);
 
   return g_atom_ok;
 }
@@ -133,12 +141,12 @@ NIF_DECL(nif_pango_layout_set_markup)
 NIF_DECL(nif_pango_layout_set_single_paragraph_mode)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
 
+  nif_resource<PangoLayout> res_layout;
   bool setting;
 
-  get_values(env, argv, &setting);
-  pango_layout_set_single_paragraph_mode(layout, setting);
+  get_values(env, argv, &res_layout, &setting);
+  pango_layout_set_single_paragraph_mode(res_layout.obj, setting);
 
   return g_atom_ok;
 }
@@ -150,16 +158,18 @@ NIF_DECL(nif_pango_layout_set_single_paragraph_mode)
 NIF_DECL(nif_pango_layout_set_text)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
 
+  nif_resource<PangoLayout> res_layout;
   ErlNifBinary bin;
+
+  get_values(env, argv, &res_layout);
 
   if (!enif_inspect_binary(env, argv[1], &bin))
   {
     return enif_make_badarg(env);
   }
 
-  pango_layout_set_text(layout, (char *)bin.data, (int)bin.size);
+  pango_layout_set_text(res_layout.obj, (char *)bin.data, (int)bin.size);
 
   return g_atom_ok;
 }
@@ -167,12 +177,12 @@ NIF_DECL(nif_pango_layout_set_text)
 NIF_DECL(nif_pango_layout_set_width)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
 
+  nif_resource<PangoLayout> res_layout;
   double width;
 
-  get_values(env, argv, &width);
-  pango_layout_set_width(layout, pango_units_from_double(width));
+  get_values(env, argv, &res_layout, &width);
+  pango_layout_set_width(res_layout.obj, pango_units_from_double(width));
 
   return g_atom_ok;
 }
@@ -180,16 +190,18 @@ NIF_DECL(nif_pango_layout_set_width)
 NIF_DECL(nif_pango_layout_set_wrap)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(PangoLayout, pango_layout, layout, 0)
 
+  nif_resource<PangoLayout> res_layout;
   PangoWrapMode wrap;
+
+  get_values(env, argv, &res_layout);
 
   if (!enum_from_atom(env, argv[1], &wrap))
   {
     return enif_make_badarg(env);
   }
 
-  pango_layout_set_wrap(layout, wrap);
+  pango_layout_set_wrap(res_layout.obj, wrap);
 
   return g_atom_ok;
 }

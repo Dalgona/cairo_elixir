@@ -12,28 +12,34 @@ NIF_DECL(nif_font_options_create)
 NIF_DECL(nif_font_options_copy)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
-  return nif_resource(env, cairo_font_options_copy(options)).term;
+  nif_resource<cairo_font_options_t> res_options;
+
+  get_values(env, argv, &res_options);
+
+  return nif_resource(env, cairo_font_options_copy(res_options.obj)).term;
 }
 
 NIF_DECL(nif_font_options_status)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
-  return enum_to_atom<cairo_status_t>(env, cairo_font_options_status(options));
+  nif_resource<cairo_font_options_t> res_options;
+
+  get_values(env, argv, &res_options);
+
+  return enum_to_atom<cairo_status_t>(env, cairo_font_options_status(res_options.obj));
 }
 
 NIF_DECL(nif_font_options_merge)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
-  {
-    REQUIRE_OBJECT(cairo_font_options_t, font_options, other, 1);
-    cairo_font_options_merge(options, other);
-  }
+  nif_resource<cairo_font_options_t> res_options;
+  nif_resource<cairo_font_options_t> res_other;
+
+  get_values(env, argv, &res_options, &res_other);
+  cairo_font_options_merge(res_options.obj, res_other.obj);
 
   return g_atom_ok;
 }
@@ -41,16 +47,18 @@ NIF_DECL(nif_font_options_merge)
 NIF_DECL(nif_font_options_set_antialias)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
+  nif_resource<cairo_font_options_t> res_options;
   cairo_antialias_t antialias;
+
+  get_values(env, argv, &res_options);
 
   if (!enum_from_atom(env, argv[1], &antialias))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_font_options_set_antialias(options, antialias);
+  cairo_font_options_set_antialias(res_options.obj, antialias);
 
   return g_atom_ok;
 }
@@ -58,24 +66,29 @@ NIF_DECL(nif_font_options_set_antialias)
 NIF_DECL(nif_font_options_get_antialias)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
-  return enum_to_atom(env, cairo_font_options_get_antialias(options));
+  nif_resource<cairo_font_options_t> res_options;
+
+  get_values(env, argv, &res_options);
+
+  return enum_to_atom(env, cairo_font_options_get_antialias(res_options.obj));
 }
 
 NIF_DECL(nif_font_options_set_subpixel_order)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
+  nif_resource<cairo_font_options_t> res_options;
   cairo_subpixel_order_t subpixel_order;
+
+  get_values(env, argv, &res_options);
 
   if (!enum_from_atom(env, argv[1], &subpixel_order))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_font_options_set_subpixel_order(options, subpixel_order);
+  cairo_font_options_set_subpixel_order(res_options.obj, subpixel_order);
 
   return g_atom_ok;
 }
@@ -83,24 +96,29 @@ NIF_DECL(nif_font_options_set_subpixel_order)
 NIF_DECL(nif_font_options_get_subpixel_order)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
-  return enum_to_atom(env, cairo_font_options_get_subpixel_order(options));
+  nif_resource<cairo_font_options_t> res_options;
+
+  get_values(env, argv, &res_options);
+
+  return enum_to_atom(env, cairo_font_options_get_subpixel_order(res_options.obj));
 }
 
 NIF_DECL(nif_font_options_set_hint_style)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
+  nif_resource<cairo_font_options_t> res_options;
   cairo_hint_style_t hint_style;
+
+  get_values(env, argv, &res_options);
 
   if (!enum_from_atom(env, argv[1], &hint_style))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_font_options_set_hint_style(options, hint_style);
+  cairo_font_options_set_hint_style(res_options.obj, hint_style);
 
   return g_atom_ok;
 }
@@ -108,24 +126,29 @@ NIF_DECL(nif_font_options_set_hint_style)
 NIF_DECL(nif_font_options_get_hint_style)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
-  return enum_to_atom(env, cairo_font_options_get_hint_style(options));
+  nif_resource<cairo_font_options_t> res_options;
+
+  get_values(env, argv, &res_options);
+
+  return enum_to_atom(env, cairo_font_options_get_hint_style(res_options.obj));
 }
 
 NIF_DECL(nif_font_options_set_hint_metrics)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
+  nif_resource<cairo_font_options_t> res_options;
   cairo_hint_metrics_t hint_metrics;
+
+  get_values(env, argv, &res_options);
 
   if (!enum_from_atom(env, argv[1], &hint_metrics))
   {
     return enif_make_badarg(env);
   }
 
-  cairo_font_options_set_hint_metrics(options, hint_metrics);
+  cairo_font_options_set_hint_metrics(res_options.obj, hint_metrics);
 
   return g_atom_ok;
 }
@@ -133,17 +156,22 @@ NIF_DECL(nif_font_options_set_hint_metrics)
 NIF_DECL(nif_font_options_get_hint_metrics)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
-  return enum_to_atom(env, cairo_font_options_get_hint_metrics(options));
+  nif_resource<cairo_font_options_t> res_options;
+
+  get_values(env, argv, &res_options);
+
+  return enum_to_atom(env, cairo_font_options_get_hint_metrics(res_options.obj));
 }
 
 NIF_DECL(nif_font_options_set_variations)
 {
   ENSURE_ARGC(2)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
+  nif_resource<cairo_font_options_t> res_options;
   ErlNifBinary bin;
+
+  get_values(env, argv, &res_options);
 
   if (!enif_inspect_binary(env, argv[1], &bin))
   {
@@ -156,7 +184,7 @@ NIF_DECL(nif_font_options_set_variations)
 
   variations[bin.size] = 0;
 
-  cairo_font_options_set_variations(options, (const char *)variations);
+  cairo_font_options_set_variations(res_options.obj, (const char *)variations);
 
   delete[] variations;
 
@@ -166,9 +194,12 @@ NIF_DECL(nif_font_options_set_variations)
 NIF_DECL(nif_font_options_get_variations)
 {
   ENSURE_ARGC(1)
-  REQUIRE_OBJECT(cairo_font_options_t, font_options, options, 0);
 
-  auto variations = cairo_font_options_get_variations(options);
+  nif_resource<cairo_font_options_t> res_options;
+
+  get_values(env, argv, &res_options);
+
+  auto variations = cairo_font_options_get_variations(res_options.obj);
 
   if (variations == nullptr)
   {
