@@ -15,6 +15,7 @@
 int load(ErlNifEnv *env, void **priv, ERL_NIF_TERM load_info)
 {
   nif_resource<cairo_t>::_initialize(env, "cairo_t");
+  nif_resource<cairo_pattern_t>::_initialize(env, "cairo_pattern_t");
   nif_resource<cairo_surface_t>::_initialize(env, "cairo_surface_t");
   nif_resource<cairo_font_options_t>::_initialize(env, "cairo_font_options_t");
   nif_resource<PangoFontDescription>::_initialize(env, "PangoFontDescription");

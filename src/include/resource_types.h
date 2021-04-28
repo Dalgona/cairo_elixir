@@ -12,6 +12,7 @@ template <typename T> struct _destroy { static void call(T *obj); };
 
 #ifndef CAIRO_ELIXIR_NIF_RESOURCE_TYPES_IMPL
 extern template struct _destroy<cairo_t>;
+extern template struct _destroy<cairo_pattern_t>;
 extern template struct _destroy<cairo_surface_t>;
 extern template struct _destroy<cairo_font_options_t>;
 extern template struct _destroy<PangoFontDescription>;

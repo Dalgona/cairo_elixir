@@ -8,6 +8,12 @@ template <> void _destroy<cairo_t>::call(cairo_t *obj)
   cairo_destroy(obj);
 }
 
+template <> void _destroy<cairo_pattern_t>::call(cairo_pattern_t *obj)
+{
+  dbgprintf("\x1b[90mDestroying cairo_pattern_t @ %p, ref count: %d\x1b[m\r\n", obj, cairo_pattern_get_reference_count(obj));
+  cairo_pattern_destroy(obj);
+}
+
 template <> void _destroy<cairo_surface_t>::call(cairo_surface_t *obj)
 {
   dbgprintf("\x1b[90mDestroying cairo_surface_t @ %p, ref count: %d\x1b[m\r\n", obj, cairo_surface_get_reference_count(obj));
