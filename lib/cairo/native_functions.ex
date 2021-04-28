@@ -306,7 +306,9 @@ defmodule Cairo.NativeFunctions do
   #
 
   defnif image_surface_create_from_png(data :: binary()) :: surface_handle()
-  defnif surface_write_to_png(surface :: surface_handle()) :: iodata()
+
+  defnif surface_write_to_png(surface :: surface_handle()) ::
+           {:ok, iodata()} | {:error, Cairo.status()}
 
   #
   # PANGO FONT DESCRIPTIONS

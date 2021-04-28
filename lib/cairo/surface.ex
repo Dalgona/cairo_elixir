@@ -128,7 +128,7 @@ defmodule Cairo.Surface do
     refresh_status(%__MODULE__{surface | fallback_resolution: resolution})
   end
 
-  @spec write_png(t()) :: iodata()
+  @spec write_png(t()) :: {:ok, iodata()} | {:error, Cairo.status()}
   def write_png(%__MODULE__{handle: handle}) do
     NF.surface_write_to_png(handle)
   end
