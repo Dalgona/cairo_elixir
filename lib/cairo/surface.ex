@@ -82,6 +82,18 @@ defmodule Cairo.Surface do
     refresh(%__MODULE__{handle: handle})
   end
 
+  @spec create_image_from_png(binary()) :: t()
+  def create_image_from_png(png_data) do
+    handle = NF.image_surface_create_from_png(png_data)
+
+    refresh(%__MODULE__{handle: handle})
+  end
+
+  @spec create_image_from_png_file(Path.t()) :: t()
+  def create_image_from_png_file(path) do
+    path |> File.read!() |> create_image_from_png()
+  end
+
   #
   # OTHER FUNCTIONS
   #
