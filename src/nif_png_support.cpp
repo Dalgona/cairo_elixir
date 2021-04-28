@@ -4,12 +4,14 @@
 
 #include "include/nif_png_support.h"
 
+using str_it = typename std::string::const_iterator;
+
 cairo_status_t read_func(void *closure, unsigned char *data, unsigned int length)
 {
-  auto state = (std::pair<unsigned char *, unsigned char *> *)closure;
+  auto state = (std::pair<str_it, str_it> *)closure;
   size_t remaining = state->second - state->first;
 
-  memcpy(data, state->first, remaining < length ? remaining : length);
+  memcpy(data, &*state->first, remaining < length ? remaining : length);
 
   state->first += length;
 
@@ -20,16 +22,11 @@ NIF_DECL(nif_image_surface_create_from_png)
 {
   ENSURE_ARGC(1)
 
-  ErlNifBinary bin_data;
+  std::string bin_data;
 
-  if (!enif_inspect_binary(env, argv[0], &bin_data))
-  {
-    return enif_make_badarg(env);
-  }
+  get_values(env, argv, bin_data);
 
-  unsigned char *start = bin_data.data;
-  unsigned char *end = start + bin_data.size;
-  auto state = std::make_pair(start, end);
+  auto state = std::make_pair(bin_data.cbegin(), bin_data.cend());
 
   return nif_resource(env, cairo_image_surface_create_from_png_stream(read_func, &state)).term;
 }

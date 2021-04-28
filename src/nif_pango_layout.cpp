@@ -122,16 +122,10 @@ NIF_DECL(nif_pango_layout_set_markup)
   ENSURE_ARGC(2)
 
   nif_resource<PangoLayout> res_layout;
-  ErlNifBinary bin;
+  std::string markup;
 
-  get_values(env, argv, res_layout);
-
-  if (!enif_inspect_binary(env, argv[1], &bin))
-  {
-    return enif_make_badarg(env);
-  }
-
-  pango_layout_set_markup(res_layout.obj, (char *)bin.data, (int)bin.size);
+  get_values(env, argv, res_layout, markup);
+  pango_layout_set_markup(res_layout.obj, markup.c_str(), markup.size());
 
   return g_atom_ok;
 }
@@ -160,16 +154,10 @@ NIF_DECL(nif_pango_layout_set_text)
   ENSURE_ARGC(2)
 
   nif_resource<PangoLayout> res_layout;
-  ErlNifBinary bin;
+  std::string text;
 
-  get_values(env, argv, res_layout);
-
-  if (!enif_inspect_binary(env, argv[1], &bin))
-  {
-    return enif_make_badarg(env);
-  }
-
-  pango_layout_set_text(res_layout.obj, (char *)bin.data, (int)bin.size);
+  get_values(env, argv, res_layout, text);
+  pango_layout_set_text(res_layout.obj, text.c_str(), text.size());
 
   return g_atom_ok;
 }

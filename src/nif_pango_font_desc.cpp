@@ -4,12 +4,9 @@ NIF_DECL(nif_pango_font_desc_from_string)
 {
   ENSURE_ARGC(1)
 
-  ErlNifBinary bin;
+  std::string str;
 
-  if (!enif_inspect_binary(env, argv[0], &bin))
-  {
-    return enif_make_badarg(env);
-  }
+  get_values(env, argv, str);
 
-  return nif_resource(env, pango_font_description_from_string((char *)bin.data)).term;
+  return nif_resource(env, pango_font_description_from_string(str.c_str())).term;
 }

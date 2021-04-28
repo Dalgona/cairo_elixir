@@ -38,6 +38,20 @@ int get_number(ErlNifEnv *env, const ERL_NIF_TERM &term, double &dest)
   }
 }
 
+int get_binary(ErlNifEnv *env, const ERL_NIF_TERM &term, std::string &dest)
+{
+  ErlNifBinary bin;
+
+  if (!enif_inspect_binary(env, term, &bin))
+  {
+    return 0;
+  }
+
+  dest = std::string { (char *)bin.data, bin.size };
+
+  return 1;
+}
+
 int get_vec2(ErlNifEnv *env, const ERL_NIF_TERM &term, vec2_t &dest)
 {
   const ERL_NIF_TERM *arr;
@@ -131,6 +145,7 @@ template <typename T> int _getresource(ErlNifEnv *env, const ERL_NIF_TERM &term,
 template <> int _getvalue<bool>(ErlNifEnv *env, const ERL_NIF_TERM &term, bool &dest) { return get_bool(env, term, dest); }
 template <> int _getvalue<int>(ErlNifEnv *env, const ERL_NIF_TERM &term, int &dest) { return enif_get_int(env, term, &dest); }
 template <> int _getvalue<double>(ErlNifEnv *env, const ERL_NIF_TERM &term, double &dest) { return get_number(env, term, dest); }
+template <> int _getvalue<std::string>(ErlNifEnv *env, const ERL_NIF_TERM &term, std::string &dest) { return get_binary(env, term, dest); }
 template <> int _getvalue<vec2_t>(ErlNifEnv *env, const ERL_NIF_TERM &term, vec2_t &dest) { return get_vec2(env, term, dest); }
 template <> int _getvalue<cairo_matrix_t>(ErlNifEnv *env, const ERL_NIF_TERM &term, cairo_matrix_t &dest) { return get_matrix(env, term, dest); }
 

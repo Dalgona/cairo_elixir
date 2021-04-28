@@ -155,17 +155,10 @@ NIF_DECL(nif_text_path)
   ENSURE_ARGC(2)
 
   nif_resource<cairo_t> res_cr;
-  ErlNifBinary utf8;
+  std::string utf8;
 
-  get_values(env, argv, res_cr);
-
-  if (!enif_inspect_binary(env, argv[1], &utf8))
-  {
-    return enif_make_badarg(env);
-  }
-
-  cairo_text_path(res_cr.obj, (char *)utf8.data);
-  enif_release_binary(&utf8);
+  get_values(env, argv, res_cr, utf8);
+  cairo_text_path(res_cr.obj, utf8.c_str());
 
   return g_atom_ok;
 }

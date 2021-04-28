@@ -169,24 +169,10 @@ NIF_DECL(nif_font_options_set_variations)
   ENSURE_ARGC(2)
 
   nif_resource<cairo_font_options_t> res_options;
-  ErlNifBinary bin;
+  std::string variations;
 
-  get_values(env, argv, res_options);
-
-  if (!enif_inspect_binary(env, argv[1], &bin))
-  {
-    return enif_make_badarg(env);
-  }
-
-  char *variations = new char[bin.size + 1];
-
-  memcpy(variations, bin.data, bin.size);
-
-  variations[bin.size] = 0;
-
-  cairo_font_options_set_variations(res_options.obj, (const char *)variations);
-
-  delete[] variations;
+  get_values(env, argv, res_options, variations);
+  cairo_font_options_set_variations(res_options.obj, variations.c_str());
 
   return g_atom_ok;
 }
