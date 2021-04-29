@@ -79,6 +79,44 @@ NIF_DECL(nif_set_source_rgba)
   return g_atom_ok;
 }
 
+NIF_DECL(nif_set_source)
+{
+  ENSURE_ARGC(2)
+
+  nif_resource<cairo_t> res_cr;
+  nif_resource<cairo_pattern_t> res_pattern;
+
+  get_values(env, argv, res_cr, res_pattern);
+  cairo_set_source(res_cr.obj, res_pattern.obj);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_set_source_surface)
+{
+  ENSURE_ARGC(3)
+
+  nif_resource<cairo_t> res_cr;
+  nif_resource<cairo_surface_t> res_surface;
+  vec2_t origin;
+
+  get_values(env, argv, res_cr, res_surface, origin);
+  cairo_set_source_surface(res_cr.obj, res_surface.obj, origin.first, origin.second);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_get_source)
+{
+  ENSURE_ARGC(1)
+
+  nif_resource<cairo_t> res_cr;
+
+  get_values(env, argv, res_cr);
+
+  return nif_resource<cairo_pattern_t>(env, cairo_pattern_reference(cairo_get_source(res_cr.obj))).term;
+}
+
 NIF_DECL(nif_set_antialias)
 {
   ENSURE_ARGC(2)

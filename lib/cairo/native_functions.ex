@@ -55,9 +55,15 @@ defmodule Cairo.NativeFunctions do
            alpha :: number()
          ) :: :ok
 
-  # defnif set_source(cr, source)
-  # defnif set_source_surface(cr, surface, x, y)
-  # defnif get_source(cr)
+  defnif set_source(cr :: cairo_handle(), source :: pattern_handle()) :: :ok
+
+  defnif set_source_surface(
+           cr :: cairo_handle(),
+           surface :: surface_handle(),
+           origin :: Cairo.vec2()
+         ) :: :ok
+
+  defnif get_source(cr :: cairo_handle()) :: pattern_handle()
 
   defnif set_antialias(cr :: cairo_handle(), antialias :: Cairo.antialias()) :: :ok
   defnif get_antialias(cr :: cairo_handle()) :: Cairo.antialias()

@@ -13,9 +13,9 @@
   /* USE_NIF(get_group_target, 1) */ \
   USE_NIF(set_source_rgb, 4) \
   USE_NIF(set_source_rgba, 5) \
-  /* USE_NIF(set_source, 2) */ \
-  /* USE_NIF(set_source_surface, 4) */ \
-  /* USE_NIF(get_source, 1) */ \
+  USE_NIF(set_source, 2) \
+  USE_NIF(set_source_surface, 3) \
+  USE_NIF(get_source, 1) \
   USE_NIF(set_antialias, 2) \
   USE_NIF(get_antialias, 1) \
   USE_NIF(set_dash, 3) \
