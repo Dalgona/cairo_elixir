@@ -4,6 +4,7 @@
 
 #include "include/nif_cairo.h"
 #include "include/nif_paths.h"
+#include "include/nif_patterns.h"
 #include "include/nif_font_options.h"
 #include "include/nif_surfaces.h"
 #include "include/nif_image_surfaces.h"
@@ -32,6 +33,7 @@ ErlNifFunc nif_funcs[] = {
 #define USE_NIF(name, arity) { #name, arity, nif_##name, 0 },
   CAIRO_NIFS
   PATH_NIFS
+  PATTERN_NIFS
   FONT_OPTIONS_NIFS
   SURFACE_NIFS
   IMAGE_SURFACE_NIFS

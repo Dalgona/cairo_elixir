@@ -38,6 +38,7 @@ extern template int _getvalue<cairo_matrix_t>(ErlNifEnv *env, const ERL_NIF_TERM
 extern template int _getvalue<double>(ErlNifEnv *env, const ERL_NIF_TERM &term, std::vector<double> &dest);
 
 extern template int _getvalue<cairo_t>(ErlNifEnv *env, const ERL_NIF_TERM &term, nif_resource<cairo_t> &dest);
+extern template int _getvalue<cairo_pattern_t>(ErlNifEnv *env, const ERL_NIF_TERM &term, nif_resource<cairo_pattern_t> &dest);
 extern template int _getvalue<cairo_surface_t>(ErlNifEnv *env, const ERL_NIF_TERM &term, nif_resource<cairo_surface_t> &dest);
 extern template int _getvalue<cairo_font_options_t>(ErlNifEnv *env, const ERL_NIF_TERM &term, nif_resource<cairo_font_options_t> &dest);
 extern template int _getvalue<PangoFontDescription>(ErlNifEnv *env, const ERL_NIF_TERM &term, nif_resource<PangoFontDescription> &dest);

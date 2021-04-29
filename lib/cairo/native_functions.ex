@@ -9,6 +9,7 @@ defmodule Cairo.NativeFunctions do
 
   @type cairo_handle :: term()
   @type font_options_handle :: term()
+  @type pattern_handle :: term()
   @type surface_handle :: term()
   @type pango_font_desc_handle :: term()
   @type pango_layout_handle :: term()
@@ -169,6 +170,24 @@ defmodule Cairo.NativeFunctions do
   defnif rel_line_to(cr :: cairo_handle(), diff :: Cairo.vec2()) :: :ok
   defnif rel_move_to(cr :: cairo_handle(), diff :: Cairo.vec2()) :: :ok
   defnif path_extents(cr :: cairo_handle()) :: {Cairo.vec2(), Cairo.vec2()}
+
+  #
+  # PATTERNS
+  #
+
+  defnif pattern_create_rgb(red :: number(), green :: number(), blue :: number()) ::
+           pattern_handle()
+
+  defnif pattern_create_rgba(
+           red :: number(),
+           green :: number(),
+           blue :: number(),
+           alpha :: number()
+         ) :: pattern_handle()
+
+  defnif pattern_create_for_surface(surface :: surface_handle()) :: pattern_handle()
+
+  defnif pattern_status(pattern :: pattern_handle()) :: Cairo.status()
 
   #
   # FONT OPTIONS

@@ -154,6 +154,7 @@ template int _getvalue<double>(ErlNifEnv *, const ERL_NIF_TERM &, std::vector<do
 
 template <typename T> int _getvalue(ErlNifEnv *env, const ERL_NIF_TERM &term, nif_resource<T> &dest) { return _getresource(env, term, dest); }
 template int _getvalue<cairo_t>(ErlNifEnv *, const ERL_NIF_TERM &, nif_resource<cairo_t> &);
+template int _getvalue<cairo_pattern_t>(ErlNifEnv *, const ERL_NIF_TERM &, nif_resource<cairo_pattern_t> &);
 template int _getvalue<cairo_surface_t>(ErlNifEnv *, const ERL_NIF_TERM &, nif_resource<cairo_surface_t> &);
 template int _getvalue<cairo_font_options_t>(ErlNifEnv *, const ERL_NIF_TERM &, nif_resource<cairo_font_options_t> &);
 template int _getvalue<PangoFontDescription>(ErlNifEnv *, const ERL_NIF_TERM &, nif_resource<PangoFontDescription> &);

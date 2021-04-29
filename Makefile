@@ -24,7 +24,7 @@ MAKE_OBJ = $(addsuffix .o,$(addprefix $(BUILD_DIR)/,$(1)))
 
 MAIN_FILE = nif_main
 COMMON_FILES = atoms resource_types utils
-NIF_FILES = nif_cairo nif_paths nif_font_options nif_surfaces nif_image_surfaces nif_png_support nif_pango_font_desc nif_pango_layout nif_pango_cairo
+NIF_FILES = nif_cairo nif_paths nif_font_options nif_patterns nif_surfaces nif_image_surfaces nif_png_support nif_pango_font_desc nif_pango_layout nif_pango_cairo
 
 MAIN_SRC = $(call MAKE_SRC,$(MAIN_FILE))
 MAIN_OBJ = $(call MAKE_OBJ,$(MAIN_FILE))
