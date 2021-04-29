@@ -1,5 +1,5 @@
 MIX = mix
-CXX = clang++
+CXX = c++
 ERL_DIR = $(shell erl -eval 'io:format("~s", [lists:concat([code:root_dir(), "/erts-", erlang:system_info(version), "/include"])])' -s init stop -noshell)
 OUT_DIR = priv/nif_lib
 BUILD_DIR = $(OUT_DIR)/build
