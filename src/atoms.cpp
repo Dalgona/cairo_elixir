@@ -40,39 +40,3 @@ template <> enum_map<PangoWrapMode> g_enum_map<PangoWrapMode> { WRAP_MODE_ATOMS 
 template <> enum_map<PangoEllipsizeMode> g_enum_map<PangoEllipsizeMode> { ELLIPSIZE_MODE_ATOMS };
 template <> enum_map<PangoAlignment> g_enum_map<PangoAlignment> { ALIGNMENT_ATOMS };
 #undef ATOM_DECL
-
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_format_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_content_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_surface_type_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_status_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_antialias_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_fill_rule_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_cap_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_line_join_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_subpixel_order_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_hint_style_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_hint_metrics_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_pattern_type_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_filter_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, cairo_extend_t *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, PangoWrapMode *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, PangoEllipsizeMode *);
-template int enum_from_atom(ErlNifEnv *, const ERL_NIF_TERM, PangoAlignment *);
-
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_format_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_content_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_surface_type_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_status_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_antialias_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_fill_rule_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_cap_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_line_join_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_subpixel_order_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_hint_style_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_hint_metrics_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_pattern_type_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_filter_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const cairo_extend_t);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const PangoWrapMode);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const PangoEllipsizeMode);
-template ERL_NIF_TERM enum_to_atom(ErlNifEnv *, const PangoAlignment);
