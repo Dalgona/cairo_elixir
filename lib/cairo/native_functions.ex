@@ -198,6 +198,7 @@ defmodule Cairo.NativeFunctions do
   defnif pattern_get_extend(pattern :: pattern_handle()) :: Pattern.extend()
   defnif pattern_set_filter(pattern :: pattern_handle(), filter :: Pattern.filter()) :: :ok
   defnif pattern_get_filter(pattern :: pattern_handle()) :: Pattern.filter()
+  defnif pattern_set_matrix(pattern :: pattern_handle(), matrix :: Cairo.matrix()) :: :ok
 
   defnif pattern_get_type(pattern :: pattern_handle()) :: Pattern.type()
 

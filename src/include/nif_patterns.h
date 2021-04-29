@@ -38,7 +38,7 @@
   USE_NIF(pattern_get_extend, 1) \
   USE_NIF(pattern_set_filter, 2) \
   USE_NIF(pattern_get_filter, 1) \
-  /* USE_NIF(pattern_set_matrix, ?) */ \
+  USE_NIF(pattern_set_matrix, 2) \
   /* USE_NIF(pattern_get_matrix, ?) */ \
   USE_NIF(pattern_get_type, 1) \
   /* USE_NIF(pattern_get_reference_count, ?) */ \

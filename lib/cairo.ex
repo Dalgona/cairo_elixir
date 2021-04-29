@@ -5,6 +5,7 @@ defmodule Cairo do
 
   @type vec2 :: {number(), number()}
   @type point :: vec2
+  @type matrix :: {vec2(), vec2(), vec2()}
 
   @type format :: :invalid | :argb32 | :rgb24 | :a8 | :a1 | :rgb16_565 | :rgb30
 

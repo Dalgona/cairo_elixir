@@ -159,7 +159,18 @@ NIF_DECL(nif_pattern_get_filter)
   return enum_to_atom(env, cairo_pattern_get_filter(res_pattern.obj));
 }
 
-/* NIF_DECL(nif_pattern_set_matrix) */
+NIF_DECL(nif_pattern_set_matrix)
+{
+  ENSURE_ARGC(2)
+
+  nif_resource<cairo_pattern_t> res_pattern;
+  cairo_matrix_t matrix;
+
+  get_values(env, argv, res_pattern, matrix);
+  cairo_pattern_set_matrix(res_pattern.obj, &matrix);
+
+  return g_atom_ok;
+}
 
 /* NIF_DECL(nif_pattern_get_matrix) */
 
