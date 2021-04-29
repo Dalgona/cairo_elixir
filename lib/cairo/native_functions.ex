@@ -5,6 +5,7 @@ defmodule Cairo.NativeFunctions do
   import __MODULE__.Macros
   alias Cairo.FontOptions
   alias Cairo.Pango
+  alias Cairo.Pattern
   alias Cairo.Surface
 
   @type cairo_handle :: term()
@@ -192,8 +193,13 @@ defmodule Cairo.NativeFunctions do
          ) :: pattern_handle()
 
   defnif pattern_create_for_surface(surface :: surface_handle()) :: pattern_handle()
-
   defnif pattern_status(pattern :: pattern_handle()) :: Cairo.status()
+  defnif pattern_set_extend(pattern :: pattern_handle(), extend :: Pattern.extend()) :: :ok
+  defnif pattern_get_extend(pattern :: pattern_handle()) :: Pattern.extend()
+  defnif pattern_set_filter(pattern :: pattern_handle(), filter :: Pattern.filter()) :: :ok
+  defnif pattern_get_filter(pattern :: pattern_handle()) :: Pattern.filter()
+
+  defnif pattern_get_type(pattern :: pattern_handle()) :: Pattern.type()
 
   #
   # FONT OPTIONS

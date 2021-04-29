@@ -99,19 +99,80 @@ NIF_DECL(nif_pattern_status)
   return enum_to_atom(env, cairo_pattern_status(res_pattern.obj));
 }
 
-/* NIF_DECL(nif_pattern_set_extend) */
+NIF_DECL(nif_pattern_set_extend)
+{
+  ENSURE_ARGC(2)
 
-/* NIF_DECL(nif_pattern_get_extend) */
+  nif_resource<cairo_pattern_t> res_pattern;
+  cairo_extend_t extend;
 
-/* NIF_DECL(nif_pattern_set_filter) */
+  get_values(env, argv, res_pattern);
 
-/* NIF_DECL(nif_pattern_get_filter) */
+  if (!enum_from_atom(env, argv[1], &extend))
+  {
+    return enif_make_badarg(env);
+  }
+
+  cairo_pattern_set_extend(res_pattern.obj, extend);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_pattern_get_extend)
+{
+  ENSURE_ARGC(1)
+
+  nif_resource<cairo_pattern_t> res_pattern;
+
+  get_values(env, argv, res_pattern);
+
+  return enum_to_atom(env, cairo_pattern_get_extend(res_pattern.obj));
+}
+
+NIF_DECL(nif_pattern_set_filter)
+{
+  ENSURE_ARGC(2)
+
+  nif_resource<cairo_pattern_t> res_pattern;
+  cairo_filter_t filter;
+
+  get_values(env, argv, res_pattern);
+
+  if (!enum_from_atom(env, argv[1], &filter))
+  {
+    return enif_make_badarg(env);
+  }
+
+  cairo_pattern_set_filter(res_pattern.obj, filter);
+
+  return g_atom_ok;
+}
+
+NIF_DECL(nif_pattern_get_filter)
+{
+  ENSURE_ARGC(1)
+
+  nif_resource<cairo_pattern_t> res_pattern;
+
+  get_values(env, argv, res_pattern);
+
+  return enum_to_atom(env, cairo_pattern_get_filter(res_pattern.obj));
+}
 
 /* NIF_DECL(nif_pattern_set_matrix) */
 
 /* NIF_DECL(nif_pattern_get_matrix) */
 
-/* NIF_DECL(nif_pattern_get_type) */
+NIF_DECL(nif_pattern_get_type)
+{
+  ENSURE_ARGC(1)
+
+  nif_resource<cairo_pattern_t> res_pattern;
+
+  get_values(env, argv, res_pattern);
+
+  return enum_to_atom(env, cairo_pattern_get_type(res_pattern.obj));
+}
 
 /* NIF_DECL(nif_pattern_get_reference_count) */
 

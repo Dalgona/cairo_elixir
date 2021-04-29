@@ -34,13 +34,13 @@
   /* USE_NIF(pattern_reference, ?) */ \
   /* USE_NIF(pattern_destroy, ?) */ \
   USE_NIF(pattern_status, 1) \
-  /* USE_NIF(pattern_set_extend, ?) */ \
-  /* USE_NIF(pattern_get_extend, ?) */ \
-  /* USE_NIF(pattern_set_filter, ?) */ \
-  /* USE_NIF(pattern_get_filter, ?) */ \
+  USE_NIF(pattern_set_extend, 2) \
+  USE_NIF(pattern_get_extend, 1) \
+  USE_NIF(pattern_set_filter, 2) \
+  USE_NIF(pattern_get_filter, 1) \
   /* USE_NIF(pattern_set_matrix, ?) */ \
   /* USE_NIF(pattern_get_matrix, ?) */ \
-  /* USE_NIF(pattern_get_type, ?) */ \
+  USE_NIF(pattern_get_type, 1) \
   /* USE_NIF(pattern_get_reference_count, ?) */ \
   /* USE_NIF(pattern_set_user_data, ?) */ \
   /* USE_NIF(pattern_get_user_data, ?) */
