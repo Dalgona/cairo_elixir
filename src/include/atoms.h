@@ -212,45 +212,48 @@ ATOMS
 
 #undef EXTERN
 
-template <typename T> std::unordered_map<std::string, T> g_atom_map;
-template <typename T> std::unordered_map<T, ERL_NIF_TERM *> g_enum_map;
+template <typename T> using atom_map = std::unordered_map<std::string, T>;
+template <typename T> using enum_map = std::unordered_map<T, ERL_NIF_TERM *>;
+
+template <typename T> atom_map<T> g_atom_map;
+template <typename T> enum_map<T> g_enum_map;
 
 #ifndef CAIRO_ELIXIR_NIF_ATOMS_IMPL
-extern template std::unordered_map<std::string, cairo_format_t> g_atom_map<cairo_format_t>;
-extern template std::unordered_map<std::string, cairo_content_t> g_atom_map<cairo_content_t>;
-extern template std::unordered_map<std::string, cairo_surface_type_t> g_atom_map<cairo_surface_type_t>;
-extern template std::unordered_map<std::string, cairo_status_t> g_atom_map<cairo_status_t>;
-extern template std::unordered_map<std::string, cairo_antialias_t> g_atom_map<cairo_antialias_t>;
-extern template std::unordered_map<std::string, cairo_fill_rule_t> g_atom_map<cairo_fill_rule_t>;
-extern template std::unordered_map<std::string, cairo_line_cap_t> g_atom_map<cairo_line_cap_t>;
-extern template std::unordered_map<std::string, cairo_line_join_t> g_atom_map<cairo_line_join_t>;
-extern template std::unordered_map<std::string, cairo_subpixel_order_t> g_atom_map<cairo_subpixel_order_t>;
-extern template std::unordered_map<std::string, cairo_hint_style_t> g_atom_map<cairo_hint_style_t>;
-extern template std::unordered_map<std::string, cairo_hint_metrics_t> g_atom_map<cairo_hint_metrics_t>;
-extern template std::unordered_map<std::string, cairo_pattern_type_t> g_atom_map<cairo_pattern_type_t>;
-extern template std::unordered_map<std::string, cairo_filter_t> g_atom_map<cairo_filter_t>;
-extern template std::unordered_map<std::string, cairo_extend_t> g_atom_map<cairo_extend_t>;
-extern template std::unordered_map<std::string, PangoWrapMode> g_atom_map<PangoWrapMode>;
-extern template std::unordered_map<std::string, PangoEllipsizeMode> g_atom_map<PangoEllipsizeMode>;
-extern template std::unordered_map<std::string, PangoAlignment> g_atom_map<PangoAlignment>;
+extern template atom_map<cairo_format_t> g_atom_map<cairo_format_t>;
+extern template atom_map<cairo_content_t> g_atom_map<cairo_content_t>;
+extern template atom_map<cairo_surface_type_t> g_atom_map<cairo_surface_type_t>;
+extern template atom_map<cairo_status_t> g_atom_map<cairo_status_t>;
+extern template atom_map<cairo_antialias_t> g_atom_map<cairo_antialias_t>;
+extern template atom_map<cairo_fill_rule_t> g_atom_map<cairo_fill_rule_t>;
+extern template atom_map<cairo_line_cap_t> g_atom_map<cairo_line_cap_t>;
+extern template atom_map<cairo_line_join_t> g_atom_map<cairo_line_join_t>;
+extern template atom_map<cairo_subpixel_order_t> g_atom_map<cairo_subpixel_order_t>;
+extern template atom_map<cairo_hint_style_t> g_atom_map<cairo_hint_style_t>;
+extern template atom_map<cairo_hint_metrics_t> g_atom_map<cairo_hint_metrics_t>;
+extern template atom_map<cairo_pattern_type_t> g_atom_map<cairo_pattern_type_t>;
+extern template atom_map<cairo_filter_t> g_atom_map<cairo_filter_t>;
+extern template atom_map<cairo_extend_t> g_atom_map<cairo_extend_t>;
+extern template atom_map<PangoWrapMode> g_atom_map<PangoWrapMode>;
+extern template atom_map<PangoEllipsizeMode> g_atom_map<PangoEllipsizeMode>;
+extern template atom_map<PangoAlignment> g_atom_map<PangoAlignment>;
 
-extern template std::unordered_map<cairo_format_t, ERL_NIF_TERM *> g_enum_map<cairo_format_t>;
-extern template std::unordered_map<cairo_content_t, ERL_NIF_TERM *> g_enum_map<cairo_content_t>;
-extern template std::unordered_map<cairo_surface_type_t, ERL_NIF_TERM *> g_enum_map<cairo_surface_type_t>;
-extern template std::unordered_map<cairo_status_t, ERL_NIF_TERM *> g_enum_map<cairo_status_t>;
-extern template std::unordered_map<cairo_antialias_t, ERL_NIF_TERM *> g_enum_map<cairo_antialias_t>;
-extern template std::unordered_map<cairo_fill_rule_t, ERL_NIF_TERM *> g_enum_map<cairo_fill_rule_t>;
-extern template std::unordered_map<cairo_line_cap_t, ERL_NIF_TERM *> g_enum_map<cairo_line_cap_t>;
-extern template std::unordered_map<cairo_line_join_t, ERL_NIF_TERM *> g_enum_map<cairo_line_join_t>;
-extern template std::unordered_map<cairo_subpixel_order_t, ERL_NIF_TERM *> g_enum_map<cairo_subpixel_order_t>;
-extern template std::unordered_map<cairo_hint_style_t, ERL_NIF_TERM *> g_enum_map<cairo_hint_style_t>;
-extern template std::unordered_map<cairo_hint_metrics_t, ERL_NIF_TERM *> g_enum_map<cairo_hint_metrics_t>;
-extern template std::unordered_map<cairo_pattern_type_t, ERL_NIF_TERM *> g_enum_map<cairo_pattern_type_t>;
-extern template std::unordered_map<cairo_filter_t, ERL_NIF_TERM *> g_enum_map<cairo_filter_t>;
-extern template std::unordered_map<cairo_extend_t, ERL_NIF_TERM *> g_enum_map<cairo_extend_t>;
-extern template std::unordered_map<PangoWrapMode, ERL_NIF_TERM *> g_enum_map<PangoWrapMode>;
-extern template std::unordered_map<PangoEllipsizeMode, ERL_NIF_TERM *> g_enum_map<PangoEllipsizeMode>;
-extern template std::unordered_map<PangoAlignment, ERL_NIF_TERM *> g_enum_map<PangoAlignment>;
+extern template enum_map<cairo_format_t> g_enum_map<cairo_format_t>;
+extern template enum_map<cairo_content_t> g_enum_map<cairo_content_t>;
+extern template enum_map<cairo_surface_type_t> g_enum_map<cairo_surface_type_t>;
+extern template enum_map<cairo_status_t> g_enum_map<cairo_status_t>;
+extern template enum_map<cairo_antialias_t> g_enum_map<cairo_antialias_t>;
+extern template enum_map<cairo_fill_rule_t> g_enum_map<cairo_fill_rule_t>;
+extern template enum_map<cairo_line_cap_t> g_enum_map<cairo_line_cap_t>;
+extern template enum_map<cairo_line_join_t> g_enum_map<cairo_line_join_t>;
+extern template enum_map<cairo_subpixel_order_t> g_enum_map<cairo_subpixel_order_t>;
+extern template enum_map<cairo_hint_style_t> g_enum_map<cairo_hint_style_t>;
+extern template enum_map<cairo_hint_metrics_t> g_enum_map<cairo_hint_metrics_t>;
+extern template enum_map<cairo_pattern_type_t> g_enum_map<cairo_pattern_type_t>;
+extern template enum_map<cairo_filter_t> g_enum_map<cairo_filter_t>;
+extern template enum_map<cairo_extend_t> g_enum_map<cairo_extend_t>;
+extern template enum_map<PangoWrapMode> g_enum_map<PangoWrapMode>;
+extern template enum_map<PangoEllipsizeMode> g_enum_map<PangoEllipsizeMode>;
+extern template enum_map<PangoAlignment> g_enum_map<PangoAlignment>;
 #endif
 
 template <typename T> int enum_from_atom(ErlNifEnv *env, const ERL_NIF_TERM term, T *dest)
