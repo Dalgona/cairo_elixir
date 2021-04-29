@@ -39,7 +39,7 @@ HEADERS = $(addsuffix .h,$(addprefix src/include/,$(COMMON_FILES) $(NIF_SRC)))
 #
 
 $(OUT_DIR)/nif_cairo.so: $(MAIN_OBJ) $(COMMON_OBJ) $(NIF_OBJ)
-	$(CXX) $(CXXFLAGS) $(LIBS) $(SHAREDFLAGS) $(LDFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) $(SHAREDFLAGS) -o $@ $^ $(LIBS) $(LDFLAGS)
 
 $(MAIN_OBJ): $(MAIN_SRC) $(COMMON_OBJ) $(NIF_OBJ)
 	$(CXX) -c $(CXXFLAGS) $(INCLUDES) -o $@ $<
