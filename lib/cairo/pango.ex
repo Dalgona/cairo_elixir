@@ -1,5 +1,6 @@
 defmodule Cairo.Pango do
   alias Cairo.Context
+  alias Cairo.Path
   alias Cairo.NativeFunctions, as: NF
 
   @type wrap_mode ::
@@ -28,26 +29,38 @@ defmodule Cairo.Pango do
           alignment: :left | :center | :right,
           wrap: :word | :char | :word_char,
           ellipsize: :none | :start | :middle | :end,
-          single_paragraph: boolean()
+          single_paragraph: boolean(),
+          next_position: next_position()
         ]
+
+  @typep next_position :: :top_left | :top_right | :bottom_left | :bottom_right
 
   @spec layout_path(Context.t(), binary(), layout_options()) :: Context.t()
   def layout_path(cr, markup, options \\ []) when is_binary(markup) and is_list(options) do
-    h_layout = setup_layout(cr, markup, options)
+    current_point = cr.current_point
+    {h_layout, extents} = setup_layout(cr, markup, options)
 
     NF.pc_layout_path(cr.handle, h_layout)
-    Context.refresh(cr)
+
+    cr
+    |> move_pen(current_point, extents, options[:next_position] || :top_left)
+    |> Context.refresh()
   end
 
   @spec show_layout(Context.t(), binary(), layout_options()) :: Context.t()
   def show_layout(cr, markup, options \\ []) when is_binary(markup) and is_list(options) do
-    h_layout = setup_layout(cr, markup, options)
+    current_point = cr.current_point
+    {h_layout, extents} = setup_layout(cr, markup, options)
 
     NF.pc_show_layout(cr.handle, h_layout)
-    Context.refresh(cr)
+
+    cr
+    |> move_pen(current_point, extents, options[:next_position] || :top_left)
+    |> Context.refresh()
   end
 
-  @spec setup_layout(Context.t(), binary(), layout_options()) :: NF.pango_layout_handle()
+  @spec setup_layout(Context.t(), binary(), layout_options()) ::
+          {NF.pango_layout_handle(), {Cairo.vec2(), Cairo.vec2()}}
   defp setup_layout(cr, markup, options) do
     options = if(Keyword.keyword?(options), do: options, else: [])
     h_layout = NF.pc_create_layout(cr.handle)
@@ -60,8 +73,24 @@ defmodule Cairo.Pango do
 
     NF.pango_layout_set_markup(h_layout, markup)
 
-    h_layout
+    {h_layout, NF.pango_layout_get_extents(h_layout)}
   end
+
+  @spec move_pen(Context.t(), Cairo.vec2(), {Cairo.vec2(), Cairo.vec2()}, next_position()) ::
+          Context.t()
+  defp move_pen(cr, current_point, extents, next_position)
+
+  defp move_pen(cr, {x0, y0}, {{x, y}, {_, _}}, :top_left),
+    do: Path.move_to(cr, {x0 + x, y0 + y})
+
+  defp move_pen(cr, {x0, y0}, {{x, y}, {w, _}}, :top_right),
+    do: Path.move_to(cr, {x0 + x + w, y0 + y})
+
+  defp move_pen(cr, {x0, y0}, {{x, y}, {_, h}}, :bottom_left),
+    do: Path.move_to(cr, {x0 + x, y0 + y + h})
+
+  defp move_pen(cr, {x0, y0}, {{x, y}, {w, h}}, :bottom_right),
+    do: Path.move_to(cr, {x0 + x + w, y0 + y + h})
 
   @spec process_option({atom(), term()}) :: (NF.pango_layout_handle() -> term())
   defp process_option(option)
