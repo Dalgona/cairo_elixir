@@ -320,6 +320,8 @@ defmodule Cairo.NativeFunctions do
   # PANGO LAYOUTS
   #
 
+  defnif pango_layout_get_extents(layout :: pango_layout_handle()) :: {Cairo.vec2(), Cairo.vec2()}
+
   defnif pango_layout_set_alignment(
            layout :: pango_layout_handle(),
            alignment :: Pango.alignment()

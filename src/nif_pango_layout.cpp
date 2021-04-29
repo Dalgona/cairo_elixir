@@ -1,5 +1,22 @@
 #include "include/nif_pango_layout.h"
 
+NIF_DECL(nif_pango_layout_get_extents)
+{
+  ENSURE_ARGC(1)
+
+  nif_resource<PangoLayout> res_layout;
+  PangoRectangle extents;
+
+  get_values(env, argv, res_layout);
+  pango_layout_get_extents(res_layout.obj, nullptr, &extents);
+
+  return enif_make_tuple2(
+    env,
+    make_vec2(env, pango_units_to_double(extents.x), pango_units_to_double(extents.y)),
+    make_vec2(env, pango_units_to_double(extents.width), pango_units_to_double(extents.height))
+  );
+}
+
 NIF_DECL(nif_pango_layout_set_alignment)
 {
   ENSURE_ARGC(2)

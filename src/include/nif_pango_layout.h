@@ -17,7 +17,7 @@
   /* USE_NIF(pango_layout_get_cursor_pos, ?) */ \
   /* USE_NIF(pango_layout_get_direction, ?) */ \
   /* USE_NIF(pango_layout_get_ellipsize, ?) */ \
-  /* USE_NIF(pango_layout_get_extents, ?) */ \
+  USE_NIF(pango_layout_get_extents, 1) \
   /* USE_NIF(pango_layout_get_font_description, ?) */ \
   /* USE_NIF(pango_layout_get_height, ?) */ \
   /* USE_NIF(pango_layout_get_indent, ?) */ \
